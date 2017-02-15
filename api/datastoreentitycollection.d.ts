@@ -296,7 +296,28 @@ interface EntityCollection {
 	
 	
 	/**
-	*returns the datastore class (object of the DatastoreClass type) of the entity collection
+	* Returns the datastore class (object of the DatastoreClass type) of the entity collection.
+	*
+	* To get the DataClass name displayed in must be followed by the getName() or toString() api 
+	* #### Example
+	* ```javascript
+	* - ds.MyDataClass.all().getDataClass().toString()  //to a collection with toString
+	* - ds.MyDataClass.first().getDataClass().getName() // to an entity with getName()
+	* ```
+	* Another example on a model event :
+	* ```javascript
+	*  
+	*
+	* // In the onInit event of an extended datastore class, you want to fill in the 'category' attribute the name of the derived class. 
+	* // You can write:
+	* model.Manager.events.init = function(event)
+	* {
+    *    //get the name of the class of the entity
+    *  var myType = this.getDataClass().getName();
+    *   //fill it in the category attribute
+    * this.category = myType;
+	* };
+	* ```
 	*/
 	getDataClass() : DatastoreClass;
 	
@@ -517,7 +538,7 @@ interface EntityCollection {
 	* - When you apply it to an entity collection, it removes the entities belonging to that entity collection,
     * - When you apply it to a datastore class, it removes all the entities in the datastore class.
 	*
-	* #### Example
+	* #### Examples
 	* ```javascript
 	* // Applied to a Dataclass 
 	* ds.Dataclass1.remove();
@@ -526,6 +547,17 @@ interface EntityCollection {
 	* // Applied to a collection
 	*  ds.Dataclass1.query('ID > 3 & ID < 5').remove();
 	* ```
+	* ```javascript
+	* // Applied to an entity
+	* ds.Dataclass1.first().remove();
+	* ```
+	* ```javascript
+	* // Applied at the Model level (Entity method on the Customer dataclass)
+	* model.Customer.entityMethods.remove = function() {
+    * this.remove();
+	* };
+	* ```
+	* 
 	*/
 	remove() : void;
 	
@@ -600,6 +632,11 @@ interface EntityCollection {
 	
 	/**
 	*returns a string representation of the entity or entity collection
+	* #### Example 
+	* ```
+	* ds.Dataclass1.query('ID > 3').toString()  // applied to a collection 
+	* ds.Dataclass1.first().toString() // applied to an entity
+	* ```
 	*/
 	toString() : String;
 }

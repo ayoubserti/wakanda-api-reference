@@ -1110,120 +1110,334 @@ interface Datastore {
 interface DatastoreClass {
 /**
 	*Collection of available attributes
+	*
+	* @returns Object containing all the attributes of the DatastoreClass
+	* 
+	* ```ds.MyDataclass.attributes```
 	*/
 	attributes: AttributeEnumerator;
+	
+	
 	/**
 	*Number of entities in the datastore class
+	*  
+	* ```javascript
+	* ds.MyDataclass.length
+	* ```
 	*/
 	length: Number;
+	
+	
 	/**
-	*returns an object of type EntityCollection containing all the entities in the datastore class to which it was applied
+	*returns an object of type EntityCollection containing all the entities in the datastore class
+	*
+	* ```javascript
+	* ds.MyDataclass.all()
+	* ```
 	*/
 	all() : EntityCollection;
+	
+	
+	
+	
+	
 	/**
 	*returns the arithmetic average of all the non-null values of attribute for the datastore class or entity collection
+	* ### For a detailled description of the method, [go here](entitycollection.html#average) 
 	*/
 	average(attribute: DatastoreClassAttribute, distinct?: Boolean) : Number;
+	
+	
+	
+	
 	/**
-	*returns the arithmetic average of all the non-null values of attribute for the datastore class or entity collection
-	*/
-	average(attribute: DatastoreClassAttribute, distinct?: String) : Number;
-	/**
-	*returns the arithmetic average of all the non-null values of attribute for the datastore class or entity collection
-	*/
-	average(attribute: String, distinct?: Boolean) : Number;
-	/**
-	*returns the arithmetic average of all the non-null values of attribute for the datastore class or entity collection
-	*/
-	average(attribute: String, distinct?: String) : Number;
-	/**
-	*performs, in a single call, all the statistical calculations on the attribute or list of attributes passed as the parameter for the datastore class or entity collection
+	* Compute performs, in a single call, all the statistical calculations on the attribute or list of attributes passed as the parameter for the datastore class or entity collection
+	* @param attribute DatastoreClassAttribute,String Attribute(s) for which you want to perform statistical calculations
+	* @param distinct Boolean Compute distinct calculations - `false` by default
+	* @returns Object containing the following calculations :
+	* 	- average	Arithmetic average
+	*	- averageDistinct	Average taking only distinct values into account
+	*	- count	Number of values
+	*	- countDistinct	Number of distinct values
+	*	- max	Maximum value
+	*	- min	Minimum value
+	*	- sum	Sum
+	*	- sumDistinct	Sum taking only distinct values into account
+	*
+	* @warning If you pass more than one attribute and enable the Distinct calculations, they will be valid only for the first attribute.
+	* #### Example 1 - Compute Multi Attributes with Distinct
+	*  ```javascript
+	*  var calculations = ds.Employee.compute("age, salary", true); //the Distinct operations will be performed only on the `age` attribute
+	*  var stats = "Average age ="+ calculations.age.averageDistinct+" Total salary ="+calculations.salary.sum);
+	* ```
 	*/
 	compute(attribute: DatastoreClassAttribute, distinct?: Boolean) : Object;
-	/**
-	*performs, in a single call, all the statistical calculations on the attribute or list of attributes passed as the parameter for the datastore class or entity collection
-	*/
-	compute(attribute: DatastoreClassAttribute, distinct?: String) : Object;
-	/**
-	*performs, in a single call, all the statistical calculations on the attribute or list of attributes passed as the parameter for the datastore class or entity collection
-	*/
-	compute(attribute: String, distinct?: Boolean) : Object;
-	/**
-	*performs, in a single call, all the statistical calculations on the attribute or list of attributes passed as the parameter for the datastore class or entity collection
-	*/
-	compute(attribute: String, distinct?: String) : Object;
-	/**
-	*performs, in a single call, all the statistical calculations on the attribute or list of attributes passed as the parameter for the datastore class or entity collection
+	/** 
+	* Compute performs, in a single call, all the statistical calculations on the attribute or list of attributes passed as the parameter for the datastore class or entity collection
+	* @param attribute DatastoreClassAttribute,String Attribute(s) for which you want to perform statistical calculations
+	* @param groupBy DatastoreClassAttribute,String Attribute(s) on which you want to have subtotal breaks	
+	* @returns Object containing all the calculations performed and subtotals
+	* #### Example 1 - Compute with groupBy 
+	* ```javascript
+	*  var stats = ds.Sales.all().compute("benefit, revenues", "country, month");
+    * // compute `benefit`and `revenues` values of a Sales class grouped by country and month
+	* // for more convenience the returned object can be converted into an array 
+	* stats.toArray();
+	* ```
 	*/
 	compute(attribute: DatastoreClassAttribute, groupBy?: DatastoreClassAttribute) : Object;
-	/**
-	*performs, in a single call, all the statistical calculations on the attribute or list of attributes passed as the parameter for the datastore class or entity collection
-	*/
-	compute(attribute: DatastoreClassAttribute, groupBy?: String) : Object;
-	/**
-	*performs, in a single call, all the statistical calculations on the attribute or list of attributes passed as the parameter for the datastore class or entity collection
-	*/
-	compute(attribute: String, groupBy?: DatastoreClassAttribute) : Object;
-	/**
-	*performs, in a single call, all the statistical calculations on the attribute or list of attributes passed as the parameter for the datastore class or entity collection
-	*/
-	compute(attribute: String, groupBy?: String) : Object;
-	/**
-	*returns the number of entities contained in the entity collection or datastore class
+	
+	
+	
+	
+	
+	
+/**
+	* The Count() method returns the number of entities contained in the entity collection or datastore class
+	* @param attribute DatastoreClassAttribute,String Attribute whose value must not be null
+	* @param distinct Boolean  Default `false` Use only entities that have different values
+	* @returns Number of entities in the collection or Dataclass
+	* @warning `distinct` parameter is ignored if you do not pass the `attribute` parameter
+	* #### Example 1
+	* ```javascript
+	* ds.DataClass1.query('name > 1*').count('name2', true)
+	* ```
+	* #### Example 2 - Count on object attribute
+	* ```javascript
+	* var vCount = ds.MyClass.all().count("objectAtt.prop") // `objectAtt` is an object attribute with a `prop` property
+	* ```
 	*/
 	count(attribute: DatastoreClassAttribute, distinct?: Boolean) : Number;
+	
+	
+	
+	
+	
 	/**
-	*returns the number of entities contained in the entity collection or datastore class
-	*/
-	count(attribute: DatastoreClassAttribute, distinct?: String) : Number;
-	/**
-	*returns the number of entities contained in the entity collection or datastore class
-	*/
-	count(attribute: String, distinct?: Boolean) : Number;
-	/**
-	*returns the number of entities contained in the entity collection or datastore class
-	*/
-	count(attribute: String, distinct?: String) : Number;
-	/**
-	*creates a new blank object of type Entity based on the datastore class to which it is applied
+	*creates a new blank object of type Entity based on the datastore class.
+	* 
+	* @warning
+	* The object is created in memory and is not saved in the datastore until the save( ) method is called. 
+	* If the object is deleted before being saved, it cannot be recovered.
+	* 
+	* #### Example (create then save)
+	* ```javascript
+	* var newCompany = ds.Company.createEntity() ;
+	* a.name = 'Wakanda';
+	* a.city = 'Paris' ; 
+	* a.save() ;
+	* ```
+	*  
+	* ### Note
+	* Another useful alternative way to create entities (then save) is to use the `new` syntax
+	* ```javascript
+	* new ds.Company({
+		name : 'Wakanda' ,
+		city : 'Paris'
+	}).save();
+	* 
 	*/
 	createEntity() : Entity;
+	
+	
+	
+	
+	
+	
+	
 	/**
-	*creates a new blank object of type EntityCollection attached to the datastore class to which it is applied
-	*/
-	createEntityCollection(keepSorted?: String) : EntityCollection;
-	/**
-	*creates a new blank object of type EntityCollection attached to the datastore class to which it is applied
+	*creates a new blank object of type EntityCollection attached to the datastore class 
+	*
+	* @param keepSorted Boulean - `True` to create a SortedCollection (`false` by Default)
+	*
+	*
+	* #### Note
+	* For more information about sorted/unsorted collection, [visit this page](http://doc.wakanda.org/Datastore/Entity-Collection/Unsorted-vs-Sorted-Entity-Collections.300-932765.en.html)
+	*
+	* #### Example 1
+	* ```javascript
+	* var all = ds.Person.all(); // get all the entities
+	* var coll1 = ds.Person.createEntityCollection(); // create an empty unsorted entity collection
+	* coll1.add( all[10]); //add some entities, one of them 3 times
+	* coll1.add( all[9]);
+	* coll1.add( all[8]);
+	* coll1.add( all[7]);
+	* coll1.add( all[8]);
+	* coll1.add( all[8]);
+	* coll1; // displays the collection
+	* ```
 	*/
 	createEntityCollection(keepSorted?: Boolean) : EntityCollection;
+	
+	
+	
+	
+	
+	
 	/**
-	*creates an array and returns in it all the distinct values stored in attribute for the entity collection or datastore class
+	* The distinctValues( ) method creates an array and returns in it all the distinct values stored in attribute for the entity collection or datastore class
+	* @param attribute DatastoreClassAttribute 		Attribute for which you want to get the list of distinct values
+	* @returns  Array containing the list of distinct values
+	* #### Example 1
+	* ```javascript
+	* //In our example, we want to return the total number of different jobs in the same company:
+    *
+	* var employer = ds.Company.find( "name == :1", "WAKANDA" ) ;  // find the company by its name
+	* var allEmp = ds.Employee.query("comp == :1", employer); // create an entity collection containing all the employees in a company
+	* // 'comp' is a relation attribute in Employee
+	*  var jobNb = allEmp.distinctValues("jobName").length; //`jobName` is a DatastoreClassAttribute of Employee
+    * ``` 
+	* #### Example 2 - distinctValues with Object Attributes.
+	* ```javascript
+	* // In a "keywords" object attribute of an Article datastore class, you store the page numbers for each keyword in a "pages" array. 
+	* // You want to know all pages that contain at least one keyword
+	*  var arr = ds.Article.all().distinctValues("keywords.pages[]");
+	* ``` 
 	*/
-	distinctValues(attribute: DatastoreClassAttribute) : any[];
-	/**
-	*creates an array and returns in it all the distinct values stored in attribute for the entity collection or datastore class
-	*/
-	distinctValues(attribute: String) : any[];
-	/**
+	distinctValues(attribute: DatastoreClassAttribute): any[];
+	
+	
+	
+
+    /**
 	*exports all the entities stored in the object for which it is called in JSON format
+	* It can be called for a :
+	* 	- datastore 
+	*	- DatastoreClass 
+	*	- EntityCollection
+	* @warning : 
+	* - calculated attributes are not exported -- only their underlying attributes are exported,
+	* - extended datastore classes are not exported,
+	* - related or alias attributes are not exported directly -- only primary keys values are exported,
+	* - data from outside catalogs or datastores are not exported	
+	* #### Example :
+	* ```javascript
+	* myFolder = new Folder("C:/ExportCollectionJSON/");     // get a reference to the export folder
+	* if (myFolder.exists)     // if the folder actually exists
+	* {
+    *	var coll=ds.Employee.query("lastName = :1", "P*");   
+    *	coll.exportAsJSON( myFolder ) ;     // export the collection
+	*	}
+	* ```
+	*For more details, go here : http://doc.wakanda.org/home2.en.html%23/Datastore/Entity-Collection/length.303-638616.en.html#/Datastore/Entity-Collection/exportAsJSON.301-1041820.en.html
+	*
+	* @param exportFolder Folder Folder where you want to export the collection.
+	* @param numFiles Number Maximum number of files per Folder
+	* @param fileLimitSize	Number Size limit vamue of export files (in KB)
+	* @param attLimitSize Number Size limit (in bytes) velow which the contents of a BLOB or Picture attribute are embedded into the main file
+	*  
 	*/
-	exportAsJSON(exportFolder: WAKFolderInstance, numFiles: Number, fileLimitSize: Number, attLimitSize?: Number) : void;
-	/**
+	exportAsJSON(exportFolder: WAKFolderInstance, numFiles?: Number, fileLimitSize?: Number, attLimitSize?: Number) : void;
+	
+	
+	
+	
+	
+/**
 	*exports all the entities stored the object for which it is called in SQL format
+	* It can be called for a :
+	* 	- datastore 
+	*	- DatastoreClass 
+	*	- EntityCollection
+	* @warning : 
+	* - calculated attributes are not exported -- only their underlying attributes are exported,
+	* - extended datastore classes are not exported,
+	* - related or alias attributes are not exported directly -- only primary keys values are exported,
+	* - data from outside catalogs or datastores are not exported	
+	* #### Example 
+	* ```javascript
+	* 	myFolder = new Folder("C:/ExportCollection/");     // get a reference to the export folder
+	*	if (myFolder.exists)     // if the folder actually exists
+	*	{
+    *	var coll=ds.Employee.query("lastName = :1", "P*");   
+    *	coll.exportAsSQL( myFolder ) ;     // export the collection
+	* ```
+	* For more details go here : http://doc.wakanda.org/home2.en.html%23/Datastore/Entity-Collection/length.303-638616.en.html#/Datastore/Entity-Collection/exportAsSQL.301-1041494.en.html
+	*
+	* @param exportFolder Folder Folder where you want to export the collection.
+	* @param numFiles Number Maximum number of files per Folder
+	* @param fileLimitSize	Number Size limit vamue of export files (in KB)
+	* @param attLimitSize Number Size limit (in bytes) velow which the contents of a BLOB or Picture attribute are embedded into the main file
 	*/
-	exportAsSQL(exportFolder: WAKFolderInstance, numFiles: Number, fileLimitSize: Number, attLimitSize?: Number) : void;
-	/**
-	*applies the search criteria specified in queryString and (optionally) value to all the entities of the DatastoreClass or EntityCollection and returns the first entity found in an object of type Entity
+	exportAsSQL(exportFolder: WAKFolderInstance, numFiles?: Number, fileLimitSize?: Number, attLimitSize?: Number) : void;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+/**
+	* Search operation in a the DatastoreClass or EntityCollection that returns `the first entity` found in an object of type `Entity`
+	* ## Important :
+	* ``
+	* The find( ) method is equivalent to executing a query( ) followed by retrieving the first entity:
+	* For more details and exemples check the Query method section
+	* ``
+	* #### Example1 : With QueryString syntax
+	* ```javascript
+	* ds.Employee.find( "name == DOE");
+	* ```
+	* #### Example2 :  With placeholders syntax
+	* ```javascript
+	* ds.Employee.find( 'name ==:1', "DOE");
+	* ```
+	* @param queryString 
+	* @param valueList  Value(s) to compare when using placeholders
+	* @param options 
+	* @returns The first found entity in the collection
+	* 
+	*  
 	*/
-	find(queryString: String, ...valueList: any[]) : Entity;
+	find(queryString: String, valueList: any[], options : Object) : Entity;
+	
+	
+	
+	
 	/**
-	*returns the entity in the first position of the entity collection or datastore class
+	* Returns the entity in the first position of the entity collection or datastore class
+	* #### Example
+	* ```javascript
+	* ds.Employee.query('ID > 2').first()  //exemple1
+	* ds.Company.first()  //exemple2
+	* ```
 	*/
 	first() : Entity;
-	/**
-	*executes the callbackFn function on each entity in the entity collection in ascending order
+	
+	
+
+
+
+/**
+	* Executes the callbackFn function on each entity in the entity collection(or Dataclass) in ascending order
+	* @param callbackFn Function Handler function to invoke for each entity in the collection
+	* ``
+	* The callbackFn function accepts two parameters: function (`thisArg`, `iterator`)
+	* -  The first parameter, `thisArg`, represents the entity currently being processed. When it is executed, the function receives in this parameter the entity on which it iterates (the parameter is used like the keyword `this`). You can then perform any type of operation on the values of the entity.
+	* - The second (optional) parameter, `iterator`, is the iterator. When it is executed, the function receives in this parameter the position of the element currently being processed in the entity collection. You can use it, for example, to display a counter.
+	* ``
+	* @warning The forEach( ) method includes an optimized mechanism that triggers the entity to be saved automatically if it has been modified, and not saved when it hasn't.
+	* You can however call the save( ) method anyway to manage any errors in a try/catch structure.  (In this case the call is detected by Wakanda and the entity is not saved a second time)
+	* #### Example 
+	* ```javascript
+	*  // We want to give a 5% raise to all employees with a salary less than 5,000.
+	* mySet = ds.Employee.query('salary < 5000') ;
+	* mySet.forEach(
+    * function( emp ) {
+	* emp.salary *= 1.05;
+	* // unnecessary to save modification forEach does it automatically when needed
+    * });
+	* ```
 	*/
 	forEach(callbackFn: Function) : void;
+	
+	
+	
+	
+	
+	
 	/**
 	*generates entities in the datastore class where it is applied and returns the resulting entity collection
 	*/
@@ -1333,49 +1547,368 @@ interface DatastoreClassEnumerator {
 
 interface Entity {
 /**
-	*returns the datastore class (object of the DatastoreClass type) of the entity
+	* Returns the datastore class (object of the DatastoreClass type) of the entity. 
+	*
+	* #### For more information go [here](entitycollection.html#getdataclass)
 	*/
 	getDataClass() : DatastoreClass;
+	
+	
+	
+	
+	
 	/**
 	*returns the timestamp of the last save of the entity to which it is applied
+	* @returns  Date object in local format
 	*/
 	getTimeStamp() : Date;
+	
+	
+	
+	
 	/**
-	*returns True or False depending on whether the entity iterator points to an entity that is currently loaded in memory
+	* returns True or False depending on whether the entity iterator points to an entity that is currently loaded in memory
 	*/
 	isLoaded() : Boolean;
+	
+	
+	
 	/**
-	*returns True or False depending on whether the entity to which it is applied has been modified since the last time it was loaded from the datastore
+	* returns True or False depending on whether the entity to which it is applied has been modified since the last time it was loaded from the datastore.
+	* #### Note
+	* You can use this method to find out if you need to save the entity.
+	* This method always returns True for a new entity.
+	*
+	* #### Example
+	* ```javascript
+	* emp = ds.Employee.first();
+    *    //... process the data in the entity
+	* if (emp.isModified())     // if at least one of the attributes has been changed
+    * emp.save(); 
+    * // otherwise, no need to save the entity
+	* ```
 	*/
 	isModified() : Boolean;
+	
+	
+	
+	
 	/**
-	*returns True or False depending on whether the entity to which it is applied has just been created in the datastore
+	*returns True or False depending on whether the entity to which it is applied has just been created in the datastore (and not saved yet)
 	*/
 	isNew() : Boolean;
+
+
+
 	/**
 	*puts the entity pointer on the next entity within an iteration of entities
+	*
+	* #### Example with a `for` loop
+	* ```javascript
+	*  var myColl = ds.People.query("nationality = :1", "FR");
+    * for (var onePerson = myColl.first(); onePerson != null; onePerson=onePerson.next())
+    * // onePerson will return null after the last entity of the collection
+	* {
+    * onePerson.name = onePerson.name.toUpperCase();
+    * onePerson.save();
+	* }
+	* ```
+	* #### Same Example with `while`
+	* ```javascript
+	* var myColl = ds.People.query("nationality = :1", "FR");
+	* var onePerson = myColl.first(); 
+	* while (onePerson != null)
+    * {
+    *    onePerson.name = onePerson.name.toUpperCase();
+    *    onePerson.save();
+    *    onePerson=onePerson.next();
+    * }
 	*/
 	next() : Entity;
+	
+	
+	
+	
 	/**
 	*reloads the entity as it is stored in the datastore
+	* @warning 
+	* If values are modified and not saved, they are lost.
+	*  #### Note : This method is useful :
+	* - when you attempt to save an entity but receive an error because this entity was modified in the meantime by another user
+	* - when adding new related entities (see below):
+	* ```javascript
+	* 
+	* 
+	* locationsColl_Before = company.locations; //3 locations
+	* //Then you create a new location related to the company.  You might expect calling this again:
+	* locationsColl_After = company.locations; //3 locations
+	* //It will not, it will still return the original 3.  In order to get all 4 locations related to the company you need to refresh:
+	* company.refresh();  locationsColl_AfterRefresh = company.locations; //4 locations
+	* ```
 	*/
 	refresh() : void;
+	
+	
+	
+	
+	
 	/**
 	*releases the entity from memory
+	*
+	* <details> <summary>**Note** : How to use this method (advanced) : </summary>
+	* ***
+	* ````text
+	* Once unloaded by this method, the entity is not unusable. 
+	* Wakanda keeps a reference to the entity and automatically reloads it as soon as it becomes used again.
+	* This utility method lets you optimize memory consumption when the server needs to load and work with numerous large objects, such as pictures or BLOBs. 
+	* 
+	* In principle, the garbage collection mechanism of JavaScript will purge unused objects from memory. However, this mechanism operates * * autonomously and can prove to be insufficient in some cases. For example, when the server has loaded dozens of large pictures on the JavaScript side, only references are handled, which may not require the intervention of the garbage collector. 
+	* 
+	* However, on the server side, the memory is in high demand. In a case like this, it is useful to be able to "force" entities to be unloaded using the release( ) method.
+	* 
+	* Note that after calling release( ), if you want to make sure that the JavaScript reference to an entity has been deleted without having to wait for garbage collection (and thus for a subsequent access to the entity to return an error), you must force its value to null.
+	* ````
+	* 
+	* #### Example :
+	* ```javascript
+	* myEntity.release();   //unload the entity from the server
+	* myEntity = null;     // delete its reference
+	* ```
 	*/
 	release() : void;
+	
+	
+	
+	
+	
+	
 	/**
 	*removes the entity from the datastore
+	*
+	* #### Note:
+	* When this method is executed, it triggers a call to the remove event on the server if it has been set for the entity's datastore class or one of the datastore class attributes.
+	* 
+	* For more information and examples about the remove() method, check its description [here (collection section)](entitycollection.html#remove)
 	*/
 	remove() : void;
+	
+	
+	
+	
+	
+	
 	/**
-	*saves the changes made to the entity in the datastore
+	* Saves the changes made to the entity in the datastore
+	* 
+	* 
+	* **How to update an existing entity :**
+	* ```javascript 
+	* var a = ds.Employee.first();
+	* a.firstname = "MyNewFirstName" ;
+	* a.lastname =  "MyNewLastName" ;
+	* a.save();
+	* ```
+	* **How to create then save an entity:**
+	* ```javascript
+	* new ds.Employee(
+*{
+*	firstname : "MyNewFirstName" ,
+*	lastname  : "MyNewLastName"
+*}).save();
+	* ```
+	* 
+	* </p> 
+	* ***
+	* 
+	* #### Events
+	* 
+	* When executing a save() action, on the server side the events (if defined) are performed in the following order :
+	* 1. validate on each attribute
+	* 2. validate on the datastore class
+	* 3. save on the datastore class
+	* 4. save on each attribute
+	*
+	* #### Example 
+	*
+	* ```javascript
+	* //You can intercept and manage the error returned by the engine when the entity's internal stamp being saved is different from the one that is saved in the data
+	* //To do this, you can place the save statement in a try/catch type structure. For example:
+	* // select an entity and change its name to uppercase
+	* function toUpperEmployee(lastName, firstName) 
+	* {
+    	* var emp = ds.Employee.find("lastName = :1 and firstName = :2", lastName, firstName);
+    	* emp.lastName.toUppercase();
+    	* try
+    	* {
+    	*    emp.save();
+    	* }
+    	* catch(e)
+       	* {  ... // put the error-processing code here
+* }
+	* ```
 	*/
 	save() : void;
+	
+	
+	
+	
 	/**
 	*returns a string representation of the entity or entity collection
+	* Examples are available [here](entitycollection.html#tostring)
 	*/
 	toString() : String;
+
+
+
+	/**
+	 * The getKey( ) method returns the primary key value of the entity to which it is applied.
+	 * ```javascript
+	 * 	var ent = ds.Person.find("name = :1", "Smith");
+	 *	var key = ent.getKey();
+	 * ```
+	 * This method is useful to identify the entity to update for instance.  
+	 * The KEY value is also needed when you pass a POST request
+	 * 
+	 * 
+	 * 
+	 */
+	getKey() : String;
+
+
+	/**
+	 * The getStamp( ) method returns the current value of the internal stamp of the entity.
+	 * The internal locking stamp is automatically incremented by Wakanda each time the entity is saved on the server. 
+	 * **It manages concurrent user access**
+	 * 
+	 * #### Note 
+	 * The entity's STAMP value is needed when executing POST request throught XRH to update an entity
+	 * 
+	 */
+	getStamp() : Number;
+
+
+
+
+
+
+	/**
+	 * The lock( ) method tries to lock the entity for the session and returns true if the entity is locked successfully, or false if the entity is already locked by another session.
+	 * @returns True if the entity is locked for the session, false otherwise
+	 * 
+	 * @warning The lock()/unlock() method only works with WakandaDB and 4D Mobile Connector. It does not work when working with the **MYSQL & OBDC Connectors**
+	 *  
+	 * For more details about locking entities check this pages :
+	 *  - [lock() API Description](http://doc.wakanda.org/Datastore/Entity/lock.301-1074685.en.html)
+	 *  - [In-Depth description of locking mecanism](http://doc.wakanda.org/Datastore/Entity/Locking-Entities.300-606099.en.html)
+	 * 
+	 */
+	lock() : Boolean;
+
+
+
+
+	/**
+	 * The unlock() method unlocks the entity in the running session.
+	 * This method must be called after the lock( ) method to unlock the entity for the other sessions.
+	 * 
+	 * @warning The lock()/unlock() method only works with WakandaDB and 4D Mobile Connector. It does not work when working with the **MYSQL & OBDC Connectors**
+	 *  
+	 * For more details about locking entities check this pages :
+	 *  - [unlock() API Description](http://doc.wakanda.org/Datastore/Entity/unlock.301-1074691.en.html)
+	 *  - [In-Depth description of locking mecanism](http://doc.wakanda.org/Datastore/Entity/Locking-Entities.300-606099.en.html)
+	 * 
+	 */
+	unlock() : void;
+
+
+
+	/**
+	 * The getModifiedAttributes( ) method returns an array containing the names of attributes that have been modified in the entity.
+	 * This method is useful in validation control functions.(validate events for instance or methods, functions..)
+	 * @returns Array of attributes 
+	 * 
+	 * #### Example in a Dataclass Validate Event 
+	 * ```javascript
+	 * model.Invoice.events.validate = function(event) {
+	 *           //get the array of attributes that were changed
+     *   var attributeMods = this.getModifiedAttributes();
+     *      //cycle through them
+     *   attributeMods.forEach(function(attribName){
+     *       switch (attribName){ 
+     *          case 'ID': //if the ID was changed
+     *          case 'InvoiceDate': //or the invoiceDate was changed
+     *                   //assign an error number and message
+     *               result = {error: 1000, errorMessage: 'Invalid Change !'};
+     *               break;
+     *       }
+     *   });
+     *   return result; //return result regardless
+     * }
+	 * ```
+	 *  
+	 * 
+	 * ```javascript
+	 *  //Then each time you perform a save action the entity will go through this validation process
+	 *  var a = ds.Invoice.first();
+	 *  a.ID = 12;
+	 *  a.save();
+	 *  // Running this will thow the error message 'Invalid Change !
+	 * ```
+	 */
+	getModifiedAttributes() : Array;
+
+
+
+
+
+
+
+	/**
+	 * The validate( ) method passes the entity through the validation process.
+	 * Precisely it means  that on the server, the code associated with the **validate (attribute) and validate (datastore class) event(s)** is executed.
+	 * @returns True in case of success (the entity successfully passes the validation process)
+	 * @warning Keep in mind that the entity is not saved until you actually call the save( ) method.  
+	 *
+	 * 
+	 * </br> </p>
+	 * <details> 
+	 * <summary> 
+	 * 
+	 *  #### Validation  Example (click to Expand) 
+	 * </summary>
+	 * ```javascript
+	 * // first let's create a dataclass validate event
+	 * model.Elem.events.validate = function(event) //onValidate until Wakanda v8
+    *{
+    *if (this.name == "Unknown") {
+    *    return {
+    *        error: 100, // an object with 'error' will make validation fail
+    *        errorMessage: "The name cannot be 'Unknown'"
+    *    };
+   * }
+*} ```
+	 * Then you could create a datastore class method
+	 * ```javascript
+	 * checkValidity:function()
+    {
+    try {
+            return this.validate(); // returns true if successful
+    }
+    catch (e) {
+        throw { // if fail
+                // send an exception with the customized message
+                // from the error stack
+            message: e.messages[e.messages.length - 1] 
+             
+        };
+    }
+} 
+	 * //Finally you would simply call your Validation process by calling 
+	 *  // - the validate() method (server side) or , 
+	 * //  - the CheckValidity class method (server side or client side)
+	* ```
+	*/
+	validate() : Boolean;
 }
 
 
@@ -1675,7 +2208,28 @@ interface EntityCollection {
 	
 	
 	/**
-	*returns the datastore class (object of the DatastoreClass type) of the entity collection
+	* Returns the datastore class (object of the DatastoreClass type) of the entity collection.
+	*
+	* To get the DataClass name displayed in must be followed by the getName() or toString() api 
+	* #### Example
+	* ```javascript
+	* - ds.MyDataClass.all().getDataClass().toString()  //to a collection with toString
+	* - ds.MyDataClass.first().getDataClass().getName() // to an entity with getName()
+	* ```
+	* Another example on a model event :
+	* ```javascript
+	*  
+	*
+	* // In the onInit event of an extended datastore class, you want to fill in the 'category' attribute the name of the derived class. 
+	* // You can write:
+	* model.Manager.events.init = function(event)
+	* {
+    *    //get the name of the class of the entity
+    *  var myType = this.getDataClass().getName();
+    *   //fill it in the category attribute
+    * this.category = myType;
+	* };
+	* ```
 	*/
 	getDataClass() : DatastoreClass;
 	
@@ -1896,7 +2450,7 @@ interface EntityCollection {
 	* - When you apply it to an entity collection, it removes the entities belonging to that entity collection,
     * - When you apply it to a datastore class, it removes all the entities in the datastore class.
 	*
-	* #### Example
+	* #### Examples
 	* ```javascript
 	* // Applied to a Dataclass 
 	* ds.Dataclass1.remove();
@@ -1905,6 +2459,17 @@ interface EntityCollection {
 	* // Applied to a collection
 	*  ds.Dataclass1.query('ID > 3 & ID < 5').remove();
 	* ```
+	* ```javascript
+	* // Applied to an entity
+	* ds.Dataclass1.first().remove();
+	* ```
+	* ```javascript
+	* // Applied at the Model level (Entity method on the Customer dataclass)
+	* model.Customer.entityMethods.remove = function() {
+    * this.remove();
+	* };
+	* ```
+	* 
 	*/
 	remove() : void;
 	
@@ -1979,6 +2544,11 @@ interface EntityCollection {
 	
 	/**
 	*returns a string representation of the entity or entity collection
+	* #### Example 
+	* ```
+	* ds.Dataclass1.query('ID > 3').toString()  // applied to a collection 
+	* ds.Dataclass1.first().toString() // applied to an entity
+	* ```
 	*/
 	toString() : String;
 }

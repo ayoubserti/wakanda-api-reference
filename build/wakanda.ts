@@ -1246,7 +1246,7 @@ interface DatastoreClass {
 	
 	
 	/**
-	*creates a new blank object of type EntityCollection attached to the datastore class 
+	* creates a new blank object of type EntityCollection attached to the datastore class 
 	*
 	* @param keepSorted Boulean - `True` to create a SortedCollection (`false` by Default)
 	*
@@ -1254,6 +1254,8 @@ interface DatastoreClass {
 	* #### Note
 	* For more information about sorted/unsorted collection, [visit this page](http://doc.wakanda.org/Datastore/Entity-Collection/Unsorted-vs-Sorted-Entity-Collections.300-932765.en.html)
 	*
+	* @warning = **createEntityCollection** do work only with Wakanda built-in DB. It does not work with MySQL / ODBC Connectors*
+	* 
 	* #### Example 1
 	* ```javascript
 	* var all = ds.Person.all(); // get all the entities
@@ -1440,94 +1442,308 @@ interface DatastoreClass {
 	
 	/**
 	*generates entities in the datastore class where it is applied and returns the resulting entity collection
+	* @param Array whose values are used to generate entities
+	* @returns New entity collection
+	* 
+	* @warning :
+	* - The entities passed in the `arrayValues` are **generated and saved** when executing fromArray()
+	* - Wakanda automatically adds the **ID number** to the entity created 
+	* - You can modify an existing entity by adding the __KEY  and STAMP attributes and their respective values in arrayValues 
+	*
+	* #### Example
+	* ```javascript
+	* var arrAdd = []     // Create an empty array
+	* arrAdd[0] = {lastName: "Potter", firstName: "Harold", salary: 3200};
+	* arrAdd[1] = {lastName: "Luke", firstName: "Lucy", salary: 5300, married: true}; // 'married' is ignored if the attribute does not exist in the datastore class
+	* arrAdd[2] = {lastName: "Blue", firstName: "George", salary: 3200};
+	* var newColl = ds.Employees.fromArray(arrAdd);     // entities are created and saved
+	* newColl; 
+	* ```
 	*/
 	fromArray(arrayValues: any[]) : EntityCollection;
+	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	*returns the percentage of logical fragmentation for the entities of the datastore class
+	* 
+	* Tip : Beyond a rate of 20% (0.2), it may be useful to [compact the datastore data] (http://doc.wakanda.org/Datastore/Datastore-Maintenance-Methods/compactDataStore.301-595628.en.html)  
+	*
+	* #### Note :
+	* Works only with Wakanda Built-in DB. (i.e. do not concern MySQL / ODBC / Custom catalog)
+	* 
 	*/
 	getFragmentation() : Number;
+	
+	
+	
+	
 	/**
 	*returns the name of the datastore class to which it is applied in a string
+	* ```javascript
+	* var nameEM = ds.Book.getName();
+	* ```
 	*/
 	getName() : String;
+	
+	
+	
+	
 	/**
 	*returns the current scope property value of the datastore class
+	* Two values can be returned for a datastore class: (default value `public`)
+	*	- "public": a public datastore class can be accessed from anywhere (including on the client side)
+	*   - "public on server": a public on server datastore class can only be accessed on the server
+	* 
+	* You can get more information about the [Datastore Class Properties here](http://doc.wakanda.org/Datastore-Model-Designer/Datastore-Classes.300-305138.en.html#664408)
 	*/
 	getScope() : String;
+	
+	
+	
+	
+	
 	/**
 	*imports all the entities stored in JSON format from the file(s) located in the importFolder folder
+	* 
+	* The importFromJSON( ) method can be called for a:
+	*	- Datastore: entities from all the datastore classes are imported,
+	*	- DatastoreClass: entities from the datastore class are imported.
+	*
+	* #### Note
+	* This method only work with the Wakanda Built-in database (MYSQL and other Connectors are not concerned)
+	*
+	*
+	* @warning :
+	* ````text
+	*	- This folder must contain UTF-8 text files into which each entity is described through a single JSON object
+	*	- calculated attributes cannot be imported directly -- only their underlying attributes are imported,
+	*	- extended datastore class entities cannot be imported,
+	*	- related or alias attributes are not imported directly -- only primary keys values are exported,
+	*	- you cannot import data from outside catalogs or datastores. 
+	*
+	*  You can refer to the [exportAsJson method description] (entitycollection.html#exportasjson) for more information about exporting/importing
+	* ```
 	*/
 	importFromJSON(importFolder: WAKFolderInstance) : void;
+	
+	
+	
 	/**
-	*returns the maximum value among all the values of attribute in the entity collection or datastore class
+	* Returns the maximum value among all the values of attribute in the entity collection or datastore class
+	* @param attribute DatastoreClassAttribute Attribute for which you want to get the highest value.
+	* @returns Number Highest value of attribute
+	* #### Example 1  
+	* ```javascript
+	* //We want to find the highest salary among all the female employees:
+	* var fColl = ds.Employee.query("gender == :1","female");
+	* var maxFSalary = fColl.max("salary");
+	* ```
+	* #### Example 2 - Max with object attributes
+	* 
+	* ```javascript
+	* var value = ds.MyClass.all().max("objectAtt.prop") //Highest of all prop attribute values
+	* ```
 	*/
 	max(attribute: DatastoreClassAttribute) : Number;
-	/**
-	*returns the maximum value among all the values of attribute in the entity collection or datastore class
-	*/
-	max(attribute: String) : Number;
+
+	
+	
+	
+	
 	/**
 	*returns the lowest (or minimum) value among all the values of attribute in the entity collection or datastore class
+	* @param attribute DatastoreClassAttribute Attribute for which you want to get the lowest value.
+	* @returns Number Lowest value of attribute
+	* #### Example 1  
+	* ```javascript
+	* //We want to find the lowest salary among all the female employees:
+	* var fColl = ds.Employee.query("gender == :1","female");
+	* var maxFSalary = fColl.min("salary");
+	* ```
+	* #### Example 2 - Min with object attributes
+	* 
+	* ```javascript
+	* var value = ds.MyClass.all().min("objectAtt.prop") //Lowest of all prop attribute values
+	* ```
 	*/
 	min(attribute: DatastoreClassAttribute) : Number;
+	
+	
+	
+	
 	/**
-	*returns the lowest (or minimum) value among all the values of attribute in the entity collection or datastore class
-	*/
-	min(attribute: String) : Number;
-	/**
-	*sorts the entities in the entity collection or datastore class and returns a new sorted entity collection
-	*/
-	orderBy(attributeList: String, sortOrder?: String) : EntityCollection;
-	/**
-	*sorts the entities in the entity collection or datastore class and returns a new sorted entity collection
+	* The orderBy method sorts the entities in the entity collection or datastore class and returns a new sorted entity collection
+	* @param attributeList DatastoreClassAttribute Attribute(s) to be sorted and (if String) order by direction(s)
+	* @param sortOrder string `asc` (by `default`) for ascending sort / `desc` for descending.
+	* @info You can pass from 1 to x attributes separated by commas
+	* #### Example1 orderBy with Mutliple Attributes
+	* ```javascript
+	*  // This example performs a simple search and returns an entity collection that has been sorted on two attributes, the first in descending order
+	*  var mySet = ds.People.query("salary > 10000");
+    *  var mySet2 = mySet.orderBy("salary desc,city");
+	* ```
+	* #### Example2 orberBy with a relation attribute 
+	* ```javascript
+	* // This example sorts employees with a salary greater than 10,000 by the city where their company is located, using a relation attribute
+	* var mySet = ds.People.query("salary > 10000");
+	* mySet = mySet.orderBy(ds.People.employer.city); // `employer` is a relation attribute
+	* ```
+	* #### Example3 orberBy with object attributes
+	* ```javascript
+	* ds.MyClass.all().orderBy("objectAtt.prop desc")
+	* ```
 	*/
 	orderBy(attributeList: DatastoreClassAttribute, sortOrder?: String) : EntityCollection;
+	
+	
+	
+	
+	
+	
 	/**
 	*searches all the entities in the datastore class or entity collection using the search criteria specified in queryString and returns a new collection containing the entities found
+	*  #### Descrption
+	* The Query method description is fully described [here (entity collection part)] (entitycollection.html#query)
 	*/
 	query(queryString: String, ...valueList: any[]) : EntityCollection;
+	
+	
+	
+	
+	
+	
+	
 	/**
-	*permanently removes entities from the datastore
+	* Permanently removes entities from the datastore
+	* - When you apply it to an entity collection, it removes the entities belonging to that entity collection,
+    * - When you apply it to a datastore class, it removes all the entities in the datastore class.
+	*
+	* #### Examples
+	* ```javascript
+	* // Applied to a Dataclass 
+	* ds.Dataclass1.remove();
+	* ```
+	* ```javascript
+	* // Applied to a collection
+	*  ds.Dataclass1.query('ID > 3 & ID < 5').remove();
+	* ```
+	* ```javascript
+	* // Applied to an entity
+	* ds.Dataclass1.first().remove();
+	* ```
+	* ```javascript
+	* // Applied at the Model level (Entity method on the Customer dataclass)
+	* model.Customer.entityMethods.remove = function() {
+    * this.remove();
+	* };
+	* ```
+	* 
 	*/
 	remove() : void;
+	
+	
+	
+	
+	
+	
+	
 	/**
 	*(re)sets the start value for the autosequence number of the datastore class
+	* @param counter New start value for entity counter
+	* This method (re)sets the start value for the autosequence number of the datastore class. 
+	* 
+	* note : the ID is based on this internal counter. An autosequence number can be set for any attribute on [Model Designer] (http://doc.wakanda.org/Datastore-Model-Designer/Datastore-Model-Designer.100-1051416.en.html)
 	*/
 	setAutoSequenceNumber(counter: Number) : void;
-	/**
+	
+	
+	
+	
+	
+	
+	
+/**
 	*returns the sum (i.e., total of all the values) of attribute for the datastore class or entity collection
+	* @param DatastoreClassAttribute Attr
+	ibute whose sum you want to calculate
+	* @param distinct  `false` by Default Use only entities that have different values
+	* #### Example 1
+	* ```javascript
+	*  var highSalaries = ds.Employees.query("salary > 30000").sum("salary" , true);
+	* ```
+	* #### Example2 With Object attributes
+	* ```javascript
+	* var propSum = ds.MyClass.all().sum("objectAtt.prop") //sum of all prop attribute values
+	* ```
 	*/
 	sum(attribute: DatastoreClassAttribute, distinct?: Boolean) : Number;
+	
+	
+	
+	
+	
+	
 	/**
-	*returns the sum (i.e., total of all the values) of attribute for the datastore class or entity collection
+	* The toArray() method creates and returns a JavaScript array where each element is an object containing a set of properties and values corresponding to the attribute names and values for a datastore class or an entity collection
+	* @param attributeList DatastoreClassAttribute List of attributes to return as array or "" to return all attributes
+	* @param sortList string list of attributes used for the sort
+	* @param key boolean Include the entity key and stamp `false` by default
+	* @param skip number Position of starting entity to return
+	* @param top number Number of entities to return
+	* @returns Array containing attributes and values of datastore class or entity collection
+	* 
+	* #### Note
+	* You can of course navigate through dataclasses via relation attributes.
+	* In this scenario you can even limit the number of related entities fetched by passing `RelatedAttribure: N` (where N represents the number of sub elements)
+	* #### EXAMPLES 
+	*  <details> <summary> Click to Expand </summary>
+	*  ### Simple case
+	* ```javascript
+	* var myArray = ds.Employee.toArray("firstName,lastName,salary");
+	* // myArray[0] contains {firstName: 'John', lastName: 'Smith', salary: 5000} 
+	* ```
+	*  ### To get all the attributes from a collection
+	* ```javascript
+	*  var myColl = ds.Employee.query("salary >= 6000 order by salary asc");
+	*  var myArray = myColl.toArray("");     // return all attributes
+	* ```
+	* ### Example with relations and options (key, skip , top)
+	* ```javascript
+	*  var myArray = ds.Employee.toArray("name, employer.name, employer.location", true, 0 , 1)  // employer is a relation attribute related to another dataclass
+	* // myArray[0] contains { __KEY: '0', __STAMP: 2,name: 'Smith', employer: {name: 'ACME', location: 'Memphis'}}
+	*  ```
+	* ### Example with Sort, and Sub filtered Relations (three levels)
+	* ```javascript
+	* 
+	* // - Retrieve the first five students.
+	* // - Limit the number of courses per student to five.
+	* // - Sort arrays by the student's first name and sort course sub-arrays by subject name. Both in ascending order.
+	* // - skip the 1st result 
+	*  var sel = ds.Student.all();
+	*  var myArray = sel.toArray("fullName, Course:5, Course.matter, Course.teacher.fullName", "firstName, Course.matter", 1, 5);
+	* ```
+	* 
 	*/
-	sum(attribute: DatastoreClassAttribute, distinct?: String) : Number;
+	toArray(attributeList: DatastoreClassAttribute, sortList?: String, key?: Boolean, skip?: Number, top?: Number): any[];
+	
+	
+	
+	
+	
+	
 	/**
-	*returns the sum (i.e., total of all the values) of attribute for the datastore class or entity collection
-	*/
-	sum(attribute: String, distinct?: Boolean) : Number;
-	/**
-	*returns the sum (i.e., total of all the values) of attribute for the datastore class or entity collection
-	*/
-	sum(attribute: String, distinct?: String) : Number;
-	/**
-	*creates and returns a JavaScript array where each element is an object containing a set of properties and values corresponding to the attribute names and values for a datastore class or an entity collection
-	*/
-	toArray(attributeList: String, sortList: String, key: String, skip: Number, top?: Number) : any[];
-	/**
-	*creates and returns a JavaScript array where each element is an object containing a set of properties and values corresponding to the attribute names and values for a datastore class or an entity collection
-	*/
-	toArray(attributeList: String, sortList: String, key: Boolean, skip: Number, top?: Number) : any[];
-	/**
-	*creates and returns a JavaScript array where each element is an object containing a set of properties and values corresponding to the attribute names and values for a datastore class or an entity collection
-	*/
-	toArray(attributeList: DatastoreClassAttribute, sortList: String, key: String, skip: Number, top?: Number) : any[];
-	/**
-	*creates and returns a JavaScript array where each element is an object containing a set of properties and values corresponding to the attribute names and values for a datastore class or an entity collection
-	*/
-	toArray(attributeList: DatastoreClassAttribute, sortList: String, key: Boolean, skip: Number, top?: Number) : any[];
-	/**
-	*returns the name of the datastore class as a string
+	*returns a string representation of the entity or entity collection
+	* #### Example 
+	* ```
+	* ds.Dataclass1.query('ID > 3').toString()  // applied to a collection 
+	* ds.Dataclass1.first().toString() // applied to an entity
+	* ```
 	*/
 	toString() : String;
 }

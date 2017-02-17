@@ -3,18 +3,30 @@
 interface ModelDataClassAttribute {
     /**
 	*(String attributes only) true if Wakanda automatically builds a list of possible values based on existing values
+	* `model.City.country.autoComplete = true`
 	*/
 	autoComplete: Boolean;
+	
+	
+	
 	/**
 	*(UUID attributes only) true if the attribute has the autogenerate property on
+	* `model.Article.IDCode.autogenerate = true;`
 	*/
 	autogenerate: Boolean;
+	
+	
 	/**
 	*(number attributes only) true if the attribute has the autosequence property on
+	* `model.Company.ID.autosequence = true;`
 	*/
 	autosequence: Boolean;
+	
+	
+	
 	/**
 	*Size in bytes below which the data of the BLOB attribute will be stored within entities (default=0)
+	*
 	*/
 	blob_switch_size: Number;
 	/**
@@ -22,7 +34,7 @@ interface ModelDataClassAttribute {
 	*/
 	cacheDuration: Number;
 	/**
-	*(relation attributes only) true to generate an array
+	*(relation attributes only) true to generate an array (instead of an entity collection)
 	*/
 	composition: Boolean;
 	/**

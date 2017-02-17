@@ -126,63 +126,63 @@ interface Application extends Authentication, Data, Core, Threads, FileSystem, H
 
 interface Data {
     /**
-     * Reference the datastore of the application.
+     * References the datastore of the application.
      */
     ds: Datastore;
     /**
-    *starts the backup of the closed datastore defined by model and data.
+    *Starts the backup of the closed datastore defined by model and data.
     */
     backupDataStore(model: WAKFileInstance, data: WAKFileInstance, settings: Object, options?: Object): WAKFileInstance;
     /**
-    *compacts the datastore's data file designated by model and data, and generates the compactedData data file.
+    *Compacts the datastore's data file designated by model and data, and generates the compactedData data file.
     */
     compactDataStore(model: WAKFileInstance, data: WAKFileInstance, options?: Object, compactedData?: WAKFileInstance): void;
     /**
-    *returns an Array that lists the 20 most recent backup manifests recorded in the specified backup registry.
+    *Returns an Array that lists the 20 most recent backup manifests recorded in the specified backup registry.
     */
     getBackupRegistry(registryFolder: WAKFolderInstance): Array<Object>;
     /**
-    *returns an Object containing the default backup settings for the solution.
+    *Returns an Object containing the default backup settings for the solution.
     */
     getBackupSettings(): Object;
     /**
-    *returns information about the journal of the datastore whose data file you passed in dataFile.
+    *Returns information about the journal of the datastore whose data file you passed in dataFile.
     */
     getJournalInfo(dataFile: WAKFileInstance, options?: Object): Object;
     /**
-    *returns information about the journal of the datastore whose data file you passed in dataFile.
+    *Returns information about the journal of the datastore whose data file you passed in dataFile.
     */
     getJournalInfo(dataFile: String, options?: Object): Object;
     /**
-    *returns an Array that lists the 20 most recent backup manifests recorded in the backup registry default folder of the application.
+    *Returns an Array that lists the 20 most recent backup manifests recorded in the backup registry default folder of the application.
     */
     getLastBackups(): Array<Object>;
     /**
-    *allows you to partially or fully integrate a journal file into a datastore.
+    *Allows you to partially or fully integrate a journal file into a datastore.
     */
     integrateDataStoreJournal(model: WAKFileInstance, data: WAKFileInstance, journal: WAKFileInstance, options?: Object): Object;
     /**
-    *repairs the datastore's data file defined by model and data, and generates the repairedData data file.
+    *Repairs the datastore's data file defined by model and data, and generates the repairedData data file.
     */
     repairDataStore(model: WAKFileInstance, data: WAKFileInstance, options?: Object, repairedData?: WAKFileInstance): void;
     /**
-    *resets the current journal of the datastore whose data file you passed in dataFile.
+    *Resets the current journal of the datastore whose data file you passed in dataFile.
     */
     resetDataStoreJournal(dataFile: WAKFileInstance): Object;
     /**
-    *resets the current journal of the datastore whose data file you passed in dataFile.
+    *Resets the current journal of the datastore whose data file you passed in dataFile.
     */
     resetDataStoreJournal(dataFile: String): Object;
     /**
-    *allows you to restore a data folder previously archived.
+    *Allows you to restore a data folder previously archived.
     */
     restoreDataStore(manifest: WAKFileInstance, restoreFolder: WAKFolderInstance, options?: Object): Object;
     /**
-    *allows you to restore a data folder previously archived.
+    *Allows you to restore a data folder previously archived.
     */
     restoreDataStore(config: Object, options?: Object): Object;
     /**
-    *verifies the internal structure of the objects contained in the datastore designated by model and data.
+    *Verifies the internal structure of the objects contained in the datastore designated by model and data.
     */
     verifyDataStore(model: WAKFileInstance, data: WAKFileInstance, options: Object): void;
 }
@@ -204,7 +204,7 @@ interface Core {
      */
     Buffer: WAKBufferInstance;
     /**
-     * Create a valid UUID string.
+     * Creates a valid UUID string.
      * 
      * ```javascript
      * generateUUID();
@@ -222,7 +222,7 @@ interface Core {
      * Creates a progress indicator.
      * @param numElements Number of elements to count
      * @param sessionName Name of execution session for progress indicator
-     * @param stoppable `true`if the progress indicator can be stopped, `false` otherwise
+     * @param stoppable `true` if the progress indicator can be stopped, `false` otherwise
      * @param unused Not used, always pass an empty string ("")	
      * @param name Unique name of object on the server
      */
@@ -263,7 +263,7 @@ interface Threads {
      */
     Mutex: Mutex;
     /**
-     * Require a SSJS module (CommonJS compliant).
+     * Requires an SSJS module (CommonJS compliant).
      * This module must be defined in `PROJECT/backend/modules/`.
      * 
      * ```javascript
@@ -278,7 +278,7 @@ interface Threads {
      */
     require(moduleId: String): Module;
     /**
-     * Require a NodeJS module.
+     * Requires a NodeJS module.
      * This module must be defined in `PROJECT/backend/node_modules`.
      * 
      * ```javascript
@@ -286,7 +286,7 @@ interface Threads {
      * var http = requireNode('http'); 
      * ```
      * 
-     * @warning This API is only available inside a Node worker (See ShareWorker for more details)
+     * @warning This API is only available inside a Node worker (See NodeWorker for more details)
      * @param moduleId Describes the module id and path
      * @returns Returns the exported API of the given module
      */
@@ -413,11 +413,11 @@ interface HTTP {
 
 interface Storage {
     /**
-     * Reference the HTTP session storage of the application.
+     * References the HTTP session storage of the application.
      */
     sessionStorage: LockableKeyValueStorage;
     /**
-     * Reference the application storage.
+     * References the application storage.
      */
     storage: LockableKeyValueStorage;
 
@@ -2781,7 +2781,7 @@ interface WAKDirectory {
      * Create a new user session and sets it as the current session.
      * 
      * ```javascript
-     * var cur = currentSession();
+     * var cur = directory.currentSession;
      * console.log( cur.ID );
      * // BF44D6E51B8FAKE485D8966ED3EDF6DD
      * 
@@ -2801,7 +2801,7 @@ interface WAKDirectory {
      * // 1E121BA4AE82446B9FDB430F0A9055C6
      * // The new session is now the current session
      * 
-     * var previousSession = getSession( 'BF44D6E51B8FAKE485D8966ED3EDF6DD' );
+     * var previousSession = directory.getSession( 'BF44D6E51B8FAKE485D8966ED3EDF6DD' );
      * console.log( previousSession.ID );
      * // BF44D6E51B8FAKE485D8966ED3EDF6DD
      * // The previous session is still valid
@@ -2876,7 +2876,7 @@ interface WAKDirectory {
      * Get an active session object from a session id.
      * 
      * ```javascript
-     * var previousSession = getSession( 'BF44D6E51B8FAKE485D8966ED3EDF6DD' );
+     * var previousSession = directory.getSession( 'BF44D6E51B8FAKE485D8966ED3EDF6DD' );
      * ```
      * 
      * @param sessionID Describes the string session id
@@ -2888,7 +2888,7 @@ interface WAKDirectory {
     //  * 
     //  * ```javascript
     //  * // Get all active user session
-    //  * var sessionArray = getUserSessions();
+    //  * var sessionArray = directory.getUserSessions();
     //  * ```
     //  * 
     //  * @returns Returns an array of session object if any
@@ -2899,7 +2899,7 @@ interface WAKDirectory {
     //  * 
     //  * ```javascript
     //  * // Get all active user session for the current user
-    //  * var sessionArray = getUserSessions( currentSession().user.ID );
+    //  * var sessionArray = directory.getUserSessions( currentSession().user.ID );
     //  * ```
     //  * 
     //  * @param userId Describes a user ID.
@@ -2911,7 +2911,7 @@ interface WAKDirectory {
     //  * 
     //  * ```javascript
     //  * // Get all active user session for the current user
-    //  * var sessionArray = getUserSessions( currentSession().user );
+    //  * var sessionArray = directory.getUserSessions( currentSession().user );
     //  * ```
     //  * 
     //  * @param user Describes a user object.
@@ -2924,7 +2924,7 @@ interface WAKDirectory {
      */
     getRemoteGroupByAlias(alias: String): Group;
     /**
-     * returns a local Group Object referencing the remote group that corresponds to the unique Distinguished Name (DN) you passed in the dn parameter.
+     * Returns a local Group Object referencing the remote group that corresponds to the unique Distinguished Name (DN) you passed in the dn parameter.
      * @warning Requires LDAP component.
      */
     getRemoteGroupByDN(dn: String): Group;
@@ -2943,8 +2943,8 @@ interface WAKDirectory {
      * Authenticates a user by their name and key and, in case of success, opens a new user Session on the server.
      * 
      * ```javascript
-     * loginByKey('john', '6153A6FA0E4880D9B8D0BE4720F78E895265D0A9');
-     * loginByKey('john', '6153A6FA0E4880D9B8D0BE4720F78E895265D0A9', 60*60);
+     * directory.loginByKey('john', '6153A6FA0E4880D9B8D0BE4720F78E895265D0A9');
+     * directory.loginByKey('john', '6153A6FA0E4880D9B8D0BE4720F78E895265D0A9', 60*60);
      * ```
      * 
      * @param name Describes the user name
@@ -2957,8 +2957,8 @@ interface WAKDirectory {
      * Authenticates a user by their name and password and, in case of success, opens a new user Session on the server.
      * 
      * ```javascript
-     * loginByPassword('john', 'my-password');
-     * loginByPassword('john', 'my-password', 60*60);
+     * directory.loginByPassword('john', 'my-password');
+     * directory.loginByPassword('john', 'my-password', 60*60);
      * ```
      * 
      * @param name Describes the user name
@@ -2971,7 +2971,7 @@ interface WAKDirectory {
      * Logs out the user from its current session on the Wakanda server.
      * 
      * ```javascript
-     * logout();
+     * directory.logout();
      * ```
      * 
      * @returns Returns `true` if the user has been successfully logged out and `false` if an error occured
@@ -3018,10 +3018,10 @@ interface WAKDirectory {
      * ```javascript
      * console.log(directory.currentSession.ID);
      * // 2EA82764A075497181278B2F05DA2EDA
-     * setCurrentSession('E8CBA745124D4BE4BF7D5A224183EC8E', true);
+     * directory.setCurrentSession('E8CBA745124D4BE4BF7D5A224183EC8E', true);
      * console.log(directory.currentSession.ID);
      * // E8CBA745124D4BE4BF7D5A224183EC8E
-     * getSession('2EA82764A075497181278B2F05DA2EDA');
+     * directory.getSession('2EA82764A075497181278B2F05DA2EDA');
      * // null
      * // Previous session has expire
      * ```
@@ -3868,7 +3868,7 @@ interface HttpServer {
      * ```javascript
      * // Must match socketID parameter of "addWebSocketHandler()"
      * // httpServer.addWebSocketHandler('^/ping$', 'backend/websocket-greetings.js', 'websocket-id', true);
-     * httpServer.httpServer.removeWebSocketHandler( 'websocket-id' );
+     * httpServer.removeWebSocketHandler( 'websocket-id' );
      * ```
      * 
      * @param socketID Identifies the websocket to remove
@@ -3913,6 +3913,7 @@ interface HttpServerSSL {
      */
     getCertificatePath(): String;
 }
+
 
 
 

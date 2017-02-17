@@ -1,3 +1,6 @@
+
+Work in progress documentation at https://jegoyann.github.io/wakanda-api-reference/
+
 # Want to improve Wakanda API Reference ?
 
 Wakanda API Reference generates its web site through TypeDoc.

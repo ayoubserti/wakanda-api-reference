@@ -29,63 +29,63 @@ interface Application extends Authentication, Data, Core, Threads, FileSystem, H
 
 interface Data {
     /**
-     * Reference the datastore of the application.
+     * References the datastore of the application.
      */
     ds: Datastore;
     /**
-    *starts the backup of the closed datastore defined by model and data.
+    *Starts the backup of the closed datastore defined by model and data.
     */
     backupDataStore(model: WAKFileInstance, data: WAKFileInstance, settings: Object, options?: Object): WAKFileInstance;
     /**
-    *compacts the datastore's data file designated by model and data, and generates the compactedData data file.
+    *Compacts the datastore's data file designated by model and data, and generates the compactedData data file.
     */
     compactDataStore(model: WAKFileInstance, data: WAKFileInstance, options?: Object, compactedData?: WAKFileInstance): void;
     /**
-    *returns an Array that lists the 20 most recent backup manifests recorded in the specified backup registry.
+    *Returns an Array that lists the 20 most recent backup manifests recorded in the specified backup registry.
     */
     getBackupRegistry(registryFolder: WAKFolderInstance): Array<Object>;
     /**
-    *returns an Object containing the default backup settings for the solution.
+    *Returns an Object containing the default backup settings for the solution.
     */
     getBackupSettings(): Object;
     /**
-    *returns information about the journal of the datastore whose data file you passed in dataFile.
+    *Returns information about the journal of the datastore whose data file you passed in dataFile.
     */
     getJournalInfo(dataFile: WAKFileInstance, options?: Object): Object;
     /**
-    *returns information about the journal of the datastore whose data file you passed in dataFile.
+    *Returns information about the journal of the datastore whose data file you passed in dataFile.
     */
     getJournalInfo(dataFile: String, options?: Object): Object;
     /**
-    *returns an Array that lists the 20 most recent backup manifests recorded in the backup registry default folder of the application.
+    *Returns an Array that lists the 20 most recent backup manifests recorded in the backup registry default folder of the application.
     */
     getLastBackups(): Array<Object>;
     /**
-    *allows you to partially or fully integrate a journal file into a datastore.
+    *Allows you to partially or fully integrate a journal file into a datastore.
     */
     integrateDataStoreJournal(model: WAKFileInstance, data: WAKFileInstance, journal: WAKFileInstance, options?: Object): Object;
     /**
-    *repairs the datastore's data file defined by model and data, and generates the repairedData data file.
+    *Repairs the datastore's data file defined by model and data, and generates the repairedData data file.
     */
     repairDataStore(model: WAKFileInstance, data: WAKFileInstance, options?: Object, repairedData?: WAKFileInstance): void;
     /**
-    *resets the current journal of the datastore whose data file you passed in dataFile.
+    *Resets the current journal of the datastore whose data file you passed in dataFile.
     */
     resetDataStoreJournal(dataFile: WAKFileInstance): Object;
     /**
-    *resets the current journal of the datastore whose data file you passed in dataFile.
+    *Resets the current journal of the datastore whose data file you passed in dataFile.
     */
     resetDataStoreJournal(dataFile: String): Object;
     /**
-    *allows you to restore a data folder previously archived.
+    *Allows you to restore a data folder previously archived.
     */
     restoreDataStore(manifest: WAKFileInstance, restoreFolder: WAKFolderInstance, options?: Object): Object;
     /**
-    *allows you to restore a data folder previously archived.
+    *Allows you to restore a data folder previously archived.
     */
     restoreDataStore(config: Object, options?: Object): Object;
     /**
-    *verifies the internal structure of the objects contained in the datastore designated by model and data.
+    *Verifies the internal structure of the objects contained in the datastore designated by model and data.
     */
     verifyDataStore(model: WAKFileInstance, data: WAKFileInstance, options: Object): void;
 }
@@ -107,7 +107,7 @@ interface Core {
      */
     Buffer: WAKBufferInstance;
     /**
-     * Create a valid UUID string.
+     * Creates a valid UUID string.
      * 
      * ```javascript
      * generateUUID();
@@ -125,7 +125,7 @@ interface Core {
      * Creates a progress indicator.
      * @param numElements Number of elements to count
      * @param sessionName Name of execution session for progress indicator
-     * @param stoppable `true`if the progress indicator can be stopped, `false` otherwise
+     * @param stoppable `true` if the progress indicator can be stopped, `false` otherwise
      * @param unused Not used, always pass an empty string ("")	
      * @param name Unique name of object on the server
      */
@@ -166,7 +166,7 @@ interface Threads {
      */
     Mutex: Mutex;
     /**
-     * Require a SSJS module (CommonJS compliant).
+     * Requires an SSJS module (CommonJS compliant).
      * This module must be defined in `PROJECT/backend/modules/`.
      * 
      * ```javascript
@@ -181,7 +181,7 @@ interface Threads {
      */
     require(moduleId: String): Module;
     /**
-     * Require a NodeJS module.
+     * Requires a NodeJS module.
      * This module must be defined in `PROJECT/backend/node_modules`.
      * 
      * ```javascript
@@ -189,7 +189,7 @@ interface Threads {
      * var http = requireNode('http'); 
      * ```
      * 
-     * @warning This API is only available inside a Node worker (See ShareWorker for more details)
+     * @warning This API is only available inside a Node worker (See NodeWorker for more details)
      * @param moduleId Describes the module id and path
      * @returns Returns the exported API of the given module
      */
@@ -316,11 +316,11 @@ interface HTTP {
 
 interface Storage {
     /**
-     * Reference the HTTP session storage of the application.
+     * References the HTTP session storage of the application.
      */
     sessionStorage: LockableKeyValueStorage;
     /**
-     * Reference the application storage.
+     * References the application storage.
      */
     storage: LockableKeyValueStorage;
 

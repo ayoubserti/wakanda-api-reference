@@ -133,7 +133,7 @@ interface HttpServer {
      * ```javascript
      * // Must match socketID parameter of "addWebSocketHandler()"
      * // httpServer.addWebSocketHandler('^/ping$', 'backend/websocket-greetings.js', 'websocket-id', true);
-     * httpServer.httpServer.removeWebSocketHandler( 'websocket-id' );
+     * httpServer.removeWebSocketHandler( 'websocket-id' );
      * ```
      * 
      * @param socketID Identifies the websocket to remove

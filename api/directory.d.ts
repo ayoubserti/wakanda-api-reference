@@ -8,7 +8,7 @@ interface WAKDirectory {
      * Create a new user session and sets it as the current session.
      * 
      * ```javascript
-     * var cur = currentSession();
+     * var cur = directory.currentSession;
      * console.log( cur.ID );
      * // BF44D6E51B8FAKE485D8966ED3EDF6DD
      * 
@@ -28,7 +28,7 @@ interface WAKDirectory {
      * // 1E121BA4AE82446B9FDB430F0A9055C6
      * // The new session is now the current session
      * 
-     * var previousSession = getSession( 'BF44D6E51B8FAKE485D8966ED3EDF6DD' );
+     * var previousSession = directory.getSession( 'BF44D6E51B8FAKE485D8966ED3EDF6DD' );
      * console.log( previousSession.ID );
      * // BF44D6E51B8FAKE485D8966ED3EDF6DD
      * // The previous session is still valid
@@ -103,7 +103,7 @@ interface WAKDirectory {
      * Get an active session object from a session id.
      * 
      * ```javascript
-     * var previousSession = getSession( 'BF44D6E51B8FAKE485D8966ED3EDF6DD' );
+     * var previousSession = directory.getSession( 'BF44D6E51B8FAKE485D8966ED3EDF6DD' );
      * ```
      * 
      * @param sessionID Describes the string session id
@@ -115,7 +115,7 @@ interface WAKDirectory {
     //  * 
     //  * ```javascript
     //  * // Get all active user session
-    //  * var sessionArray = getUserSessions();
+    //  * var sessionArray = directory.getUserSessions();
     //  * ```
     //  * 
     //  * @returns Returns an array of session object if any
@@ -126,7 +126,7 @@ interface WAKDirectory {
     //  * 
     //  * ```javascript
     //  * // Get all active user session for the current user
-    //  * var sessionArray = getUserSessions( currentSession().user.ID );
+    //  * var sessionArray = directory.getUserSessions( currentSession().user.ID );
     //  * ```
     //  * 
     //  * @param userId Describes a user ID.
@@ -138,7 +138,7 @@ interface WAKDirectory {
     //  * 
     //  * ```javascript
     //  * // Get all active user session for the current user
-    //  * var sessionArray = getUserSessions( currentSession().user );
+    //  * var sessionArray = directory.getUserSessions( currentSession().user );
     //  * ```
     //  * 
     //  * @param user Describes a user object.
@@ -151,7 +151,7 @@ interface WAKDirectory {
      */
     getRemoteGroupByAlias(alias: String): Group;
     /**
-     * returns a local Group Object referencing the remote group that corresponds to the unique Distinguished Name (DN) you passed in the dn parameter.
+     * Returns a local Group Object referencing the remote group that corresponds to the unique Distinguished Name (DN) you passed in the dn parameter.
      * @warning Requires LDAP component.
      */
     getRemoteGroupByDN(dn: String): Group;
@@ -170,8 +170,8 @@ interface WAKDirectory {
      * Authenticates a user by their name and key and, in case of success, opens a new user Session on the server.
      * 
      * ```javascript
-     * loginByKey('john', '6153A6FA0E4880D9B8D0BE4720F78E895265D0A9');
-     * loginByKey('john', '6153A6FA0E4880D9B8D0BE4720F78E895265D0A9', 60*60);
+     * directory.loginByKey('john', '6153A6FA0E4880D9B8D0BE4720F78E895265D0A9');
+     * directory.loginByKey('john', '6153A6FA0E4880D9B8D0BE4720F78E895265D0A9', 60*60);
      * ```
      * 
      * @param name Describes the user name
@@ -184,8 +184,8 @@ interface WAKDirectory {
      * Authenticates a user by their name and password and, in case of success, opens a new user Session on the server.
      * 
      * ```javascript
-     * loginByPassword('john', 'my-password');
-     * loginByPassword('john', 'my-password', 60*60);
+     * directory.loginByPassword('john', 'my-password');
+     * directory.loginByPassword('john', 'my-password', 60*60);
      * ```
      * 
      * @param name Describes the user name
@@ -198,7 +198,7 @@ interface WAKDirectory {
      * Logs out the user from its current session on the Wakanda server.
      * 
      * ```javascript
-     * logout();
+     * directory.logout();
      * ```
      * 
      * @returns Returns `true` if the user has been successfully logged out and `false` if an error occured
@@ -245,10 +245,10 @@ interface WAKDirectory {
      * ```javascript
      * console.log(directory.currentSession.ID);
      * // 2EA82764A075497181278B2F05DA2EDA
-     * setCurrentSession('E8CBA745124D4BE4BF7D5A224183EC8E', true);
+     * directory.setCurrentSession('E8CBA745124D4BE4BF7D5A224183EC8E', true);
      * console.log(directory.currentSession.ID);
      * // E8CBA745124D4BE4BF7D5A224183EC8E
-     * getSession('2EA82764A075497181278B2F05DA2EDA');
+     * directory.getSession('2EA82764A075497181278B2F05DA2EDA');
      * // null
      * // Previous session has expire
      * ```

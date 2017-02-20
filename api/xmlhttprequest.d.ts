@@ -144,7 +144,7 @@ interface XMLHttpRequest {
      * @warning Sends synchronous XHR request.
      * @param data Data to send in the request `body`
      */
-    send(data?: WAKFileInstance): void;
+    send(data?: WAKFileInstance | WAKBlobInstance | WAKBufferInstance ): void;
     /**
      * Allows the request to be authenticated on the remote server with a client certificate, when necessary.
      * @param keyPath Path to the PEM format private key

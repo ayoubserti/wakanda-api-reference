@@ -60,7 +60,7 @@ interface WAKBlobInstance {
     copyTo(destination: String, overwrite?: Boolean): void;
     copyTo(destination: WAKFileInstance, overwrite?: Boolean): void;
     /**
-     * Creates a new blob by referencing the contents of the bytes of the Blob to which it is applied, from start to end.
+     * Creates a new blob by referencing the binary contents of the File to which it is applied, from start to end.
      * 
      * #### Example 1: Slice a blob
      * ```javascript
@@ -95,7 +95,7 @@ interface WAKBlobInstance {
      */
     slice(start?: Number, end?: Number, mimeType?: String): WAKBlobInstance;
     /**
-     * Returns a buffer object containing a copy of the blob bytes.
+     * Returns a buffer object containing a copy of the File bytes.
      */
     toBuffer(): WAKBufferInstance;
     /**

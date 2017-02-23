@@ -35,7 +35,7 @@ interface HttpServer {
      */
     readonly ssl: HttpServerSSL;
     /**
-     * Current status of the HTTP server.
+     * Return true if the HTTP Server is started.
      */
     readonly started: Boolean;
     /**
@@ -107,7 +107,7 @@ interface HttpServer {
      * };
      * ```
      * 
-     * @param pattern Regexp pattern to intercept a HTTP request
+     * @param pattern Regexp pattern to intercept a WS request
      * @param filePath Absolute or relative path from the project to the file that defines the websocket handler. Filesystem are not working in filePath parameter (`PROJECT`, `SOLUTION`, ...).
      * @param socketID Socket ID usefull for `removeWebSocketHandler()`
      * @param sharedWorker `true` if uses shared worker (recommended). `false` if uses dedicated worker.

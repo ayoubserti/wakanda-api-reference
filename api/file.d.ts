@@ -174,7 +174,7 @@ interface WAKFileInstance extends WAKBlobInstance {
     moveTo(file: String, overwrite?: Boolean): void;
     /**
      * Removes the file from the disk.
-     * @returns `true` if the file is not here, `false` otherwise.
+     * @returns `true` if the file is removed from disk, `false` otherwise.
       */
     remove(): Boolean;
     /**

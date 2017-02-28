@@ -3801,7 +3801,31 @@ interface HttpServer {
      * #### Step 1: Add a request handler
      * ```javascript
      * // It is recommended to write these lines in bootstrap.js
-     * // On every "/ping" requests, call "hello()" function in "request-greetings.js"
+     * // On every "/ping" requests, call "pong()" function in "request-greetings" module
+     * httpServer.addRequestHandler('^/ping$', 'request-greetings', 'pong');
+     * ```
+     * 
+     * #### Step 2: Handle the request
+     * ```javascript
+     * // modules/request-greetings/index.js
+     * function pong( request, response ){
+     *     return 'pong';
+     * }
+     * ```
+     * 
+     * @param pattern Regexp pattern to intercept a HTTP request
+     * @param modulePath Path to the module that exports the functionName
+     * @param functionName Function name which handles the request and returns the request response
+     */
+    addRequestHandler(pattern: String, modulePath: String, functionName: String): void;
+    /**
+     * Adds a request handler function on the server.
+     * It is recommended to write all request handler in the `bootstrap.js` file in order to be available at server start up.
+     * 
+     * #### Step 1: Add a request handler
+     * ```javascript
+     * // It is recommended to write these lines in bootstrap.js
+     * // On every "/ping" requests, call "pong()" function in "request-greetings.js"
      * httpServer.addRequestHandler('^/ping$', 'request-greetings.js', 'pong');
      * ```
      * 
@@ -3869,6 +3893,20 @@ interface HttpServer {
      * @param sharedWorker `true` if uses shared worker (recommended). `false` if uses dedicated worker.
      */
     addWebSocketHandler(pattern: String, filePath: String, socketID: String, sharedWorker: Boolean): void;
+    /**
+     * Removes an existing request handler function on the server.
+     * 
+     * ```javascript
+     * // Must match parameters of "addRequestHandler()"
+     * // httpServer.addRequestHandler('^/ping$', 'request-greetings', 'pong');
+     * httpServer.removeRequestHandler('^/ping$', 'request-greetings', 'pong');
+     * ```
+     * 
+     * @param pattern Regexp pattern to intercept a HTTP request
+     * @param modulePath Path to the module that exports the functionName
+     * @param functionName Function name which handles the request
+     */
+    removeRequestHandler(pattern: String, modulePath: String, functionName: String): void;
     /**
      * Removes an existing request handler function on the server.
      * 

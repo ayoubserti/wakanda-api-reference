@@ -25,9 +25,16 @@
 /// <reference path="./user.d.ts" />
 /// <reference path="./xmlhttprequest.d.ts" />
 
-interface Application extends Authentication, Data, Core, Threads, FileSystem, HTTP, Storage { }
+interface Application extends WAKAuthentication, WAKData, WAKCore, WAKThreads, WAKFileSystem, WAKHTTP, WAKStorage { }
 
-interface Data {
+interface WAKAuthentication {
+    /**
+     * References the directory of the application.
+     */
+    directory : WAKDirectory;
+}
+
+interface WAKData {
     /**
      * References the datastore of the application.
      */
@@ -90,14 +97,7 @@ interface Data {
     verifyDataStore(model: WAKFileInstance, data: WAKFileInstance, options: Object): void;
 }
 
-interface Authentication {
-    /**
-     * References the directory of the application.
-     */
-    directory : WAKDirectory;
-}
-
-interface Core {
+interface WAKCore {
     /**
      * References the console of the application.
      */
@@ -132,7 +132,7 @@ interface Core {
     ProgressIndicator(numElements: Number, sessionName?: String, stoppable?: Boolean, unused?: String, name?: String): ProgressIndicator;
 }
 
-interface Threads {
+interface WAKThreads {
     /**
      * Ends the current thread.
      * 
@@ -209,7 +209,7 @@ interface Threads {
     wait(timeout?: Number): void;
 }
 
-interface FileSystem {
+interface WAKFileSystem {
     BinaryStream: BinaryStream;
     Blob: Blob;
     File: File;
@@ -306,7 +306,7 @@ interface FileSystem {
     saveText(textToSave: String, file: WAKFileInstance, charset?: Number): void;
 }
 
-interface HTTP {
+interface WAKHTTP {
     /**
      * Reference the HTTP server of the application.
      */
@@ -314,7 +314,7 @@ interface HTTP {
     XMLHttpRequest: XMLHttpRequest;
 }
 
-interface Storage {
+interface WAKStorage {
     /**
      * References the HTTP session storage of the application.
      */

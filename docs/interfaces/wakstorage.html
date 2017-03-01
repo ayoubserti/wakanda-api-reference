@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Authentication | </title>
+	<title>WAKStorage | </title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="authentication.html">Authentication</a>
+					<a href="wakstorage.html">WAKStorage</a>
 				</li>
 			</ul>
-			<h1>Interface Authentication</h1>
+			<h1>Interface WAKStorage</h1>
 		</div>
 	</div>
 </header>
@@ -71,7 +71,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Authentication</span>
+						<span class="target">WAKStorage</span>
 					</li>
 				</ul>
 			</section>
@@ -82,7 +82,8 @@
 						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="authentication.html#directory" class="tsd-kind-icon">directory</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="wakstorage.html#sessionstorage" class="tsd-kind-icon">session<wbr>Storage</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="wakstorage.html#storage" class="tsd-kind-icon">storage</a></li>
 							</ul>
 						</section>
 					</div>
@@ -91,17 +92,32 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-					<a name="directory" class="tsd-anchor"></a>
-					<h3>directory</h3>
-					<div class="tsd-signature tsd-kind-icon">directory<span class="tsd-signature-symbol">:</span> <a href="wakdirectory.html" class="tsd-signature-type">WAKDirectory</a></div>
+					<a name="sessionstorage" class="tsd-anchor"></a>
+					<h3>session<wbr>Storage</h3>
+					<div class="tsd-signature tsd-kind-icon">session<wbr>Storage<span class="tsd-signature-symbol">:</span> <a href="lockablekeyvaluestorage.html" class="tsd-signature-type">LockableKeyValueStorage</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/c6c3f5b/api/application.d.ts#L97">application.d.ts:97</a></li>
+							<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/737a60e/api/application.d.ts#L321">application.d.ts:321</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>References the directory of the application.</p>
+							<p>References the HTTP session storage of the application.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+					<a name="storage" class="tsd-anchor"></a>
+					<h3>storage</h3>
+					<div class="tsd-signature tsd-kind-icon">storage<span class="tsd-signature-symbol">:</span> <a href="lockablekeyvaluestorage.html" class="tsd-signature-type">LockableKeyValueStorage</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/737a60e/api/application.d.ts#L325">application.d.ts:325</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>References the application storage.</p>
 						</div>
 					</div>
 				</section>
@@ -120,10 +136,13 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-is-not-exported">
-						<a href="authentication.html" class="tsd-kind-icon">Authentication</a>
+						<a href="wakstorage.html" class="tsd-kind-icon">WAKStorage</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="authentication.html#directory" class="tsd-kind-icon">directory</a>
+								<a href="wakstorage.html#sessionstorage" class="tsd-kind-icon">session<wbr>Storage</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+								<a href="wakstorage.html#storage" class="tsd-kind-icon">storage</a>
 							</li>
 						</ul>
 					</li>

@@ -8,14 +8,14 @@ interface File {
      * 
      * #### Example 1: Get a reference to an existing file
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/bootstrap.js' );
+     * var myFile = new File( 'PROJECT/bootstrap.js' );
      * console.log( myFile.exists );
      * // true
      * ```
      * 
      * #### Example 2: Get a reference to a missing file
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/file-to-create.js' );
+     * var myFile = new File( 'PROJECT/file-to-create.js' );
      * console.log( myFile.exists );
      * // false
      * ```
@@ -29,7 +29,7 @@ interface File {
      * 
      * #### Example 1: Get a reference to an existing file
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend/' );
+     * var myFolder = new Folder( 'PROJECT/' );
      * var myFile = new File( myFolder, 'bootstrap.js' );
      * console.log( myFile.exists );
      * // true
@@ -37,7 +37,7 @@ interface File {
      * 
      * #### Example 2: Get a reference to a missing file
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend/' );
+     * var myFolder = new Folder( 'PROJECT/' );
      * var myFile = new File( myFolder, 'file-to-create.js' );
      * console.log( myFile.exists );
      * // false
@@ -51,7 +51,7 @@ interface File {
      * Check if the path references a file.
      * 
      * ```javascript
-     * var myIsFile = File.isFile( 'PROJECT/backend/bootstrap.js' );
+     * var myIsFile = File.isFile( 'PROJECT/bootstrap.js' );
      * console.log( myIsFile );
      * // true
      * ```
@@ -111,7 +111,7 @@ interface WAKFileInstance extends WAKBlobInstance {
      * Creates a new file on disk.
      * 
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/my-created-file.js' );
+     * var myFile = new File( 'PROJECT/my-created-file.js' );
      * var myResult = myFile.create();
      * console.log( myResult );
      * // true
@@ -139,7 +139,7 @@ interface WAKFileInstance extends WAKBlobInstance {
      * Moves the file to the specified destination.
      * 
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/my-file.js' );
+     * var myFile = new File( 'PROJECT/my-file.js' );
      * myFile.create();
      * myFile.moveTo( 'PROJECT/my-moved-file.js', yes );
      * // myFile always references the "my-file.js" file
@@ -156,7 +156,7 @@ interface WAKFileInstance extends WAKBlobInstance {
      * Moves the file to the specified destination.
      * 
      * ```javascript
-     * var mySourceFile = new File( 'PROJECT/backend/my-file.js' );
+     * var mySourceFile = new File( 'PROJECT/my-file.js' );
      * var myDestinationFile = new File( 'PROJECT/my-moved-file.js' );
      * // The file must exists to be renamed
      * myFile.create();
@@ -164,7 +164,7 @@ interface WAKFileInstance extends WAKBlobInstance {
      * // myFile always references the "my-file.js" file
      * // The referenced file did not change with the moveTo() action.
      * console.log( myFile.path );
-     * // PROJECT/backend/my-file.js
+     * // PROJECT/my-file.js
      * ```
      * 
      * @warning After the `moveTo()` action, the file referenced is still the source file and not the destination file. Therefore, the referenced file does not exist anymore.
@@ -181,7 +181,7 @@ interface WAKFileInstance extends WAKBlobInstance {
      * Rename the file on disk.
      * 
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/my-file.js' );
+     * var myFile = new File( 'PROJECT/my-file.js' );
      * // The file must exists to be renamed
      * myFile.create();
      * // The destination file name must be free
@@ -189,7 +189,7 @@ interface WAKFileInstance extends WAKBlobInstance {
      * // myFile always references the "my-file.js" file
      * // The referenced file did not change with the setName() action.
      * console.log( myFile.path );
-     * // PROJECT/backend/my-file.js
+     * // PROJECT/my-file.js
      * ```
      * 
      * @warning The file must exist on disk to be renamed

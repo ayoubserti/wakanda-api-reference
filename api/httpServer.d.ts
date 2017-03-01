@@ -93,12 +93,12 @@ interface HttpServer {
      * #### Step 1: Add a websocket handler
      * ```javascript
      * // It is recommended to write these lines in bootstrap.js
-     * httpServer.addWebSocketHandler('^/ping$', './backend/websocket-greetings.js', 'websocket-id', true);
+     * httpServer.addWebSocketHandler('^/ping$', './websocket-greetings.js', 'websocket-id', true);
      * ```
      * 
      * #### Step 2: Handle the websocket
      * ```javascript
-     * // ./backend/websocket-greetings.js
+     * // ./websocket-greetings.js
      * // Same as for ShareWorker
      * // Called every time a new websocket is connected
      * onconnect = function ( msg ) {

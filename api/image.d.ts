@@ -32,13 +32,13 @@ interface Image {
      * 
      * #### Example 1: Basic usage
      * ```javascript
-     * var myImage = loadImage( 'PROJECT/backend/my-image.jpg' );
-     * myImage.save( 'PROJECT/backend/my-saved-image.jpg' );
+     * var myImage = loadImage( 'PROJECT/my-image.jpg' );
+     * myImage.save( 'PROJECT/my-saved-image.jpg' );
      * ```
      * #### Example 2: Save image in another format
      * ```javascript
-     * var myImage = loadImage( 'PROJECT/backend/my-image.jpg' );
-     * myImage.save( 'PROJECT/backend/my-png-image.png', 'image/png' );
+     * var myImage = loadImage( 'PROJECT/my-image.jpg' );
+     * myImage.save( 'PROJECT/my-png-image.png', 'image/png' );
      * ```
      * 
      * @warning Overrides existing files
@@ -51,14 +51,14 @@ interface Image {
      * 
      * #### Example 1: Basic usage
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/my-saved-image.jpg' );
-     * var myImage = loadImage( 'PROJECT/backend/my-image.jpg' );
+     * var myFile = new File( 'PROJECT/my-saved-image.jpg' );
+     * var myImage = loadImage( 'PROJECT/my-image.jpg' );
      * myImage.save( myFile );
      * ```
      * #### Example 2: Save image in another format
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/my-png-image.png' );
-     * var myImage = loadImage( 'PROJECT/backend/my-image.jpg' );
+     * var myFile = new File( 'PROJECT/my-png-image.png' );
+     * var myImage = loadImage( 'PROJECT/my-image.jpg' );
      * myImage.save( myFile, 'image/png' );
      * ```
      * 
@@ -71,10 +71,10 @@ interface Image {
      * Updates the image metadata.
      * 
      * ```javascript
-     * var myImage = loadImage( 'PROJECT/backend/my-image.jpg' );
+     * var myImage = loadImage( 'PROJECT/my-image.jpg' );
      * var newMeta = { IPTC: { Keywords: ['vacation', 'snow']}};
      * myImage.saveMeta( newMeta );
-     * myImage.save( 'PROJECT/backend/my-meta-image.jpg' );
+     * myImage.save( 'PROJECT/my-meta-image.jpg' );
      * ```
      * 
      * @warning A `save` is required in order to save the metadata on disk
@@ -94,16 +94,16 @@ interface Image {
      * 
      * #### Example 1: Basic usage
      * ```javascript
-     * var myImage = loadImage( 'PROJECT/backend/my-image.jpg' );
+     * var myImage = loadImage( 'PROJECT/my-image.jpg' );
      * var myThumbnail = myImage.thumbnail( 50, 50 );
-     * myThumbnail.save( 'PROJECT/backend/my-thumbnail.jpg' );
+     * myThumbnail.save( 'PROJECT/my-thumbnail.jpg' );
      * ```
      * 
      * #### Example 2: Change thumbnail mode
      * ```javascript
-     * var myImage = loadImage( 'PROJECT/backend/my-image.jpg' );
+     * var myImage = loadImage( 'PROJECT/my-image.jpg' );
      * var myThumbnail = myImage.thumbnail( 50, 50, 2 );
-     * myThumbnail.save( 'PROJECT/backend/my-thumbnail.jpg' );
+     * myThumbnail.save( 'PROJECT/my-thumbnail.jpg' );
      * ```
      * 
      * @param width (pixels) Thumbnail width

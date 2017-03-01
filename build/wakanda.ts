@@ -264,12 +264,12 @@ interface WAKThreads {
     Mutex: Mutex;
     /**
      * Requires an SSJS module (CommonJS compliant).
-     * This module must be defined in `PROJECT/backend/modules/`.
+     * This module must be defined in `PROJECT/modules/`.
      * 
      * ```javascript
-     * // Get the module defined in PROJECT/backend/modules/mail
+     * // Get the module defined in PROJECT/modules/mail
      * var mail = require('mail');
-     * // Get the module defined in PROJECT/backend/modules/customers/platinium
+     * // Get the module defined in PROJECT/modules/customers/platinium
      * var platiniumCustomers = require('/customers/platinium'); 
      * ```
      * 
@@ -279,10 +279,10 @@ interface WAKThreads {
     require(moduleId: String): Module;
     /**
      * Requires a NodeJS module.
-     * This module must be defined in `PROJECT/backend/node_modules`.
+     * This module must be defined in `PROJECT/node_modules`.
      * 
      * ```javascript
-     * // Get the Node module defined in PROJECT/backend/node_modules/http
+     * // Get the Node module defined in PROJECT/node_modules/http
      * var http = requireNode('http'); 
      * ```
      * 
@@ -353,7 +353,7 @@ interface WAKFileSystem {
      * Loads the content of a text file from its path.
      * 
      * ```javascript
-     * var myText = loadText( 'PROJECT/backend/bootstrap.js' );
+     * var myText = loadText( 'PROJECT/bootstrap.js' );
      * console.log(myText);
      * ```
      * 
@@ -366,7 +366,7 @@ interface WAKFileSystem {
      * Loads the content of a text file from a File object.
      * 
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/bootstrap.js' );
+     * var myFile = new File( 'PROJECT/bootstrap.js' );
      * var myText = loadText( myFile );
      * console.log( myText );
      * ```
@@ -432,7 +432,7 @@ interface BinaryStream {
      * Creates a new BinaryStream object.
      * 
      * ```javascript
-     * var readstream = new BinaryStream( 'PROJECT/backend/logs/HTTPServer.waLog' );
+     * var readstream = new BinaryStream( 'PROJECT/logs/HTTPServer.waLog' );
      * console.log( '[chunck] '+ readstream.getBuffer(1000).toString() );
      * // Important to close the stream after every use to release the referenced file
      * readstream.close();
@@ -446,7 +446,7 @@ interface BinaryStream {
      * Creates a new BinaryStream object.
      * 
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/logs/HTTPServer.waLog' );
+     * var myFile = new File( 'PROJECT/logs/HTTPServer.waLog' );
      * var readstream = new BinaryStream( myFile );
      * console.log( '[chunck] '+ readstream.getBuffer(1000).toString() );
      * // Important to close the stream after every use to release the referenced file
@@ -468,7 +468,7 @@ interface WAKBinaryStreamInstance {
      * Closes the file referenced in the BinaryStream object.
      * 
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/logs/HTTPServer.waLog' );
+     * var myFile = new File( 'PROJECT/logs/HTTPServer.waLog' );
      * var readstream = new BinaryStream( myFile );
      * // Important to close the stream after every use to release the referenced file
      * readstream.close();
@@ -613,24 +613,24 @@ interface WAKBlobInstance {
      * #### Example 1: Copy a blob
      * ```javascript
      * var myBlob = new Blob( 20 ); 
-     * myBlob.copyTo( 'PROJECT/backend/blob_copy.js' );
+     * myBlob.copyTo( 'PROJECT/blob_copy.js' );
      * ```
      * or
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/blob_copy.js' );
+     * var myFile = new File( 'PROJECT/blob_copy.js' );
      * var myBlob = new Blob( 20 ); 
      * myBlob.copyTo( myFile );
      * ```
      * 
      * #### Example 2: Copy a file
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/bootstrap.js' );
-     * myFile.copyTo( 'PROJECT/backend/bootstrap_copy.js' );
+     * var myFile = new File( 'PROJECT/bootstrap.js' );
+     * myFile.copyTo( 'PROJECT/bootstrap_copy.js' );
      * ```
      * or
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/bootstrap.js' );
-     * var myFileCopy = new File( 'PROJECT/backend/bootstrap_copy.js' );
+     * var myFile = new File( 'PROJECT/bootstrap.js' );
+     * var myFileCopy = new File( 'PROJECT/bootstrap_copy.js' );
      * myFile.copyTo( myFileCopy );
      * ```
      * 
@@ -664,7 +664,7 @@ interface WAKBlobInstance {
      * 
      * #### Example 3: Slice a file
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/bootstrap.js' );
+     * var myFile = new File( 'PROJECT/bootstrap.js' );
      * var myBlobSlice = myFile.slice( 0, 100 );
      * console.log( myBlobSlice.toString() );
      * ```
@@ -3056,13 +3056,13 @@ interface WAKDirectory {
      * ```javascript
      * // Usually defined in a boostrap file
      * directory.setSessionManager( 'session' );
-     * // Refers to PROJECT/backend/modules/session/index.js module
+     * // Refers to PROJECT/modules/session/index.js module
      * ```
      * 
      * The module must export the following methods to handle all session operations:
      * 
      * ```javascript
-     * // PROJECT/backend/modules/session/index.js
+     * // PROJECT/modules/session/index.js
      * // This session manager saves all session in the storage (could be a Redis instead)
      * 
      * // Called everytime the server creates or updates a session
@@ -3119,7 +3119,7 @@ interface WAKDirectory {
      * directory.setLoginManager('my-login-module', 'myDirectoryGroup');
      * ```
      * 
-     * This module is defined inside `PROJECT/backend/modules/my-login-module` or `SOLUTION/modules/my-login-module`.
+     * This module is defined inside `PROJECT/modules/my-login-module` or `SOLUTION/modules/my-login-module`.
      * If the module is not found in the project, it is then check inside the solution.
      * It must export a `login()` method and return the `user` object.
      * 
@@ -3190,14 +3190,14 @@ interface File {
      * 
      * #### Example 1: Get a reference to an existing file
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/bootstrap.js' );
+     * var myFile = new File( 'PROJECT/bootstrap.js' );
      * console.log( myFile.exists );
      * // true
      * ```
      * 
      * #### Example 2: Get a reference to a missing file
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/file-to-create.js' );
+     * var myFile = new File( 'PROJECT/file-to-create.js' );
      * console.log( myFile.exists );
      * // false
      * ```
@@ -3211,7 +3211,7 @@ interface File {
      * 
      * #### Example 1: Get a reference to an existing file
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend/' );
+     * var myFolder = new Folder( 'PROJECT/' );
      * var myFile = new File( myFolder, 'bootstrap.js' );
      * console.log( myFile.exists );
      * // true
@@ -3219,7 +3219,7 @@ interface File {
      * 
      * #### Example 2: Get a reference to a missing file
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend/' );
+     * var myFolder = new Folder( 'PROJECT/' );
      * var myFile = new File( myFolder, 'file-to-create.js' );
      * console.log( myFile.exists );
      * // false
@@ -3233,7 +3233,7 @@ interface File {
      * Check if the path references a file.
      * 
      * ```javascript
-     * var myIsFile = File.isFile( 'PROJECT/backend/bootstrap.js' );
+     * var myIsFile = File.isFile( 'PROJECT/bootstrap.js' );
      * console.log( myIsFile );
      * // true
      * ```
@@ -3293,7 +3293,7 @@ interface WAKFileInstance extends WAKBlobInstance {
      * Creates a new file on disk.
      * 
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/my-created-file.js' );
+     * var myFile = new File( 'PROJECT/my-created-file.js' );
      * var myResult = myFile.create();
      * console.log( myResult );
      * // true
@@ -3321,7 +3321,7 @@ interface WAKFileInstance extends WAKBlobInstance {
      * Moves the file to the specified destination.
      * 
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/my-file.js' );
+     * var myFile = new File( 'PROJECT/my-file.js' );
      * myFile.create();
      * myFile.moveTo( 'PROJECT/my-moved-file.js', yes );
      * // myFile always references the "my-file.js" file
@@ -3338,7 +3338,7 @@ interface WAKFileInstance extends WAKBlobInstance {
      * Moves the file to the specified destination.
      * 
      * ```javascript
-     * var mySourceFile = new File( 'PROJECT/backend/my-file.js' );
+     * var mySourceFile = new File( 'PROJECT/my-file.js' );
      * var myDestinationFile = new File( 'PROJECT/my-moved-file.js' );
      * // The file must exists to be renamed
      * myFile.create();
@@ -3346,7 +3346,7 @@ interface WAKFileInstance extends WAKBlobInstance {
      * // myFile always references the "my-file.js" file
      * // The referenced file did not change with the moveTo() action.
      * console.log( myFile.path );
-     * // PROJECT/backend/my-file.js
+     * // PROJECT/my-file.js
      * ```
      * 
      * @warning After the `moveTo()` action, the file referenced is still the source file and not the destination file. Therefore, the referenced file does not exist anymore.
@@ -3363,7 +3363,7 @@ interface WAKFileInstance extends WAKBlobInstance {
      * Rename the file on disk.
      * 
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/my-file.js' );
+     * var myFile = new File( 'PROJECT/my-file.js' );
      * // The file must exists to be renamed
      * myFile.create();
      * // The destination file name must be free
@@ -3371,7 +3371,7 @@ interface WAKFileInstance extends WAKBlobInstance {
      * // myFile always references the "my-file.js" file
      * // The referenced file did not change with the setName() action.
      * console.log( myFile.path );
-     * // PROJECT/backend/my-file.js
+     * // PROJECT/my-file.js
      * ```
      * 
      * @warning The file must exist on disk to be renamed
@@ -3403,7 +3403,7 @@ interface Folder {
      * 
      * #### Example 1: Get a reference to an existing folder
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend' );
+     * var myFolder = new Folder( 'PROJECT' );
      * console.log( myFolder.exists );
      * // true
      * ```
@@ -3422,7 +3422,7 @@ interface Folder {
      * Check if the path references a folder.
      * 
      * ```javascript
-     * var myIsFolder = Folder.isFolder( 'PROJECT/backend' );
+     * var myIsFolder = Folder.isFolder( 'PROJECT' );
      * console.log( myIsFolder );
      * // true
      * ```
@@ -3494,7 +3494,7 @@ interface WAKFolderInstance {
      * Creates a new folder on disk.
      * 
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend/my-created-folder' );
+     * var myFolder = new Folder( 'PROJECT/my-created-folder' );
      * var myResult = myFolder.create();
      * console.log( myResult );
      * // true
@@ -3509,7 +3509,7 @@ interface WAKFolderInstance {
      * 
      * #### Example 1: Basic usage
      * ```javascript
-     * var folder = new Folder( 'PROJECT/backend/' );
+     * var folder = new Folder( 'PROJECT/' );
      * folder.forEachFile( function( file )
      * {
      *     console.log( file.path );
@@ -3518,7 +3518,7 @@ interface WAKFolderInstance {
      * 
      * #### Example 2: Override `this`
      * ```javascript
-     * var folder = new Folder( 'PROJECT/backend/' );
+     * var folder = new Folder( 'PROJECT/' );
      * folder.forEachFile( function( file )
      * {
      *     console.log( this );
@@ -3537,7 +3537,7 @@ interface WAKFolderInstance {
      * 
      * #### Example 1: Basic usage
      * ```javascript
-     * var folder = new Folder( 'PROJECT/backend/' );
+     * var folder = new Folder( 'PROJECT/' );
      * folder.forEachFolder( function( folder )
      * {
      *     console.log( folder.path );
@@ -3546,7 +3546,7 @@ interface WAKFolderInstance {
      * 
      * #### Example 2: Override `this`
      * ```javascript
-     * var folder = new Folder( 'PROJECT/backend/' );
+     * var folder = new Folder( 'PROJECT/' );
      * folder.forEachFolder( function( folder )
      * {
      *     console.log( this );
@@ -3583,7 +3583,7 @@ interface WAKFolderInstance {
      * 
      * #### Example 1: Basic usage
      * ```javascript
-     * var folder = new Folder( 'PROJECT/backend/' );
+     * var folder = new Folder( 'PROJECT/' );
      * folder.parse( function( file, position, folder )
      * {
      *     console.log( '-----------------------------' );
@@ -3595,7 +3595,7 @@ interface WAKFolderInstance {
      * 
      * #### Example 2: Override `this`
      * ```javascript
-     * var folder = new Folder( 'PROJECT/backend/' );
+     * var folder = new Folder( 'PROJECT/' );
      * folder.parse( function( file, position, folder )
      * {
      *     console.log( this );
@@ -3624,7 +3624,7 @@ interface WAKFolderInstance {
      * Rename the folder on disk.
      * 
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend/my-folder' );
+     * var myFolder = new Folder( 'PROJECT/my-folder' );
      * // The folder must exists to be renamed
      * myFolder.create();
      * // The destination folder name must be free
@@ -3632,7 +3632,7 @@ interface WAKFolderInstance {
      * // myFolder always references the "my-folder" folder
      * // The referenced folder did not change with the setName() action.
      * console.log( myFolder.path );
-     * // PROJECT/backend/my-folder
+     * // PROJECT/my-folder
      * ```
      * 
      * @warning The folder must exist on disk to be renamed
@@ -3849,12 +3849,12 @@ interface HttpServer {
      * #### Step 1: Add a websocket handler
      * ```javascript
      * // It is recommended to write these lines in bootstrap.js
-     * httpServer.addWebSocketHandler('^/ping$', './backend/websocket-greetings.js', 'websocket-id', true);
+     * httpServer.addWebSocketHandler('^/ping$', './websocket-greetings.js', 'websocket-id', true);
      * ```
      * 
      * #### Step 2: Handle the websocket
      * ```javascript
-     * // ./backend/websocket-greetings.js
+     * // ./websocket-greetings.js
      * // Same as for ShareWorker
      * // Called every time a new websocket is connected
      * onconnect = function ( msg ) {
@@ -4121,13 +4121,13 @@ interface Image {
      * 
      * #### Example 1: Basic usage
      * ```javascript
-     * var myImage = loadImage( 'PROJECT/backend/my-image.jpg' );
-     * myImage.save( 'PROJECT/backend/my-saved-image.jpg' );
+     * var myImage = loadImage( 'PROJECT/my-image.jpg' );
+     * myImage.save( 'PROJECT/my-saved-image.jpg' );
      * ```
      * #### Example 2: Save image in another format
      * ```javascript
-     * var myImage = loadImage( 'PROJECT/backend/my-image.jpg' );
-     * myImage.save( 'PROJECT/backend/my-png-image.png', 'image/png' );
+     * var myImage = loadImage( 'PROJECT/my-image.jpg' );
+     * myImage.save( 'PROJECT/my-png-image.png', 'image/png' );
      * ```
      * 
      * @warning Overrides existing files
@@ -4140,14 +4140,14 @@ interface Image {
      * 
      * #### Example 1: Basic usage
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/my-saved-image.jpg' );
-     * var myImage = loadImage( 'PROJECT/backend/my-image.jpg' );
+     * var myFile = new File( 'PROJECT/my-saved-image.jpg' );
+     * var myImage = loadImage( 'PROJECT/my-image.jpg' );
      * myImage.save( myFile );
      * ```
      * #### Example 2: Save image in another format
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/my-png-image.png' );
-     * var myImage = loadImage( 'PROJECT/backend/my-image.jpg' );
+     * var myFile = new File( 'PROJECT/my-png-image.png' );
+     * var myImage = loadImage( 'PROJECT/my-image.jpg' );
      * myImage.save( myFile, 'image/png' );
      * ```
      * 
@@ -4160,10 +4160,10 @@ interface Image {
      * Updates the image metadata.
      * 
      * ```javascript
-     * var myImage = loadImage( 'PROJECT/backend/my-image.jpg' );
+     * var myImage = loadImage( 'PROJECT/my-image.jpg' );
      * var newMeta = { IPTC: { Keywords: ['vacation', 'snow']}};
      * myImage.saveMeta( newMeta );
-     * myImage.save( 'PROJECT/backend/my-meta-image.jpg' );
+     * myImage.save( 'PROJECT/my-meta-image.jpg' );
      * ```
      * 
      * @warning A `save` is required in order to save the metadata on disk
@@ -4183,16 +4183,16 @@ interface Image {
      * 
      * #### Example 1: Basic usage
      * ```javascript
-     * var myImage = loadImage( 'PROJECT/backend/my-image.jpg' );
+     * var myImage = loadImage( 'PROJECT/my-image.jpg' );
      * var myThumbnail = myImage.thumbnail( 50, 50 );
-     * myThumbnail.save( 'PROJECT/backend/my-thumbnail.jpg' );
+     * myThumbnail.save( 'PROJECT/my-thumbnail.jpg' );
      * ```
      * 
      * #### Example 2: Change thumbnail mode
      * ```javascript
-     * var myImage = loadImage( 'PROJECT/backend/my-image.jpg' );
+     * var myImage = loadImage( 'PROJECT/my-image.jpg' );
      * var myThumbnail = myImage.thumbnail( 50, 50, 2 );
-     * myThumbnail.save( 'PROJECT/backend/my-thumbnail.jpg' );
+     * myThumbnail.save( 'PROJECT/my-thumbnail.jpg' );
      * ```
      * 
      * @param width (pixels) Thumbnail width
@@ -4373,7 +4373,7 @@ interface WAKMutexProxy {
  * ### Step 1: Define the node worker
  * 
  * ```javascript
- * // PROJECT/backend/worker.js
+ * // PROJECT/worker.js
  * // onconnect is called everytime a new worker proxy is created
  * onconnect = function( event )
  * {
@@ -4426,7 +4426,7 @@ interface WAKMutexProxy {
  * ```
  * 
  * #### How to require a wakanda module ?
- * The module should be defined in `PROJECT/backend/modules`
+ * The module should be defined in `PROJECT/modules`
  * 
  * ```javascript
  * var myModule = require( 'myModule' );
@@ -4435,7 +4435,7 @@ interface WAKMutexProxy {
  * ### Step 2: Create the node worker thread and get the worker proxy
  * 
  * ```javascript
- * // PROJECT/backend/proxy.js
+ * // PROJECT/proxy.js
  * // Create a new NodeWorker and get the proxy worker
  * var myWorkerProxy = new NodeWorker( 'backend/worker.js', 'my-worker-name' );
  * // Get the proxy worker port for communication
@@ -4447,7 +4447,7 @@ interface WAKMutexProxy {
  * ### Step 3: Listen for node worker messages
  * 
  * ```javascript
- * // PROJECT/backend/proxy.js
+ * // PROJECT/proxy.js
  * // Listen for worker thread messages
  * workerProxyPort.onmessage = function( event )
  * {
@@ -4485,7 +4485,7 @@ interface NodeWorker {
      * Node workers can be addressed from any thread, they are uniquely identified by their path and name.
      * 
      * ```javascript
-     * // "worker.js" is defined in PROJECT/backend/worker.js
+     * // "worker.js" is defined in PROJECT/worker.js
      * var myWorkerProxy = new NodeWorker( 'backend/worker.js', 'my-worker-name' );
      * ```
      * 
@@ -4637,7 +4637,7 @@ interface WAKNodeWorkerProxy {
  * ### Step 1: Define the shared worker
  * 
  * ```javascript
- * // PROJECT/backend/worker.js
+ * // PROJECT/worker.js
  * // onconnect is called everytime a new worker proxy is created
  * onconnect = function( event )
  * {
@@ -4682,7 +4682,7 @@ interface WAKNodeWorkerProxy {
  * ```
  * 
  * #### How to require a wakanda module ?
- * The module should be defined in `PROJECT/backend/modules`
+ * The module should be defined in `PROJECT/modules`
  * 
  * ```javascript
  * var myModule = require( 'myModule' );
@@ -4691,7 +4691,7 @@ interface WAKNodeWorkerProxy {
  * ### Step 2: Create the shared worker thread and get the worker proxy
  * 
  * ```javascript
- * // PROJECT/backend/proxy.js
+ * // PROJECT/proxy.js
  * // Create a new SharedWorker and get the proxy worker
  * var myWorkerProxy = new SharedWorker( 'backend/worker.js', 'my-worker-name' );
  * // Get the proxy worker port for communication
@@ -4703,7 +4703,7 @@ interface WAKNodeWorkerProxy {
  * ### Step 3: Listen for shared worker messages
  * 
  * ```javascript
- * // PROJECT/backend/proxy.js
+ * // PROJECT/proxy.js
  * // Listen for worker thread messages
  * workerProxyPort.onmessage = function( event )
  * {
@@ -4742,7 +4742,7 @@ interface SharedWorker {
      * Shared workers can be addressed from any thread, they are uniquely identified by their path and name.
      * 
      * ```javascript
-     * // "worker.js" is defined in PROJECT/backend/worker.js
+     * // "worker.js" is defined in PROJECT/worker.js
      * var myWorkerProxy = new SharedWorker( 'backend/worker.js', 'my-worker-name' );
      * ```
      * 
@@ -4909,7 +4909,7 @@ interface SystemWorker {
      * 
      * #### Example 2: Pass parameters, quotes and env variables options to the system worker
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend' );
+     * var myFolder = new Folder( 'PROJECT' );
      * var options = {
      *     parameters : { folder_ref : myFolder },
      *     quote : '"',
@@ -4947,7 +4947,7 @@ interface SystemWorker {
      * 
      * #### Example 2: Pass parameters, quotes and env variables options to the system worker
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend' );
+     * var myFolder = new Folder( 'PROJECT' );
      * var options = {
      *     parameters : { folder_ref : myFolder },
      *     quote : '"',
@@ -4990,7 +4990,7 @@ interface SystemWorker {
      * 
      * #### Example 4: Pass parameters, quotes and env variables options to the system worker
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend' );
+     * var myFolder = new Folder( 'PROJECT' );
      * var options = {
      *     parameters : { folder_ref : myFolder },
      *     quote : '"',
@@ -5033,7 +5033,7 @@ interface SystemWorker {
      * 
      * #### Example 4: Pass parameters, quotes and env variables options to the system worker
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend' );
+     * var myFolder = new Folder( 'PROJECT' );
      * var options = {
      *     parameters : { folder_ref : myFolder },
      *     quote : '"',
@@ -5246,7 +5246,7 @@ interface TextStream {
      * 
      * ```javascript
      * // The file does not have to exist
-     * var myStream = new TextStream( 'PROJECT/backend/my-streamed-file.js', 'write' );
+     * var myStream = new TextStream( 'PROJECT/my-streamed-file.js', 'write' );
      * // Creates the file if it does not exist
      * myStream.write( 'Hello '+ Date.now() +' !\n' );
      * // Important to close the stream every time.
@@ -5263,7 +5263,7 @@ interface TextStream {
      * 
      * ```javascript
      * // The file does not have to exist
-     * var myFile = new File( 'PROJECT/backend/my-streamed-file.js' );
+     * var myFile = new File( 'PROJECT/my-streamed-file.js' );
      * var myStream = new TextStream( file, 'write' );
      * // Creates the file if it does not exist
      * myStream.write( 'Hello '+ Date.now() +' !\n' );
@@ -5283,7 +5283,7 @@ interface WAKTextStreamInstance {
      * Closes the file referenced in the TextStream object.
      * 
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/my-streamed-file.js' );
+     * var myFile = new File( 'PROJECT/my-streamed-file.js' );
      * var myStream = new TextStream( file, 'write' );
      * myStream.write( 'Hello '+ Date.now() +' !\n' );
      * // Important to close the stream every time.
@@ -5295,7 +5295,7 @@ interface WAKTextStreamInstance {
      * Checks if the the cursor position is after the last character of the file referenced in the TextStream object.
      * 
      * ```javascript
-     * var myStream = new TextStream( 'PROJECT/backend/bootstrap.js', 'Read' );
+     * var myStream = new TextStream( 'PROJECT/bootstrap.js', 'Read' );
      * // Is end of file reached ?
      * while( !myStream.end() ){
      *     console.log( myStream.read( 10 ) );
@@ -5315,7 +5315,7 @@ interface WAKTextStreamInstance {
      * Get the current cursor position in the text stream.
      * 
      * ```javascript
-     * var myStream = new TextStream( 'PROJECT/backend/bootstrap.js', 'Read' );
+     * var myStream = new TextStream( 'PROJECT/bootstrap.js', 'Read' );
      * while( !myStream.end() ){
      *     myStream.read( 10 );
      *     console.log( myStream.getPos() );
@@ -5330,7 +5330,7 @@ interface WAKTextStreamInstance {
      * Get the current text stream size.
      * 
      * ```javascript
-     * var myStream = new TextStream( 'PROJECT/backend/bootstrap.js', 'Read' );
+     * var myStream = new TextStream( 'PROJECT/bootstrap.js', 'Read' );
      * console.log( myStream.getSize() );
      * // 183
      * // Important to close the stream every time.
@@ -5342,7 +5342,7 @@ interface WAKTextStreamInstance {
      * Reads bytes from the text stream.
      * 
      * ```javascript
-     * var myStream = new TextStream( 'PROJECT/backend/bootstrap.js', 'Read' );
+     * var myStream = new TextStream( 'PROJECT/bootstrap.js', 'Read' );
      * while( !myStream.end() ){
      *     // Read the next 10 bytes and moves the cursor position accordingly
      *     console.log( myStream.read( 10 ) );
@@ -5358,7 +5358,7 @@ interface WAKTextStreamInstance {
      * Set the cursor position to the beginning of the TextStream.
      * 
      * ```javascript
-     * var myStream = new TextStream( 'PROJECT/backend/bootstrap.js', 'Read' );
+     * var myStream = new TextStream( 'PROJECT/bootstrap.js', 'Read' );
      * console.log( 'Start: '+ myStream.getPos() );
      * myStream.read(20);
      * console.log( 'After read: '+ myStream.getPos() );
@@ -5373,7 +5373,7 @@ interface WAKTextStreamInstance {
      * Writes the text in the TextStream.
      * 
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/my-streamed-file.js' );
+     * var myFile = new File( 'PROJECT/my-streamed-file.js' );
      * var myStream = new TextStream( file, 'write' );
      * myStream.write( 'Hello '+ Date.now() +' !\n' );
      * // Important to close the stream every time.
@@ -5585,7 +5585,7 @@ interface XMLHttpRequest {
      *     // Displays the upload result ID to use as reference in Wakanda DB
      *     console.log( 'Upload ID:'+ xhr.responseText );
      * }
-     * xhr.send( 'PROJECT/backend/my-image.jpg' );
+     * xhr.send( 'PROJECT/my-image.jpg' );
      * ```
      * 
      * @warning Sends synchronous XHR request.
@@ -5605,7 +5605,7 @@ interface XMLHttpRequest {
      * #### Example 2: Upload file
      * See [doc center](http://doc.wakanda.org/home2.en.html#/HTTP-REST/Interacting-with-the-Server/upload.303-1158401.en.html) for more details about upload
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/my-image.jpg' );
+     * var myFile = new File( 'PROJECT/my-image.jpg' );
      * var xhr = new XMLHttpRequest();
      * xhr.open('PUT', 'http://127.0.0.1:8081/rest/$upload?$rawPict=true');
      * xhr.setRequestHeader( 'Content-Type', 'image/jpeg' );

@@ -167,12 +167,12 @@ interface WAKThreads {
     Mutex: Mutex;
     /**
      * Requires an SSJS module (CommonJS compliant).
-     * This module must be defined in `PROJECT/backend/modules/`.
+     * This module must be defined in `PROJECT/modules/`.
      * 
      * ```javascript
-     * // Get the module defined in PROJECT/backend/modules/mail
+     * // Get the module defined in PROJECT/modules/mail
      * var mail = require('mail');
-     * // Get the module defined in PROJECT/backend/modules/customers/platinium
+     * // Get the module defined in PROJECT/modules/customers/platinium
      * var platiniumCustomers = require('/customers/platinium'); 
      * ```
      * 
@@ -182,10 +182,10 @@ interface WAKThreads {
     require(moduleId: String): Module;
     /**
      * Requires a NodeJS module.
-     * This module must be defined in `PROJECT/backend/node_modules`.
+     * This module must be defined in `PROJECT/node_modules`.
      * 
      * ```javascript
-     * // Get the Node module defined in PROJECT/backend/node_modules/http
+     * // Get the Node module defined in PROJECT/node_modules/http
      * var http = requireNode('http'); 
      * ```
      * 
@@ -256,7 +256,7 @@ interface WAKFileSystem {
      * Loads the content of a text file from its path.
      * 
      * ```javascript
-     * var myText = loadText( 'PROJECT/backend/bootstrap.js' );
+     * var myText = loadText( 'PROJECT/bootstrap.js' );
      * console.log(myText);
      * ```
      * 
@@ -269,7 +269,7 @@ interface WAKFileSystem {
      * Loads the content of a text file from a File object.
      * 
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/bootstrap.js' );
+     * var myFile = new File( 'PROJECT/bootstrap.js' );
      * var myText = loadText( myFile );
      * console.log( myText );
      * ```

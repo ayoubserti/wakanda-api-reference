@@ -8,7 +8,7 @@ interface BinaryStream {
      * Creates a new BinaryStream object.
      * 
      * ```javascript
-     * var readstream = new BinaryStream( 'PROJECT/backend/logs/HTTPServer.waLog' );
+     * var readstream = new BinaryStream( 'PROJECT/logs/HTTPServer.waLog' );
      * console.log( '[chunck] '+ readstream.getBuffer(1000).toString() );
      * // Important to close the stream after every use to release the referenced file
      * readstream.close();
@@ -22,7 +22,7 @@ interface BinaryStream {
      * Creates a new BinaryStream object.
      * 
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/logs/HTTPServer.waLog' );
+     * var myFile = new File( 'PROJECT/logs/HTTPServer.waLog' );
      * var readstream = new BinaryStream( myFile );
      * console.log( '[chunck] '+ readstream.getBuffer(1000).toString() );
      * // Important to close the stream after every use to release the referenced file
@@ -44,7 +44,7 @@ interface WAKBinaryStreamInstance {
      * Closes the file referenced in the BinaryStream object.
      * 
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/logs/HTTPServer.waLog' );
+     * var myFile = new File( 'PROJECT/logs/HTTPServer.waLog' );
      * var readstream = new BinaryStream( myFile );
      * // Important to close the stream after every use to release the referenced file
      * readstream.close();

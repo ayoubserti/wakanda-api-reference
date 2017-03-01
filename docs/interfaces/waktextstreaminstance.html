@@ -107,14 +107,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/e175a46/api/textstream.d.ts#L53">textstream.d.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/371cfa2/api/textstream.d.ts#L53">textstream.d.ts:53</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Closes the file referenced in the TextStream object.</p>
 								</div>
-								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myFile = <span class="hljs-keyword">new</span> File( <span class="hljs-string">'PROJECT/backend/my-streamed-file.js'</span> );
+								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myFile = <span class="hljs-keyword">new</span> File( <span class="hljs-string">'PROJECT/my-streamed-file.js'</span> );
 <span class="hljs-keyword">var</span> myStream = <span class="hljs-keyword">new</span> TextStream( file, <span class="hljs-string">'write'</span> );
 myStream.write( <span class="hljs-string">'Hello '</span>+ <span class="hljs-built_in">Date</span>.now() +<span class="hljs-string">' !\n'</span> );
 <span class="hljs-comment">// Important to close the stream every time.</span>
@@ -135,14 +135,14 @@ myStream.close();
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/e175a46/api/textstream.d.ts#L69">textstream.d.ts:69</a></li>
+									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/371cfa2/api/textstream.d.ts#L69">textstream.d.ts:69</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Checks if the the cursor position is after the last character of the file referenced in the TextStream object.</p>
 								</div>
-								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myStream = <span class="hljs-keyword">new</span> TextStream( <span class="hljs-string">'PROJECT/backend/bootstrap.js'</span>, <span class="hljs-string">'Read'</span> );
+								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myStream = <span class="hljs-keyword">new</span> TextStream( <span class="hljs-string">'PROJECT/bootstrap.js'</span>, <span class="hljs-string">'Read'</span> );
 <span class="hljs-comment">// Is end of file reached ?</span>
 <span class="hljs-keyword">while</span>( !myStream.end() ){
     <span class="hljs-built_in">console</span>.log( myStream.read( <span class="hljs-number">10</span> ) );
@@ -166,7 +166,7 @@ myStream.close();
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/e175a46/api/textstream.d.ts#L73">textstream.d.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/371cfa2/api/textstream.d.ts#L73">textstream.d.ts:73</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -188,14 +188,14 @@ myStream.close();
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/e175a46/api/textstream.d.ts#L88">textstream.d.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/371cfa2/api/textstream.d.ts#L88">textstream.d.ts:88</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Get the current cursor position in the text stream.</p>
 								</div>
-								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myStream = <span class="hljs-keyword">new</span> TextStream( <span class="hljs-string">'PROJECT/backend/bootstrap.js'</span>, <span class="hljs-string">'Read'</span> );
+								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myStream = <span class="hljs-keyword">new</span> TextStream( <span class="hljs-string">'PROJECT/bootstrap.js'</span>, <span class="hljs-string">'Read'</span> );
 <span class="hljs-keyword">while</span>( !myStream.end() ){
     myStream.read( <span class="hljs-number">10</span> );
     <span class="hljs-built_in">console</span>.log( myStream.getPos() );
@@ -219,14 +219,14 @@ myStream.close();
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/e175a46/api/textstream.d.ts#L100">textstream.d.ts:100</a></li>
+									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/371cfa2/api/textstream.d.ts#L100">textstream.d.ts:100</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Get the current text stream size.</p>
 								</div>
-								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myStream = <span class="hljs-keyword">new</span> TextStream( <span class="hljs-string">'PROJECT/backend/bootstrap.js'</span>, <span class="hljs-string">'Read'</span> );
+								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myStream = <span class="hljs-keyword">new</span> TextStream( <span class="hljs-string">'PROJECT/bootstrap.js'</span>, <span class="hljs-string">'Read'</span> );
 <span class="hljs-built_in">console</span>.log( myStream.getSize() );
 <span class="hljs-comment">// 183</span>
 <span class="hljs-comment">// Important to close the stream every time.</span>
@@ -247,14 +247,14 @@ myStream.close();
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/e175a46/api/textstream.d.ts#L116">textstream.d.ts:116</a></li>
+									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/371cfa2/api/textstream.d.ts#L116">textstream.d.ts:116</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Reads bytes from the text stream.</p>
 								</div>
-								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myStream = <span class="hljs-keyword">new</span> TextStream( <span class="hljs-string">'PROJECT/backend/bootstrap.js'</span>, <span class="hljs-string">'Read'</span> );
+								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myStream = <span class="hljs-keyword">new</span> TextStream( <span class="hljs-string">'PROJECT/bootstrap.js'</span>, <span class="hljs-string">'Read'</span> );
 <span class="hljs-keyword">while</span>( !myStream.end() ){
     <span class="hljs-comment">// Read the next 10 bytes and moves the cursor position accordingly</span>
     <span class="hljs-built_in">console</span>.log( myStream.read( <span class="hljs-number">10</span> ) );
@@ -286,14 +286,14 @@ myStream.close();
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/e175a46/api/textstream.d.ts#L131">textstream.d.ts:131</a></li>
+									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/371cfa2/api/textstream.d.ts#L131">textstream.d.ts:131</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Set the cursor position to the beginning of the TextStream.</p>
 								</div>
-								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myStream = <span class="hljs-keyword">new</span> TextStream( <span class="hljs-string">'PROJECT/backend/bootstrap.js'</span>, <span class="hljs-string">'Read'</span> );
+								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myStream = <span class="hljs-keyword">new</span> TextStream( <span class="hljs-string">'PROJECT/bootstrap.js'</span>, <span class="hljs-string">'Read'</span> );
 <span class="hljs-built_in">console</span>.log( <span class="hljs-string">'Start: '</span>+ myStream.getPos() );
 myStream.read(<span class="hljs-number">20</span>);
 <span class="hljs-built_in">console</span>.log( <span class="hljs-string">'After read: '</span>+ myStream.getPos() );
@@ -317,14 +317,14 @@ myStream.close();
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/e175a46/api/textstream.d.ts#L145">textstream.d.ts:145</a></li>
+									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/371cfa2/api/textstream.d.ts#L145">textstream.d.ts:145</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Writes the text in the TextStream.</p>
 								</div>
-								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myFile = <span class="hljs-keyword">new</span> File( <span class="hljs-string">'PROJECT/backend/my-streamed-file.js'</span> );
+								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myFile = <span class="hljs-keyword">new</span> File( <span class="hljs-string">'PROJECT/my-streamed-file.js'</span> );
 <span class="hljs-keyword">var</span> myStream = <span class="hljs-keyword">new</span> TextStream( file, <span class="hljs-string">'write'</span> );
 myStream.write( <span class="hljs-string">'Hello '</span>+ <span class="hljs-built_in">Date</span>.now() +<span class="hljs-string">' !\n'</span> );
 <span class="hljs-comment">// Important to close the stream every time.</span>

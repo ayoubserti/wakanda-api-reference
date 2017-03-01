@@ -107,7 +107,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/e175a46/api/file.d.ts#L4">file.d.ts:4</a></li>
+									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/371cfa2/api/file.d.ts#L4">file.d.ts:4</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -116,12 +116,12 @@
 									The file does not have to exist.</p>
 								</div>
 								<h4 id="example-1-get-a-reference-to-an-existing-file">Example 1: Get a reference to an existing file</h4>
-								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myFile = <span class="hljs-keyword">new</span> File( <span class="hljs-string">'PROJECT/backend/bootstrap.js'</span> );
+								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myFile = <span class="hljs-keyword">new</span> File( <span class="hljs-string">'PROJECT/bootstrap.js'</span> );
 <span class="hljs-built_in">console</span>.log( myFile.exists );
 <span class="hljs-comment">// true</span>
 </code></pre>
 								<h4 id="example-2-get-a-reference-to-a-missing-file">Example 2: Get a reference to a missing file</h4>
-								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myFile = <span class="hljs-keyword">new</span> File( <span class="hljs-string">'PROJECT/backend/file-to-create.js'</span> );
+								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myFile = <span class="hljs-keyword">new</span> File( <span class="hljs-string">'PROJECT/file-to-create.js'</span> );
 <span class="hljs-built_in">console</span>.log( myFile.exists );
 <span class="hljs-comment">// false</span>
 </code></pre>
@@ -142,7 +142,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/e175a46/api/file.d.ts#L25">file.d.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/371cfa2/api/file.d.ts#L25">file.d.ts:25</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -151,13 +151,13 @@
 									The file does not have to exist.</p>
 								</div>
 								<h4 id="example-1-get-a-reference-to-an-existing-file">Example 1: Get a reference to an existing file</h4>
-								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myFolder = <span class="hljs-keyword">new</span> Folder( <span class="hljs-string">'PROJECT/backend/'</span> );
+								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myFolder = <span class="hljs-keyword">new</span> Folder( <span class="hljs-string">'PROJECT/'</span> );
 <span class="hljs-keyword">var</span> myFile = <span class="hljs-keyword">new</span> File( myFolder, <span class="hljs-string">'bootstrap.js'</span> );
 <span class="hljs-built_in">console</span>.log( myFile.exists );
 <span class="hljs-comment">// true</span>
 </code></pre>
 								<h4 id="example-2-get-a-reference-to-a-missing-file">Example 2: Get a reference to a missing file</h4>
-								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myFolder = <span class="hljs-keyword">new</span> Folder( <span class="hljs-string">'PROJECT/backend/'</span> );
+								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myFolder = <span class="hljs-keyword">new</span> Folder( <span class="hljs-string">'PROJECT/'</span> );
 <span class="hljs-keyword">var</span> myFile = <span class="hljs-keyword">new</span> File( myFolder, <span class="hljs-string">'file-to-create.js'</span> );
 <span class="hljs-built_in">console</span>.log( myFile.exists );
 <span class="hljs-comment">// false</span>
@@ -199,14 +199,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/e175a46/api/file.d.ts#L62">file.d.ts:62</a></li>
+									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/371cfa2/api/file.d.ts#L62">file.d.ts:62</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Check if the path references a file.</p>
 								</div>
-								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myIsFile = File.isFile( <span class="hljs-string">'PROJECT/backend/bootstrap.js'</span> );
+								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myIsFile = File.isFile( <span class="hljs-string">'PROJECT/bootstrap.js'</span> );
 <span class="hljs-built_in">console</span>.log( myIsFile );
 <span class="hljs-comment">// true</span>
 </code></pre>

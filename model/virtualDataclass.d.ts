@@ -691,7 +691,7 @@ getCollectionLength(event:Object):number;
 * };
 * ```
 */
-countEntities(event:oject):number;
+countEntities(event:object):number;
 
 
 
@@ -782,8 +782,7 @@ countEntities(event:oject):number;
 * The toArray method do work by default but you may want to override this behaviour for specific or optimization purpose
 * 
 */
-collectionToArray(event:object):[];
-
+collectionToArray(event:object):[any];
 
 
 
@@ -820,5 +819,5 @@ nextInCollection(object:event):entity;
 */
 getStamp(event:object):Number
 
-
+}
 

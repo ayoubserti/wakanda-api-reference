@@ -263,13 +263,13 @@ interface WAKDirectory {
      * ```javascript
      * // Usually defined in a boostrap file
      * directory.setSessionManager( 'session' );
-     * // Refers to PROJECT/backend/modules/session/index.js module
+     * // Refers to PROJECT/modules/session/index.js module
      * ```
      * 
      * The module must export the following methods to handle all session operations:
      * 
      * ```javascript
-     * // PROJECT/backend/modules/session/index.js
+     * // PROJECT/modules/session/index.js
      * // This session manager saves all session in the storage (could be a Redis instead)
      * 
      * // Called everytime the server creates or updates a session
@@ -326,7 +326,7 @@ interface WAKDirectory {
      * directory.setLoginManager('my-login-module', 'myDirectoryGroup');
      * ```
      * 
-     * This module is defined inside `PROJECT/backend/modules/my-login-module` or `SOLUTION/modules/my-login-module`.
+     * This module is defined inside `PROJECT/modules/my-login-module` or `SOLUTION/modules/my-login-module`.
      * If the module is not found in the project, it is then check inside the solution.
      * It must export a `login()` method and return the `user` object.
      * 

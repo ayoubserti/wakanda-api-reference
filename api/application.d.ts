@@ -25,9 +25,16 @@
 /// <reference path="./user.d.ts" />
 /// <reference path="./xmlhttprequest.d.ts" />
 
-interface Application extends Authentication, Data, Core, Threads, FileSystem, HTTP, Storage { }
+interface Application extends WAKAuthentication, WAKData, WAKCore, WAKThreads, WAKFileSystem, WAKHTTP, WAKStorage { }
 
-interface Data {
+interface WAKAuthentication {
+    /**
+     * References the directory of the application.
+     */
+    directory : WAKDirectory;
+}
+
+interface WAKData {
     /**
      * References the datastore of the application.
      */
@@ -90,14 +97,7 @@ interface Data {
     verifyDataStore(model: WAKFileInstance, data: WAKFileInstance, options: Object): void;
 }
 
-interface Authentication {
-    /**
-     * References the directory of the application.
-     */
-    directory : WAKDirectory;
-}
-
-interface Core {
+interface WAKCore {
     /**
      * References the console of the application.
      */
@@ -132,7 +132,7 @@ interface Core {
     ProgressIndicator(numElements: Number, sessionName?: String, stoppable?: Boolean, unused?: String, name?: String): ProgressIndicator;
 }
 
-interface Threads {
+interface WAKThreads {
     /**
      * Ends the current thread.
      * 
@@ -167,12 +167,12 @@ interface Threads {
     Mutex: Mutex;
     /**
      * Requires an SSJS module (CommonJS compliant).
-     * This module must be defined in `PROJECT/backend/modules/`.
+     * This module must be defined in `PROJECT/modules/`.
      * 
      * ```javascript
-     * // Get the module defined in PROJECT/backend/modules/mail
+     * // Get the module defined in PROJECT/modules/mail
      * var mail = require('mail');
-     * // Get the module defined in PROJECT/backend/modules/customers/platinium
+     * // Get the module defined in PROJECT/modules/customers/platinium
      * var platiniumCustomers = require('/customers/platinium'); 
      * ```
      * 
@@ -182,10 +182,10 @@ interface Threads {
     require(moduleId: String): Module;
     /**
      * Requires a NodeJS module.
-     * This module must be defined in `PROJECT/backend/node_modules`.
+     * This module must be defined in `PROJECT/node_modules`.
      * 
      * ```javascript
-     * // Get the Node module defined in PROJECT/backend/node_modules/http
+     * // Get the Node module defined in PROJECT/node_modules/http
      * var http = requireNode('http'); 
      * ```
      * 
@@ -209,7 +209,7 @@ interface Threads {
     wait(timeout?: Number): void;
 }
 
-interface FileSystem {
+interface WAKFileSystem {
     BinaryStream: BinaryStream;
     Blob: Blob;
     File: File;
@@ -256,7 +256,7 @@ interface FileSystem {
      * Loads the content of a text file from its path.
      * 
      * ```javascript
-     * var myText = loadText( 'PROJECT/backend/bootstrap.js' );
+     * var myText = loadText( 'PROJECT/bootstrap.js' );
      * console.log(myText);
      * ```
      * 
@@ -269,7 +269,7 @@ interface FileSystem {
      * Loads the content of a text file from a File object.
      * 
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/bootstrap.js' );
+     * var myFile = new File( 'PROJECT/bootstrap.js' );
      * var myText = loadText( myFile );
      * console.log( myText );
      * ```
@@ -306,7 +306,7 @@ interface FileSystem {
     saveText(textToSave: String, file: WAKFileInstance, charset?: Number): void;
 }
 
-interface HTTP {
+interface WAKHTTP {
     /**
      * Reference the HTTP server of the application.
      */
@@ -314,7 +314,7 @@ interface HTTP {
     XMLHttpRequest: XMLHttpRequest;
 }
 
-interface Storage {
+interface WAKStorage {
     /**
      * References the HTTP session storage of the application.
      */

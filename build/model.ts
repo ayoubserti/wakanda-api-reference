@@ -636,19 +636,46 @@ interface controlMethods {
  * - a Board dataclass
  * - a List dataclass
  * - a Card dataclass
- * - a Mermber dataclass
+ * - a Member dataclass
  * 
+ *   Here's bellow a description of the model.js file 
+ *   ```javascript
+ *  model.Board = new DataClass("Boards", "public");
+ *  model.Board.ID = new Attribute("storage", "string", "key", {readOnly: true});
+ *  model.Board.name = new Attribute("storage","string");
+ *  model.Board.desc = new Attribute("storage","string");
+ *  model.Board.children = new Attribute("relatedEntities", "Lists", "parent", {reversePath: true}); 
+ 
+
+ *  model.List=new DataClass("Lists","public");
+ *  model.List.ID=new Attribute("storage","string","key",{readOnly:true});
+ *  model.List.name=new Attribute("storage","string");
+ *  model.List.isClosed=new Attribute("storage","bool");
+ *  model.List.idBoard=new Attribute("storage","string");
+ *  model.List.parent = new Attribute("relatedEntity", "Board", "Board");
+
+
+ *  model.Card= new DataClass("Cards","public");
+ *  model.Card.ID=new Attribute("storage","string","key",{readOnly :true});
+ *  model.Card.name= new Attribute("storage","string");
+ *  model.Card.isClosed=new Attribute("storage","bool");
+ *  model.Card.desc= new Attribute("storage","string");
+
+ *  model.Member = new DataClass("Members", "public");
+ *  model.Member.ID = new Attribute("storage", "string", "key", {readOnly: true});
+ *  model.Member.fullname = new Attribute("storage","string");
+ *  model.Member.username = new Attribute("storage","string");
  * 
- * 
+
  *  #### Note
  *  The API will be described following this order :
  *   **READ Operations** :
  *  - getEntityByGey
  *  - getEntityByPos
  *  - allEntities
- *  - getCollectionLenght
  *  - getAttributeValue
- *  - orderBy
+ *  - loadEntity
+ * 
  * 
  *   **CREATE/SAVE OPERATIONS**
  *  - newEntity (instanciation (ds))
@@ -656,7 +683,32 @@ interface controlMethods {
  *  - saveEntity (save (ds) )
  *  - refreshEntity
  * 
+ *  **DROP OPERATIONS**
+ *  - dropEntity
+ *  - dropEntities 
  * 
+ *  **QUERY**
+ *  - searchByString
+ *  - searchByCriteria
+ * 
+ *  **Relationship Management**
+ *  - getRelatedKey
+ *  - getRelatedEntity-
+ *  - getRelatedEntities   
+ * 
+ *  **Collections Operations**
+ *  - newCollection
+ *  - addEntityToCollection
+ *  - getCollectionLength
+ *  - countEntities
+ *  - orderBy
+ *  - compute
+ *  - collectionToArray
+ *  - nextInCollection
+ * 
+ * 
+ *  **Others**
+ *  - getStamp 
  */ 
 
 
@@ -731,23 +783,6 @@ allEntities(event:Object):EntityCollection;
 
 
 
-/** Method  getCollectionLength - Method to retrieve the collection length
-* ```javascript
-* model.Board.controlMethods.getCollectionLength = function(event) {  
-* }
-*  In the event, you have access to the following object : 
-* `collectionStorage, collection, dataclass`
-* 
-* #### Example
-* ```javascript
-* model.Board.controlMethods.getCollectionLength = function(event) {
-*	
-*   return event.collectionStorage.elements.length;
-* };
-* ```
-*/
-getCollectionLength(event:Object):number
-
 
 
 
@@ -773,10 +808,10 @@ getCollectionLength(event:Object):number
 * };
 * ```
 */
-getEntityByPos(event:Object):entity
+getEntityByPos(event:Object):entity;
 
 
-/**Method getAttributeValue - Get the entity's attribute value
+/** Method getAttributeValue - Get the entity's attribute value
 *
 * model.Board.controlMethods.getAttributeValue = function(event) {  
 * }
@@ -802,76 +837,16 @@ getEntityByPos(event:Object):entity
 *    };
 * ```
 */
-getAttributeValue(event:Object):any
+getAttributeValue(event:Object):any;
 
+/** Method loadEntity - Works by default (can be overided)
+ *  model.Board.controlMethod.loadEntity = function(event){};
+ * 
+ * Works by default, but can be overided if needed
+ * 
+ */
+loadEntity(event:object);entity;
 
-
-/** 
-*Method orderby - Method used to order by the remote collection
-* ```
-* model.Board.controlMethods.orderBy = function(event) {
-* } ```
-*  Are available in the event :
-* `collectionStorage  , sortedCollectionStorage, dataclass, collection, attributeNames`
-*  Doing this we receive an array of objects attributeNames[] containing the properties :
-* ```{
-* attname : string ,
-* sort : bool (ascending, descending) 
-* } ```
-
-* #### Example
-* ```javascript
-* model.Board.controlMethods.orderBy = function(event) {
-*
-* //Get unsort entityCollection
-*    var elements = event.collectionStorage.elements;
-*    var orderBy1 = event.attributeNames[0];
-*    var orderBy2 = event.attributeNames[1];
-*    // Sort entityCollection
-*    elements.sort(function(s1, s2) {
-*        if (orderBy1.ascending) {
-*            if (s1[orderBy1.attname] < s2[orderBy1.attname])
-*                return -1;
-*            else if (s1[orderBy1.attname] == s2[orderBy1.attname]) {
-*                // if we have an ambiguity  we sort by the second attribute (in general ID)
-*                if (orderBy2 != undefined) {
-*                    if (orderBy2.ascending) {
-*
-*                        if (s1[orderBy2.attname] < s2[orderBy2.attname]) {
-*                            return -1;
-*                        }
-*                        else
-*                            return 1;
-*                    }
-*                }
-*            }
-*            else
-*                return 1;
-*        }
-*        else {
-*            if (s2[orderBy1.attname] < s1[orderBy1.attname])
-*                return -1;
-*            else if (s2[orderBy1.attname] == s1[orderBy1.attname]) {
-*                if (orderBy2 != undefined) {
-*                    if (orderBy2.ascending) {
-*
-*                        if (s1[orderBy2.attname] < s2[orderBy2.attname]) {
-*                            return -1;
-*                        }
-*                        else
-*                            return 1;
-*                    }
-*                }
-*            }
-*            else
-*                return 1;
-*        }
-*    });
-*    // Set sort entityCollection
-*    event.sortedCollectionStorage.elements = elements;
-* };
-*/
- orderBy(event:object):entityCollection;
 
 
 
@@ -949,381 +924,517 @@ Are available
 *            throw e;
 *        }
 *    }
-*};
+* };
 * ```
 */
-saveEntity(event:object):entity
+saveEntity(event:object):entity;
 
 
 
 
-Method refreshENtity - Refresh the remote entity -> OPTIONNAL
-
-model.dataClass1.controlMethods.refreshEntity=function(){};
-
-
-
-
-
+/** Method refreshENtity - Refresh the remote entity -> OPTIONNAL
+ * model.dataClass1.controlMethods.refreshEntity=function(){};
+ * 
+*/
+refreshEntity(event:object):entity;
 
 
 
 
 
 
-DELETE OPERATIONS
+/** 
+* Method dropEntity - Remove a remote Entity
+*
+* model.Card.controlMethods.dropEntity = function(event) {};
+*
+* Are available in the event :
+* `Dataclass, entity, entityStorage`
+*
+* #### Example 
+* ```javascript
+* model.Card.controlMethods.dropEntity = function(event) {
+*
+*        console.log("drop entity")
+*        if (event.entityStorage.ID != null) {
+*            try {
+*                wakTrello.deleteCardByID(process.env.appkey, process.env.token, event.entityStorage.ID);
+*            }
+*            catch (e) {
+*                throw e;
+*            }
+*        }
+*    }
+* ```
+*/
+dropEntity(event:object): void;
+
+/** Method dropEntities - Remove a remote Collection
+*
+* model.Card.controlMethods.dropEntities = function(event) {};
+*
+* Are avaiable in the event :
+* `dataclass, entity, entityStora, collection, collectionStorage`
+*
+* #### Example
+* ```javascript
+* model.Card.controlMethods.dropEntities = function(event) {
+*
+*    var allCards = event.collectionStorage.elements;
+*    allCards.forEach(function(item) {
+*        try {
+*            wakTrello.deleteCardByID(process.env.appkey, process.env.token, item.ID)
+*        }
+*        catch (e) {
+*            throw e;
+*        }
+*    });
+*   }
+*/
+dropEntities(event:object):void;
 
 
 
-Method dropEntity - Supprime un entité
 
-model.Card.controlMethods.dropEntity = function(event) {
-Dataclass, entity, entityStorage}
+/*
+* Method QueryByString - Method to query a remote collection with a pre-defined string
+* 
+* model.List.controlMethods.queryByString = function(event) {};
+* 
+* Is available in the event :
+* `collectionStorage`
+* 
+* #### Note
+* If the queryByString return false then it automatically falls back in the QueryByCriteria method
+*
+* 
+*
 
-
-exemple
-model.Card.controlMethods.dropEntity = function(event) {
-
-        console.log("drop entity")
-        if (event.entityStorage.ID != null) {
-            try {
-                wakTrello.deleteCardByID(process.env.appkey, process.env.token, event.entityStorage.ID);
-            }
-            catch (e) {
-                throw e;
-            }
-        }
-    }
-
-
-Method dropEntities - Supprime une collection d’entity
-
-model.Card.controlMethods.dropEntities = function(event) {
-dataclass, entity, entityStora, collection, collectionStorage
-}
-
-exemple
-model.Card.controlMethods.dropEntities = function(event) {
-
-    var allCards = event.collectionStorage.elements;
-    allCards.forEach(function(item) {
-        try {
-            wakTrello.deleteCardByID(process.env.appkey, process.env.token, item.ID)
-        }
-        catch (e) {
-            throw e;
-        }
-    });
-   }
-
-
-
-QUERY OPERATIONS
+* #### Example
+* ```javascript
+* model.List.controlMethods.queryByString = function(event) {
+*
+*    if (event.queryString[0] === "+") {
+*        var elements = [];
+*        var idBoard = event.queryString.split("+")[1];
+*        wakTrello.getListsOfABoard(process.env.appkey, process.env.token, idBoard).forEach(function(item) {
+*            var list = {};
+*            list.ID = item.id;
+*            list.name = item.name;
+*            list.isClosed = item.closed;
+*            list.idBoard = item.idBoard;
+*            elements.push(list);
+*        })
+*        event.collectionStorage.elements = elements;
+*        return true;
+*    }
+*    else
+*        return false; // falls back on queryByCriteria()
+*}
+* ```
+*/
+queryString(event:object):entityCollection;
 
 
-2 methods exist: QueryByString and QueryByCriteria.
-If the queryByString return false then it automatically falls back in the QueryByCriteria method
+/**
+ * Method queryByCriteria - Method that allows full management of query
+ * 
+ *
 
 
-Method QueryByString - parse une string de query définie
+* model.List.controlMethods.queryByCriteria = function(event) {};
+*
+* Is avaiable in the event :
+* `collectionStorage`
 
-model.List.controlMethods.queryByString = function(event) {
-collectionStorage
-}
+* #### Example <details> <summary> Click to Expand </summary>
+* ```javascript
+* model.List.controlMethods.queryByCriteria = function(event) {
+*  
+*    var listsToBeReturned=[];
+*    var criterias = event.query;
+*    if (criterias.length == 1)
+*	{
+*		var criteria = criterias[0]; 
+*		var val ;   
+*		var attributeName=criteria.attributeName;
+*		var beginWith = false;
+*		var endWith = false;
+*		var equal=false;
+*		if (criteria.value[0] == '*')
+*		{
+*			endWith = true;
+*			val = criteria.value.substring(1, criteria.value.length);
+*		}
+*		else if (criteria.value[criteria.value.length-1] == '*')
+*		{
+*			beginWith = true;
+*			val = criteria.value.substring(0, criteria.value.length-1);
+*		}
+*		else {
+*			equal=true;
+*			val = criteria.value;
+*			
+*		}
+*      if(beginWith){
+*      var lists=ds.List.all();
+ *     
 
-exemple
-model.List.controlMethods.queryByString = function(event) {
+ *     	
+ *     	lists.forEach(function(item){
+ *     		var ok=false;
+ *     			var subname = item[attributeName].substring(0,val.length);
+ *     		if(subname.toLowerCase()==val.toLowerCase()) 
+ *     		  ok=true;
+ *     		
+ *        if(ok){
+ *        	
+ *        	var list = {};
+ *           list.ID = item.ID;
+ *           list.name = item.name;
+ *           list.isClosed = item.closed;
+ *           list.idBoard = item.idBoard;
+ *           listsToBeReturned.push(list);
+ *        }	
+ *     	})
+ *     }else if(endWith){
+ *     		
+ *     	var lists=ds.List.all();
+ *     	
+ *     	lists.forEach(function(item){
+ *     		var ok=false;
+ *     		
+ *     		var subname = item[attributeName].substring(item[attributeName].length-val.length);
+ *     		if(subname.toLowerCase()==val.toLowerCase()) 
+ *     		  ok=true;
+ *     		
+ *        if(ok){
+ *        	 
+ *        	var list = {};
+ *           list.ID = item.ID;
+ *           list.name = item.name;
+ *           list.isClosed = item.closed;
+ *           list.idBoard = item.idBoard;
+ *           listsToBeReturned.push(list);
+ *        }
+ *     		
+ *     	})
+ *     }
+ *     else {
+ *     	
+ *     	var lists=ds.List.all();
+ *     	
+ *     	lists.forEach(function(item){
+ *     		var ok=false;
+ *     		 
+ *     		var subname = item[attributeName].substring(item[attributeName].length-val.length);
+ *     		if(subname.toLowerCase()==val.toLowerCase()) 
+ *     		  ok=true;
+ *     		
+ *        if(ok){
+ *        	 
+ *        	var list = {};
+ *           list.ID = item.ID;
+ *           list.name = item.name;
+ *           list.isClosed = item.closed;
+ *           list.idBoard = item.idBoard;
+ *           listsToBeReturned.push(list);
+ *        }
+ *     		
+ *     	})
+ *     	
+  *    }
+* 
+ *    event.collectionStorage.elements = listsToBeReturned;
+ *    return true;
+ *  }
+ *  return false;
+* }
+* ```
+*/
+queryByCriteria(event:object):EntityCollection;
 
-    if (event.queryString[0] === "+") {
-        var elements = [];
-        var idBoard = event.queryString.split("+")[1];
-        wakTrello.getListsOfABoard(process.env.appkey, process.env.token, idBoard).forEach(function(item) {
-            var list = {};
-            list.ID = item.id;
-            list.name = item.name;
-            list.isClosed = item.closed;
-            list.idBoard = item.idBoard;
-            elements.push(list);
-        })
-        event.collectionStorage.elements = elements;
-        return true;
-    }
-    else
-        return false; // falls back on queryByCriteria()
-}
 
 
-Method queryByCriteria - Allow full management of query
 
-model.List.controlMethods.queryByCriteria = function(event) {
-collectionStorage
-}
+/** Method getRelatedKey - Mandatory for managing Relations 
+* 
+* model.List.controlMethods.getRelatedKey = function(event) {};
+*
+* Is available in the event :
+*`dataClass, entity, entityStorage`
 
-exemple
-model.List.controlMethods.queryByCriteria = function(event) {
-  
-    var listsToBeReturned=[];
-    var criterias = event.query;
-    if (criterias.length == 1)
-	{
-		var criteria = criterias[0]; 
-		var val ;   
-		var attributeName=criteria.attributeName;
-		var beginWith = false;
-		var endWith = false;
-		var equal=false;
-		if (criteria.value[0] == '*')
-		{
-			endWith = true;
-			val = criteria.value.substring(1, criteria.value.length);
-		}
-		else if (criteria.value[criteria.value.length-1] == '*')
-		{
-			beginWith = true;
-			val = criteria.value.substring(0, criteria.value.length-1);
-		}
-		else {
-			equal=true;
-			val = criteria.value;
-			
-		}
-      if(beginWith){
-      var lists=ds.List.all();
-      
-      	
-      	lists.forEach(function(item){
-      		var ok=false;
-      			var subname = item[attributeName].substring(0,val.length);
-      		if(subname.toLowerCase()==val.toLowerCase()) 
-      		  ok=true;
-      		
-         if(ok){
-         	
-         	var list = {};
-            list.ID = item.ID;
-            list.name = item.name;
-            list.isClosed = item.closed;
-            list.idBoard = item.idBoard;
-            listsToBeReturned.push(list);
-         }	
-      	})
-      }else if(endWith){
-      		
-      	var lists=ds.List.all();
-      	
-      	lists.forEach(function(item){
-      		var ok=false;
-      		
-      		var subname = item[attributeName].substring(item[attributeName].length-val.length);
-      		if(subname.toLowerCase()==val.toLowerCase()) 
-      		  ok=true;
-      		
-         if(ok){
-         	 
-         	var list = {};
-            list.ID = item.ID;
-            list.name = item.name;
-            list.isClosed = item.closed;
-            list.idBoard = item.idBoard;
-            listsToBeReturned.push(list);
-         }
-      		
-      	})
-      }
-      else {
-      	
-      	var lists=ds.List.all();
-      	
-      	lists.forEach(function(item){
-      		var ok=false;
-      		 
-      		var subname = item[attributeName].substring(item[attributeName].length-val.length);
-      		if(subname.toLowerCase()==val.toLowerCase()) 
-      		  ok=true;
-      		
-         if(ok){
-         	 
-         	var list = {};
-            list.ID = item.ID;
-            list.name = item.name;
-            list.isClosed = item.closed;
-            list.idBoard = item.idBoard;
-            listsToBeReturned.push(list);
-         }
-      		
-      	})
-      	
-      }
+
+* #### Example
+* ```javascript
+* model.List.controlMethods.getRelatedKey = function(event) {
+*    return event.entityStorage.idBoard 
+* }
+* ```
+* #### Note
+* For now the method returns the key, but in the near future it might return an array of values for composite keys [] too
+
+*/
+getRelatedKey(event:object):any;
+
+
+
+
+/** Method getRelatedEntities - Method to retrieve the Related Collections
+
+* model.Board.controlMethods.getRelatedEntities = function(event) {}
+
+* Is available in the event :
+* `dataClass, entity, entityStorage, attributes, attributeName`
+
+* Example:
+* ```javascript
+* model.Board.controlMethods.getRelatedEntities = function(event) {
+*    return event.entityStorage.Children;
+* }
+* ```
+
+*/
+getRelatedEntities(event:object):EntityCollection;
+
+
+
+/** Method getRelatedEntity - Allows Alias management and necessary (in addition to getRelatedEntities) for level 2 relations 
+*
+* model.List.controlMethods.getRelatedEntity = function(event) {};
+*
+* Is available in the event :
+* `dataClass, entity, entityStorage, attributes , attributeName`
+*
+* Note : it must Return an Entity
+
+* #### Example
+* ```javascript
+* model.List.controlMethods.getRelatedEntity = function(event) {
+*
+*    return event.entityStorage.parent;
+* }
+* ```
+*/
+getRelatedEntity(event : object): Entity;
+
+
+
+
+
  
-     event.collectionStorage.elements = listsToBeReturned;
-     return true;
-   }
-   return false;
-}
-
 
 
-RELATIONS OPERATIONS
-
-
-Method getRelatedEntities - Allow you to manage Related Collections
-
-model.Board.controlMethods.getRelatedEntities = function(event) {
-dataClass, entity, entityStorage, attributes, attributeName
-}
-
-exemple:
-model.Board.controlMethods.getRelatedEntities = function(event) {
-
-    return event.entityStorage.Children;
-}
-
-it must return a Collection
-
-Method getRelatedEntity - Allows Alias management and necessary (in addition to getRelatedEntities) for level 2 relations 
-
-model.List.controlMethods.getRelatedEntity = function(event) {
-dataClass, entity, entityStorage, attributes , attributeName
-}
-
-it must Return an Entity
-exemple
-
-model.List.controlMethods.getRelatedEntity = function(event) {
-
-    return event.entityStorage.parent;
-}
-
-
-
-
-
-
- Method getRelatedKey - Necessary for Relations Management
-
-model.List.controlMethods.getRelatedKey = function(event) {
-dataClass, entity, entityStorage }
-
-Returns the key or (in the near future) an array of values for composite keys []
-
-
-exemple
-model.List.controlMethods.getRelatedKey = function(event) {
-    return event.entityStorage.idBoard 
-}
-
-
-
-
-COLLECTIONS OPERATIONS
 
  
 
-Method NewCollection - For creating new collections
-
-model.List.controlMethods.newCollection = function(event) {
-dataclass, collection, collectionStorage  }
-
-
-exemple:
-model.List.controlMethods.newCollection = function(event) {
-
-    event.collectionStorage.elements = [];
-
-}
-
- Method addEntityToCollection - Add Entity to a collection
-
-model.List.controlMethods.addEntityToCollection = function(event) {
-dataClass, collection,collectionStorage,entity, entityStorage  }
-
-
-exemple
-model.List.controlMethods.addEntityToCollection = function(event) {
-	var item = event.entity;
-	var elements = event.collectionStorage.elements;
-    var list = {};
-    list.ID = item.ID;
-    list.name = item.name;
-    list.isClosed = item.closed;
-    list.idBoard = item.idBoard;
-    elements.push(list);
-    event.collectionStorage.elements = elements;
-}
+/** Method NewCollection - For creating new collections
+*
+* model.List.controlMethods.newCollection = function(event) {};
+* 
+* Is available in the event : 
+* `dataclass, collection, collectionStorage`
+*
+*
+* #### Example:
+* ```javascript
+* model.List.controlMethods.newCollection = function(event) {
+*    event.collectionStorage.elements = [];
+*
+* }
+* ```
+*/
+newCollection(event:object):EntityCollection;
 
 
-
-Method countEntities - Count Number of entities in a dataclass - Allow ds.Dataclass.count()
-
-It’s different from getCollectionLenght (collection level) as countEntities works at the Dataclass level. 
-
-
-model.Board.controlMethods.countEntities = function(event) {}
-
-
-Exemple : 
-
-model.Board.controlMethods.countEntities = function(event) {
-
-    var coll = wakTrello.getBoards(process.env.appkey, process.env.token, process.env.userNameTrello);
-    return coll.length
-};
+/** Method addEntityToCollection - Add Entity to a Collection
+*
+* model.List.controlMethods.addEntityToCollection = function(event) {};
+* Is available in the event :
+* `dataClass, collection,collectionStorage,entity, entityStorage `
+*
+* #### Example
+* ```javascript
+* model.List.controlMethods.addEntityToCollection = function(event) {
+*	var item = event.entity;
+*	var elements = event.collectionStorage.elements;
+*    var list = {};
+*    list.ID = item.ID;
+*    list.name = item.name;
+*    list.isClosed = item.closed;
+*    list.idBoard = item.idBoard;
+*    elements.push(list);
+*    event.collectionStorage.elements = elements;
+* }
+* ```
+*/
+addEntityToCollection(event:object):EntityCollection;
 
 
 
 
+/** Method  getCollectionLength - Method to retrieve the collection length
+* ```javascript
+* model.Board.controlMethods.getCollectionLength = function(event) {  
+* }
+*  In the event, you have access to the following object : 
+* `collectionStorage, collection, dataclass`
+* 
+* #### Example
+* ```javascript
+* model.Board.controlMethods.getCollectionLength = function(event) {
+*	
+*   return event.collectionStorage.elements.length;
+* };
+* ```
+*/
+getCollectionLength(event:Object):number;
+
+
+/** Method countEntities - Count Number of entities in a dataclass 
+* 
+*model.Board.controlMethods.countEntities = function(event) {}
+*
+* #### Note
+* It’s different from getCollectionLenght (collection level) as countEntities works at the Dataclass level. 
+*
+* #### Example : 
+* ```javascript
+* model.Board.controlMethods.countEntities = function(event) {
+*
+*   var coll = wakTrello.getBoards(process.env.appkey, process.env.token, process.env.userNameTrello);
+*    return coll.length
+* };
+* ```
+*/
+countEntities(event:oject):number;
 
 
 
+/** 
+*Method orderby - Method used to order by the remote collection
+* ```
+* model.Board.controlMethods.orderBy = function(event) {
+* } ```
+*  Are available in the event :
+* `collectionStorage  , sortedCollectionStorage, dataclass, collection, attributeNames`
+*  Doing this we receive an array of objects attributeNames[] containing the properties :
+* ```{
+* attname : string ,
+* sort : bool (ascending, descending) 
+* } ```
+
+* #### Example
+* ```javascript
+* model.Board.controlMethods.orderBy = function(event) {
+*
+* //Get unsort entityCollection
+*    var elements = event.collectionStorage.elements;
+*    var orderBy1 = event.attributeNames[0];
+*    var orderBy2 = event.attributeNames[1];
+*    // Sort entityCollection
+*    elements.sort(function(s1, s2) {
+*        if (orderBy1.ascending) {
+*            if (s1[orderBy1.attname] < s2[orderBy1.attname])
+*                return -1;
+*            else if (s1[orderBy1.attname] == s2[orderBy1.attname]) {
+*                // if we have an ambiguity  we sort by the second attribute (in general ID)
+*                if (orderBy2 != undefined) {
+*                    if (orderBy2.ascending) {
+*
+*                        if (s1[orderBy2.attname] < s2[orderBy2.attname]) {
+*                            return -1;
+*                        }
+*                        else
+*                            return 1;
+*                    }
+*                }
+*            }
+*            else
+*                return 1;
+*        }
+*        else {
+*            if (s2[orderBy1.attname] < s1[orderBy1.attname])
+*                return -1;
+*            else if (s2[orderBy1.attname] == s1[orderBy1.attname]) {
+*                if (orderBy2 != undefined) {
+*                    if (orderBy2.ascending) {
+*
+*                        if (s1[orderBy2.attname] < s2[orderBy2.attname]) {
+*                            return -1;
+*                        }
+*                        else
+*                            return 1;
+*                    }
+*                }
+*            }
+*            else
+*                return 1;
+*        }
+*    });
+*    // Set sort entityCollection
+*    event.sortedCollectionStorage.elements = elements;
+* };
+*/
+ orderBy(event:object):entityCollection;
 
 
-
-
-
-
-
-
-
-
-
-
- OTHER METHODS - Not mandatory - They do provide a default behaviour
-
-
-
-method getStamp - Returns the _stampValue
-
-model.List.controlMethods.getStamp = function() {
- dataClass, entity}
-
-If not coded getStamp() returns 0
-Working with Stamps allows optimistic Locking
-
-
-
-
-
-
-Method collectionToArray - Transform a collection to an array
-
-The toArray method do work by default but you may want to override this behaviour for specific or optimization purpose
-
-model.Dataclass1.controlMethods.collectionToArray = function(event) {collectionStorage, } ;
-
-
-
-Method nextInCollection - Returns the next entity in the collection
-
-A default behaviour already works and allow u to use the next() method when working with collection. If u want/need to override or optimize it you need to use the following method
-
-model.Board.controlMethods.countEntities = function(event) {
-dataclass }
-
-
-
-//Method Load Entity > Non implementé dans le controller.js
+/** Method computeAttribute - Method for using the Wakanda statistical API. Works by default
+ * 
+ * model.List.controlMethods.computeAttribute = function() {};
+ *  
+ * Works by default - However it needs to be declared in the controller.js file (like all the methods)
  */
+ computeAttribute(event:object):object;
+
+
+/** Method collectionToArray - Transform a collection to an array - Works by default
+*
+* model.Dataclass1.controlMethods.collectionToArray = function(event) {};
+* Is available in the method :
+* `collectionStorage`
+* 
+* #### Note
+* The toArray method do work by default but you may want to override this behaviour for specific or optimization purpose
+* 
+*/
+collectionToArray(event:object):[];
 
 
 
-}
+
+/** Method nextInCollection - Returns the next entity in the collection - Works by default
+* 
+* model.Board.controlMethods.nextInCollection = function(event) {};
+* In the event is available :
+* `dataclass,entityCollection, entityCollectionStorage, entity`
+* A default behaviour already works and allow you to use the next() method when working with collection. 
+* If you want/need to override or optimize it you need to use this method
+*/
+nextInCollection(object:event):entity;
+
+
+
+
+
+
+
+
+ /**OTHER METHODS */
+
+
+/** Method getStamp - Returns the _stampValue
+*
+* model.List.controlMethods.getStamp = function() {};
+* 
+* In the event are available :
+* `dataClass, entity``
+*
+* #### Note
+* If not coded getStamp() returns 0
+* Working with Stamps allows optimistic Locking 
+*/
+getStamp(event:object):Number
+
+
+

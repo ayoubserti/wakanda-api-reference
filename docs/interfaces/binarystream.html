@@ -101,14 +101,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/bde0e54/api/binarystream.d.ts#L6">binarystream.d.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/aceed6c/api/binarystream.d.ts#L6">binarystream.d.ts:6</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Creates a new BinaryStream object.</p>
 								</div>
-								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> readstream = <span class="hljs-keyword">new</span> BinaryStream( <span class="hljs-string">'PROJECT/backend/logs/HTTPServer.waLog'</span> );
+								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> readstream = <span class="hljs-keyword">new</span> BinaryStream( <span class="hljs-string">'PROJECT/logs/HTTPServer.waLog'</span> );
 <span class="hljs-built_in">console</span>.log( <span class="hljs-string">'[chunck] '</span>+ readstream.getBuffer(<span class="hljs-number">1000</span>).toString() );
 <span class="hljs-comment">// Important to close the stream after every use to release the referenced file</span>
 readstream.close();
@@ -138,14 +138,14 @@ readstream.close();
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/bde0e54/api/binarystream.d.ts#L20">binarystream.d.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/aceed6c/api/binarystream.d.ts#L20">binarystream.d.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Creates a new BinaryStream object.</p>
 								</div>
-								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myFile = <span class="hljs-keyword">new</span> File( <span class="hljs-string">'PROJECT/backend/logs/HTTPServer.waLog'</span> );
+								<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myFile = <span class="hljs-keyword">new</span> File( <span class="hljs-string">'PROJECT/logs/HTTPServer.waLog'</span> );
 <span class="hljs-keyword">var</span> readstream = <span class="hljs-keyword">new</span> BinaryStream( myFile );
 <span class="hljs-built_in">console</span>.log( <span class="hljs-string">'[chunck] '</span>+ readstream.getBuffer(<span class="hljs-number">1000</span>).toString() );
 <span class="hljs-comment">// Important to close the stream after every use to release the referenced file</span>

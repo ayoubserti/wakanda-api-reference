@@ -15,7 +15,8 @@ interface MIMEMessage {
      */
     count: Number;
     /**
-     * Encoding type: 'multipart/form-data' or 'application/x-www-form-urlencoded'.
+     * Encoding type.
+        example: 'multipart/form-data' or 'application/x-www-form-urlencoded'.
      */
     encoding: String;
     /**
@@ -63,6 +64,8 @@ interface MIMEMessagePart {
     size: Number;
     /**
      * Saves the body of the part in the file whose path is passed in filePath.
+     * @param filePath file path where to save MIMEMessagePart
+     * @param overWrite if true, it will override the file if already exists. Else, the save will be omitted
      */
     save(filePath: String, overWrite?: Boolean): void;
 }

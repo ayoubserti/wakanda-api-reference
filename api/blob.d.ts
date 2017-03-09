@@ -33,24 +33,24 @@ interface WAKBlobInstance {
      * #### Example 1: Copy a blob
      * ```javascript
      * var myBlob = new Blob( 20 ); 
-     * myBlob.copyTo( 'PROJECT/backend/blob_copy.js' );
+     * myBlob.copyTo( 'PROJECT/blob_copy.js' );
      * ```
      * or
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/blob_copy.js' );
+     * var myFile = new File( 'PROJECT/blob_copy.js' );
      * var myBlob = new Blob( 20 ); 
      * myBlob.copyTo( myFile );
      * ```
      * 
      * #### Example 2: Copy a file
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/bootstrap.js' );
-     * myFile.copyTo( 'PROJECT/backend/bootstrap_copy.js' );
+     * var myFile = new File( 'PROJECT/bootstrap.js' );
+     * myFile.copyTo( 'PROJECT/bootstrap_copy.js' );
      * ```
      * or
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/bootstrap.js' );
-     * var myFileCopy = new File( 'PROJECT/backend/bootstrap_copy.js' );
+     * var myFile = new File( 'PROJECT/bootstrap.js' );
+     * var myFileCopy = new File( 'PROJECT/bootstrap_copy.js' );
      * myFile.copyTo( myFileCopy );
      * ```
      * 
@@ -60,7 +60,7 @@ interface WAKBlobInstance {
     copyTo(destination: String, overwrite?: Boolean): void;
     copyTo(destination: WAKFileInstance, overwrite?: Boolean): void;
     /**
-     * Creates a new blob by referencing the contents of the bytes of the Blob to which it is applied, from start to end.
+     * Creates a new blob by referencing the binary contents of the File to which it is applied, from start to end.
      * 
      * #### Example 1: Slice a blob
      * ```javascript
@@ -84,7 +84,7 @@ interface WAKBlobInstance {
      * 
      * #### Example 3: Slice a file
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/bootstrap.js' );
+     * var myFile = new File( 'PROJECT/bootstrap.js' );
      * var myBlobSlice = myFile.slice( 0, 100 );
      * console.log( myBlobSlice.toString() );
      * ```
@@ -95,7 +95,7 @@ interface WAKBlobInstance {
      */
     slice(start?: Number, end?: Number, mimeType?: String): WAKBlobInstance;
     /**
-     * Returns a buffer object containing a copy of the blob bytes.
+     * Returns a buffer object containing a copy of the File bytes.
      */
     toBuffer(): WAKBufferInstance;
     /**

@@ -52,7 +52,7 @@ interface HttpServer {
      * #### Step 2: Handle the request
      * ```javascript
      * // modules/request-greetings/index.js
-     * function pong( request, response ){
+     * exports.pong = function pong( request, response ){
      *     return 'pong';
      * }
      * ```

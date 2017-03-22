@@ -2,6 +2,7 @@
 ///<reference path="./connectionsessioninfo.d.ts" />
 ///<reference path="./user.d.ts" />
 ///<reference path="./group.d.ts" />
+///<reference path="./file.d.ts" />
 
 interface WAKDirectory {
     /**

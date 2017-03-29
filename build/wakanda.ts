@@ -122,79 +122,79 @@ var XMLHttpRequest = application.XMLHttpRequest;
 
 
 
-interface Application extends Authentication, Data, Core, Threads, FileSystem, HTTP, Storage { }
+interface Application extends WAKAuthentication, WAKData, WAKCore, WAKThreads, WAKFileSystem, WAKHTTP, WAKStorage { }
 
-interface Data {
-    /**
-     * Reference the datastore of the application.
-     */
-    ds: Datastore;
-    /**
-    *starts the backup of the closed datastore defined by model and data.
-    */
-    backupDataStore(model: WAKFileInstance, data: WAKFileInstance, settings: Object, options?: Object): WAKFileInstance;
-    /**
-    *compacts the datastore's data file designated by model and data, and generates the compactedData data file.
-    */
-    compactDataStore(model: WAKFileInstance, data: WAKFileInstance, options?: Object, compactedData?: WAKFileInstance): void;
-    /**
-    *returns an Array that lists the 20 most recent backup manifests recorded in the specified backup registry.
-    */
-    getBackupRegistry(registryFolder: WAKFolderInstance): Array<Object>;
-    /**
-    *returns an Object containing the default backup settings for the solution.
-    */
-    getBackupSettings(): Object;
-    /**
-    *returns information about the journal of the datastore whose data file you passed in dataFile.
-    */
-    getJournalInfo(dataFile: WAKFileInstance, options?: Object): Object;
-    /**
-    *returns information about the journal of the datastore whose data file you passed in dataFile.
-    */
-    getJournalInfo(dataFile: String, options?: Object): Object;
-    /**
-    *returns an Array that lists the 20 most recent backup manifests recorded in the backup registry default folder of the application.
-    */
-    getLastBackups(): Array<Object>;
-    /**
-    *allows you to partially or fully integrate a journal file into a datastore.
-    */
-    integrateDataStoreJournal(model: WAKFileInstance, data: WAKFileInstance, journal: WAKFileInstance, options?: Object): Object;
-    /**
-    *repairs the datastore's data file defined by model and data, and generates the repairedData data file.
-    */
-    repairDataStore(model: WAKFileInstance, data: WAKFileInstance, options?: Object, repairedData?: WAKFileInstance): void;
-    /**
-    *resets the current journal of the datastore whose data file you passed in dataFile.
-    */
-    resetDataStoreJournal(dataFile: WAKFileInstance): Object;
-    /**
-    *resets the current journal of the datastore whose data file you passed in dataFile.
-    */
-    resetDataStoreJournal(dataFile: String): Object;
-    /**
-    *allows you to restore a data folder previously archived.
-    */
-    restoreDataStore(manifest: WAKFileInstance, restoreFolder: WAKFolderInstance, options?: Object): Object;
-    /**
-    *allows you to restore a data folder previously archived.
-    */
-    restoreDataStore(config: Object, options?: Object): Object;
-    /**
-    *verifies the internal structure of the objects contained in the datastore designated by model and data.
-    */
-    verifyDataStore(model: WAKFileInstance, data: WAKFileInstance, options: Object): void;
-}
-
-interface Authentication {
+interface WAKAuthentication {
     /**
      * References the directory of the application.
      */
     directory : WAKDirectory;
 }
 
-interface Core {
+interface WAKData {
+    /**
+     * References the datastore of the application.
+     */
+    ds: Datastore;
+    /**
+    *Starts the backup of the closed datastore defined by model and data.
+    */
+    backupDataStore(model: WAKFileInstance, data: WAKFileInstance, settings: Object, options?: Object): WAKFileInstance;
+    /**
+    *Compacts the datastore's data file designated by model and data, and generates the compactedData data file.
+    */
+    compactDataStore(model: WAKFileInstance, data: WAKFileInstance, options?: Object, compactedData?: WAKFileInstance): void;
+    /**
+    *Returns an Array that lists the 20 most recent backup manifests recorded in the specified backup registry.
+    */
+    getBackupRegistry(registryFolder: WAKFolderInstance): Array<Object>;
+    /**
+    *Returns an Object containing the default backup settings for the solution.
+    */
+    getBackupSettings(): Object;
+    /**
+    *Returns information about the journal of the datastore whose data file you passed in dataFile.
+    */
+    getJournalInfo(dataFile: WAKFileInstance, options?: Object): Object;
+    /**
+    *Returns information about the journal of the datastore whose data file you passed in dataFile.
+    */
+    getJournalInfo(dataFile: String, options?: Object): Object;
+    /**
+    *Returns an Array that lists the 20 most recent backup manifests recorded in the backup registry default folder of the application.
+    */
+    getLastBackups(): Array<Object>;
+    /**
+    *Allows you to partially or fully integrate a journal file into a datastore.
+    */
+    integrateDataStoreJournal(model: WAKFileInstance, data: WAKFileInstance, journal: WAKFileInstance, options?: Object): Object;
+    /**
+    *Repairs the datastore's data file defined by model and data, and generates the repairedData data file.
+    */
+    repairDataStore(model: WAKFileInstance, data: WAKFileInstance, options?: Object, repairedData?: WAKFileInstance): void;
+    /**
+    *Resets the current journal of the datastore whose data file you passed in dataFile.
+    */
+    resetDataStoreJournal(dataFile: WAKFileInstance): Object;
+    /**
+    *Resets the current journal of the datastore whose data file you passed in dataFile.
+    */
+    resetDataStoreJournal(dataFile: String): Object;
+    /**
+    *Allows you to restore a data folder previously archived.
+    */
+    restoreDataStore(manifest: WAKFileInstance, restoreFolder: WAKFolderInstance, options?: Object): Object;
+    /**
+    *Allows you to restore a data folder previously archived.
+    */
+    restoreDataStore(config: Object, options?: Object): Object;
+    /**
+    *Verifies the internal structure of the objects contained in the datastore designated by model and data.
+    */
+    verifyDataStore(model: WAKFileInstance, data: WAKFileInstance, options: Object): void;
+}
+
+interface WAKCore {
     /**
      * References the console of the application.
      */
@@ -204,7 +204,7 @@ interface Core {
      */
     Buffer: WAKBufferInstance;
     /**
-     * Create a valid UUID string.
+     * Creates a valid UUID string.
      * 
      * ```javascript
      * generateUUID();
@@ -222,14 +222,14 @@ interface Core {
      * Creates a progress indicator.
      * @param numElements Number of elements to count
      * @param sessionName Name of execution session for progress indicator
-     * @param stoppable `true`if the progress indicator can be stopped, `false` otherwise
+     * @param stoppable `true` if the progress indicator can be stopped, `false` otherwise
      * @param unused Not used, always pass an empty string ("")	
      * @param name Unique name of object on the server
      */
     ProgressIndicator(numElements: Number, sessionName?: String, stoppable?: Boolean, unused?: String, name?: String): ProgressIndicator;
 }
 
-interface Threads {
+interface WAKThreads {
     /**
      * Ends the current thread.
      * 
@@ -263,13 +263,13 @@ interface Threads {
      */
     Mutex: Mutex;
     /**
-     * Require a SSJS module (CommonJS compliant).
-     * This module must be defined in `PROJECT/backend/modules/`.
+     * Requires an SSJS module (CommonJS compliant).
+     * This module must be defined in `PROJECT/modules/`.
      * 
      * ```javascript
-     * // Get the module defined in PROJECT/backend/modules/mail
+     * // Get the module defined in PROJECT/modules/mail
      * var mail = require('mail');
-     * // Get the module defined in PROJECT/backend/modules/customers/platinium
+     * // Get the module defined in PROJECT/modules/customers/platinium
      * var platiniumCustomers = require('/customers/platinium'); 
      * ```
      * 
@@ -278,15 +278,15 @@ interface Threads {
      */
     require(moduleId: String): Module;
     /**
-     * Require a NodeJS module.
-     * This module must be defined in `PROJECT/backend/node_modules`.
+     * Requires a NodeJS module.
+     * This module must be defined in `PROJECT/node_modules`.
      * 
      * ```javascript
-     * // Get the Node module defined in PROJECT/backend/node_modules/http
+     * // Get the Node module defined in PROJECT/node_modules/http
      * var http = requireNode('http'); 
      * ```
      * 
-     * @warning This API is only available inside a Node worker (See ShareWorker for more details)
+     * @warning This API is only available inside a Node worker (See NodeWorker for more details)
      * @param moduleId Describes the module id and path
      * @returns Returns the exported API of the given module
      */
@@ -306,7 +306,7 @@ interface Threads {
     wait(timeout?: Number): void;
 }
 
-interface FileSystem {
+interface WAKFileSystem {
     BinaryStream: BinaryStream;
     Blob: Blob;
     File: File;
@@ -353,7 +353,7 @@ interface FileSystem {
      * Loads the content of a text file from its path.
      * 
      * ```javascript
-     * var myText = loadText( 'PROJECT/backend/bootstrap.js' );
+     * var myText = loadText( 'PROJECT/bootstrap.js' );
      * console.log(myText);
      * ```
      * 
@@ -366,7 +366,7 @@ interface FileSystem {
      * Loads the content of a text file from a File object.
      * 
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/bootstrap.js' );
+     * var myFile = new File( 'PROJECT/bootstrap.js' );
      * var myText = loadText( myFile );
      * console.log( myText );
      * ```
@@ -403,7 +403,7 @@ interface FileSystem {
     saveText(textToSave: String, file: WAKFileInstance, charset?: Number): void;
 }
 
-interface HTTP {
+interface WAKHTTP {
     /**
      * Reference the HTTP server of the application.
      */
@@ -411,13 +411,13 @@ interface HTTP {
     XMLHttpRequest: XMLHttpRequest;
 }
 
-interface Storage {
+interface WAKStorage {
     /**
-     * Reference the HTTP session storage of the application.
+     * References the HTTP session storage of the application.
      */
     sessionStorage: LockableKeyValueStorage;
     /**
-     * Reference the application storage.
+     * References the application storage.
      */
     storage: LockableKeyValueStorage;
 
@@ -432,7 +432,7 @@ interface BinaryStream {
      * Creates a new BinaryStream object.
      * 
      * ```javascript
-     * var readstream = new BinaryStream( 'PROJECT/backend/logs/HTTPServer.waLog' );
+     * var readstream = new BinaryStream( 'PROJECT/logs/HTTPServer.waLog' );
      * console.log( '[chunck] '+ readstream.getBuffer(1000).toString() );
      * // Important to close the stream after every use to release the referenced file
      * readstream.close();
@@ -446,7 +446,7 @@ interface BinaryStream {
      * Creates a new BinaryStream object.
      * 
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/logs/HTTPServer.waLog' );
+     * var myFile = new File( 'PROJECT/logs/HTTPServer.waLog' );
      * var readstream = new BinaryStream( myFile );
      * console.log( '[chunck] '+ readstream.getBuffer(1000).toString() );
      * // Important to close the stream after every use to release the referenced file
@@ -468,43 +468,50 @@ interface WAKBinaryStreamInstance {
      * Closes the file referenced in the BinaryStream object.
      * 
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/logs/HTTPServer.waLog' );
+     * var myFile = new File( 'PROJECT/logs/HTTPServer.waLog' );
      * var readstream = new BinaryStream( myFile );
      * // Important to close the stream after every use to release the referenced file
      * readstream.close();
      * ```
+     * @throw may throw exception if an error occur
      */
     close(): void;
     /**
      * Saves the buffer contents to the disk file referenced in the BinaryStream object.
+     *  @throw may throw exception if an error occur
      */
     flush(): void;
     /**
      * Creates a new BLOB object containing the next sizeToRead data in the BinaryStream object.
+     * @throw may throw exception if an error occur
      */
     getBlob(sizeToRead: Number): WAKBlobInstance;
     /**
-     * Returns a new Buffer object containing the next sizeToRead data in the BinaryStream object.
+     * Returns a new Buffer object containing the next sizeToRead data in the BinaryStream object. Otherwise, return null
+     * @throw may throw exception if an error occur
      */
     getBuffer(sizeToRead: Number): WAKBufferInstance;
     /**
-     * Returns a number representing the next byte from the BinaryStream object.
+     * Returns a number representing the next byte from the BinaryStream object. Otherwise, return null
+     * @throw may throw exception if an error occur
      */
     getByte(): Number;
     /**
-     * Returns the next long number (if present) from the BinaryStream object.
+     * Returns the next long number (if present) from the BinaryStream object. Otherwise, return null
+     * @throw may throw exception if an error occur
      */
     getLong(): Number;
     /**
-     * Returns the next long64 number (if present) from the BinaryStream object.
+     * Returns the next long64 number (if present) from the BinaryStream object. Otherwise, return null
+     * @throw may throw exception if an error occur
      */
     getLong64(): Number;
     /**
-     * Returns the current position of the cursor in the BinaryStream object.
+     * Returns the current position of the cursor in the BinaryStream object. Otherwise, return null
      */
     getPos(): Number;
     /**
-     * Returns the next real (if present) from the BinaryStream object.
+     * Returns the next real (if present) from the BinaryStream object. Otherwise, return null
      */
     getReal(): Number;
     /**
@@ -512,11 +519,13 @@ interface WAKBinaryStreamInstance {
      */
     getSize(): Number;
     /**
-     * Returns the next string (if present) from the BinaryStream object.
+     * Returns the next string (if present) from the BinaryStream object. Otherwise, return null
+     * @throw may throw exception if an error occur
      */
     getString(): String;
     /**
-     * Returns the next word, i.e., a binary integer (if present) from the BinaryStream object.
+     * Returns the next word, i.e., a binary integer (if present) from the BinaryStream object. Otherwise, return null
+     * @throw may throw exception if an error occur
      */
     getWord(): Number;
     /**
@@ -525,41 +534,51 @@ interface WAKBinaryStreamInstance {
     isByteSwapping(): Boolean;
     /**
      * Writes the BLOB you passed as the blob parameter in the BinaryStream object at the current cursor location.
+      * @throw may throw exception if an error occur
      */
     putBlob(blob: WAKBlobInstance, offset: Number, size?: Number): void;
     /**
      * Writes the Buffer you passed as the buffer parameter in the BinaryStream object at the current cursor location.
+     * @throw may throw exception if an error occur
      */
     putBuffer(buffer: WAKBufferInstance, offset: Number, size?: Number): void;
     /**
      * Writes the byte value you passed as the parameter in the BinaryStream object at the current cursor location.
+      * @throw may throw exception if an error occur
      */
     putByte(byteValue: Number): void;
     /**
      * Writes the long value you passed as the parameter in the BinaryStream object at the current cursor location.
+     * @throw may throw exception if an error occur
      */
     putLong(longValue: Number): void;
     /**
      * Writes the long64 value you passed as the parameter in the BinaryStream object at the current cursor location.
+     * @throw may throw exception if an error occur
      */
     putLong64(long64Value: Number): void;
     /**
      * Writes the real value you passed as the parameter in the BinaryStream object at the current cursor location.
+     * @throw may throw exception if an error occur
      */
     putReal(realValue: Number): void;
     /**
      * Writes the string value you passed as the parameter in the BinaryStream object at the current cursor location.
+     * @throw may throw exception if an error occur
      */
     putString(url: String): void;
     /**
      * Writes the byte word (i.e., an integer value) you passed as the parameter in the BinaryStream object at the current cursor location.
+     * @throw may throw exception if an error occur
      */
     putWord(wordValue: Number): void;
     /**
      * Moves the stream cursor to the position you passed in offset in the BinaryStream object.
+     * @throw may throw exception if an error occur
      */
     setPos(offset: Number): void;
 }
+
 
 
 interface Blob {
@@ -594,24 +613,24 @@ interface WAKBlobInstance {
      * #### Example 1: Copy a blob
      * ```javascript
      * var myBlob = new Blob( 20 ); 
-     * myBlob.copyTo( 'PROJECT/backend/blob_copy.js' );
+     * myBlob.copyTo( 'PROJECT/blob_copy.js' );
      * ```
      * or
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/blob_copy.js' );
+     * var myFile = new File( 'PROJECT/blob_copy.js' );
      * var myBlob = new Blob( 20 ); 
      * myBlob.copyTo( myFile );
      * ```
      * 
      * #### Example 2: Copy a file
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/bootstrap.js' );
-     * myFile.copyTo( 'PROJECT/backend/bootstrap_copy.js' );
+     * var myFile = new File( 'PROJECT/bootstrap.js' );
+     * myFile.copyTo( 'PROJECT/bootstrap_copy.js' );
      * ```
      * or
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/bootstrap.js' );
-     * var myFileCopy = new File( 'PROJECT/backend/bootstrap_copy.js' );
+     * var myFile = new File( 'PROJECT/bootstrap.js' );
+     * var myFileCopy = new File( 'PROJECT/bootstrap_copy.js' );
      * myFile.copyTo( myFileCopy );
      * ```
      * 
@@ -621,7 +640,7 @@ interface WAKBlobInstance {
     copyTo(destination: String, overwrite?: Boolean): void;
     copyTo(destination: WAKFileInstance, overwrite?: Boolean): void;
     /**
-     * Creates a new blob by referencing the contents of the bytes of the Blob to which it is applied, from start to end.
+     * Creates a new blob by referencing the binary contents of the File to which it is applied, from start to end.
      * 
      * #### Example 1: Slice a blob
      * ```javascript
@@ -645,7 +664,7 @@ interface WAKBlobInstance {
      * 
      * #### Example 3: Slice a file
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/bootstrap.js' );
+     * var myFile = new File( 'PROJECT/bootstrap.js' );
      * var myBlobSlice = myFile.slice( 0, 100 );
      * console.log( myBlobSlice.toString() );
      * ```
@@ -656,7 +675,7 @@ interface WAKBlobInstance {
      */
     slice(start?: Number, end?: Number, mimeType?: String): WAKBlobInstance;
     /**
-     * Returns a buffer object containing a copy of the blob bytes.
+     * Returns a buffer object containing a copy of the File bytes.
      */
     toBuffer(): WAKBufferInstance;
     /**
@@ -664,6 +683,7 @@ interface WAKBlobInstance {
      */
     toString(stringFormat?: String): String;
 }
+
 
 interface Buffer {
     /**
@@ -1110,210 +1130,640 @@ interface Datastore {
 interface DatastoreClass {
 /**
 	*Collection of available attributes
+	*
+	* @returns Object containing all the attributes of the DatastoreClass
+	* 
+	* ```ds.MyDataclass.attributes```
 	*/
 	attributes: AttributeEnumerator;
+	
+	
 	/**
 	*Number of entities in the datastore class
+	*  
+	* ```javascript
+	* ds.MyDataclass.length
+	* ```
 	*/
 	length: Number;
+	
+	
 	/**
-	*returns an object of type EntityCollection containing all the entities in the datastore class to which it was applied
+	*returns an object of type EntityCollection containing all the entities in the datastore class
+	*
+	* ```javascript
+	* ds.MyDataclass.all()
+	* ```
 	*/
 	all() : EntityCollection;
+	
+	
+	
+	
+	
 	/**
 	*returns the arithmetic average of all the non-null values of attribute for the datastore class or entity collection
+	* ### For a detailled description of the method, [go here](entitycollection.html#average) 
 	*/
 	average(attribute: DatastoreClassAttribute, distinct?: Boolean) : Number;
+	
+	
+	
+	
 	/**
-	*returns the arithmetic average of all the non-null values of attribute for the datastore class or entity collection
-	*/
-	average(attribute: DatastoreClassAttribute, distinct?: String) : Number;
-	/**
-	*returns the arithmetic average of all the non-null values of attribute for the datastore class or entity collection
-	*/
-	average(attribute: String, distinct?: Boolean) : Number;
-	/**
-	*returns the arithmetic average of all the non-null values of attribute for the datastore class or entity collection
-	*/
-	average(attribute: String, distinct?: String) : Number;
-	/**
-	*performs, in a single call, all the statistical calculations on the attribute or list of attributes passed as the parameter for the datastore class or entity collection
+	* Compute performs, in a single call, all the statistical calculations on the attribute or list of attributes passed as the parameter for the datastore class or entity collection
+	* @param attribute DatastoreClassAttribute,String Attribute(s) for which you want to perform statistical calculations
+	* @param distinct Boolean Compute distinct calculations - `false` by default
+	* @returns Object containing the following calculations :
+	* 	- average	Arithmetic average
+	*	- averageDistinct	Average taking only distinct values into account
+	*	- count	Number of values
+	*	- countDistinct	Number of distinct values
+	*	- max	Maximum value
+	*	- min	Minimum value
+	*	- sum	Sum
+	*	- sumDistinct	Sum taking only distinct values into account
+	*
+	* @warning If you pass more than one attribute and enable the Distinct calculations, they will be valid only for the first attribute.
+	* #### Example 1 - Compute Multi Attributes with Distinct
+	*  ```javascript
+	*  var calculations = ds.Employee.compute("age, salary", true); //the Distinct operations will be performed only on the `age` attribute
+	*  var stats = "Average age ="+ calculations.age.averageDistinct+" Total salary ="+calculations.salary.sum);
+	* ```
 	*/
 	compute(attribute: DatastoreClassAttribute, distinct?: Boolean) : Object;
-	/**
-	*performs, in a single call, all the statistical calculations on the attribute or list of attributes passed as the parameter for the datastore class or entity collection
-	*/
-	compute(attribute: DatastoreClassAttribute, distinct?: String) : Object;
-	/**
-	*performs, in a single call, all the statistical calculations on the attribute or list of attributes passed as the parameter for the datastore class or entity collection
-	*/
-	compute(attribute: String, distinct?: Boolean) : Object;
-	/**
-	*performs, in a single call, all the statistical calculations on the attribute or list of attributes passed as the parameter for the datastore class or entity collection
-	*/
-	compute(attribute: String, distinct?: String) : Object;
-	/**
-	*performs, in a single call, all the statistical calculations on the attribute or list of attributes passed as the parameter for the datastore class or entity collection
+	/** 
+	* Compute performs, in a single call, all the statistical calculations on the attribute or list of attributes passed as the parameter for the datastore class or entity collection
+	* @param attribute DatastoreClassAttribute,String Attribute(s) for which you want to perform statistical calculations
+	* @param groupBy DatastoreClassAttribute,String Attribute(s) on which you want to have subtotal breaks	
+	* @returns Object containing all the calculations performed and subtotals
+	* #### Example 1 - Compute with groupBy 
+	* ```javascript
+	*  var stats = ds.Sales.all().compute("benefit, revenues", "country, month");
+    * // compute `benefit`and `revenues` values of a Sales class grouped by country and month
+	* // for more convenience the returned object can be converted into an array 
+	* stats.toArray();
+	* ```
 	*/
 	compute(attribute: DatastoreClassAttribute, groupBy?: DatastoreClassAttribute) : Object;
-	/**
-	*performs, in a single call, all the statistical calculations on the attribute or list of attributes passed as the parameter for the datastore class or entity collection
-	*/
-	compute(attribute: DatastoreClassAttribute, groupBy?: String) : Object;
-	/**
-	*performs, in a single call, all the statistical calculations on the attribute or list of attributes passed as the parameter for the datastore class or entity collection
-	*/
-	compute(attribute: String, groupBy?: DatastoreClassAttribute) : Object;
-	/**
-	*performs, in a single call, all the statistical calculations on the attribute or list of attributes passed as the parameter for the datastore class or entity collection
-	*/
-	compute(attribute: String, groupBy?: String) : Object;
-	/**
-	*returns the number of entities contained in the entity collection or datastore class
+	
+	
+	
+	
+	
+	
+/**
+	* The Count() method returns the number of entities contained in the entity collection or datastore class
+	* @param attribute DatastoreClassAttribute,String Attribute whose value must not be null
+	* @param distinct Boolean  Default `false` Use only entities that have different values
+	* @returns Number of entities in the collection or Dataclass
+	* @warning `distinct` parameter is ignored if you do not pass the `attribute` parameter
+	* #### Example 1
+	* ```javascript
+	* ds.DataClass1.query('name > 1*').count('name2', true)
+	* ```
+	* #### Example 2 - Count on object attribute
+	* ```javascript
+	* var vCount = ds.MyClass.all().count("objectAtt.prop") // `objectAtt` is an object attribute with a `prop` property
+	* ```
 	*/
 	count(attribute: DatastoreClassAttribute, distinct?: Boolean) : Number;
+	
+	
+	
+	
+	
 	/**
-	*returns the number of entities contained in the entity collection or datastore class
-	*/
-	count(attribute: DatastoreClassAttribute, distinct?: String) : Number;
-	/**
-	*returns the number of entities contained in the entity collection or datastore class
-	*/
-	count(attribute: String, distinct?: Boolean) : Number;
-	/**
-	*returns the number of entities contained in the entity collection or datastore class
-	*/
-	count(attribute: String, distinct?: String) : Number;
-	/**
-	*creates a new blank object of type Entity based on the datastore class to which it is applied
+	*creates a new blank object of type Entity based on the datastore class.
+	* 
+	* @warning
+	* The object is created in memory and is not saved in the datastore until the save( ) method is called. 
+	* If the object is deleted before being saved, it cannot be recovered.
+	* 
+	* #### Example (create then save)
+	* ```javascript
+	* var newCompany = ds.Company.createEntity() ;
+	* a.name = 'Wakanda';
+	* a.city = 'Paris' ; 
+	* a.save() ;
+	* ```
+	*  
+	* ### Note
+	* Another useful alternative way to create entities (then save) is to use the `new` syntax
+	* ```javascript
+	* new ds.Company({
+		name : 'Wakanda' ,
+		city : 'Paris'
+	}).save();
+	* 
 	*/
 	createEntity() : Entity;
+	
+	
+	
+	
+	
+	
+	
 	/**
-	*creates a new blank object of type EntityCollection attached to the datastore class to which it is applied
-	*/
-	createEntityCollection(keepSorted?: String) : EntityCollection;
-	/**
-	*creates a new blank object of type EntityCollection attached to the datastore class to which it is applied
+	* creates a new blank object of type EntityCollection attached to the datastore class 
+	*
+	* @param keepSorted Boulean - `True` to create a SortedCollection (`false` by Default)
+	*
+	*
+	* #### Note
+	* For more information about sorted/unsorted collection, [visit this page](http://doc.wakanda.org/Datastore/Entity-Collection/Unsorted-vs-Sorted-Entity-Collections.300-932765.en.html)
+	*
+	* @warning = **createEntityCollection** do work only with Wakanda built-in DB. It does not work with MySQL / ODBC Connectors*
+	* 
+	* #### Example 1
+	* ```javascript
+	* var all = ds.Person.all(); // get all the entities
+	* var coll1 = ds.Person.createEntityCollection(); // create an empty unsorted entity collection
+	* coll1.add( all[10]); //add some entities, one of them 3 times
+	* coll1.add( all[9]);
+	* coll1.add( all[8]);
+	* coll1.add( all[7]);
+	* coll1.add( all[8]);
+	* coll1.add( all[8]);
+	* coll1; // displays the collection
+	* ```
 	*/
 	createEntityCollection(keepSorted?: Boolean) : EntityCollection;
+	
+	
+	
+	
+	
+	
 	/**
-	*creates an array and returns in it all the distinct values stored in attribute for the entity collection or datastore class
+	* The distinctValues( ) method creates an array and returns in it all the distinct values stored in attribute for the entity collection or datastore class
+	* @param attribute DatastoreClassAttribute 		Attribute for which you want to get the list of distinct values
+	* @returns  Array containing the list of distinct values
+	* #### Example 1
+	* ```javascript
+	* //In our example, we want to return the total number of different jobs in the same company:
+    *
+	* var employer = ds.Company.find( "name == :1", "WAKANDA" ) ;  // find the company by its name
+	* var allEmp = ds.Employee.query("comp == :1", employer); // create an entity collection containing all the employees in a company
+	* // 'comp' is a relation attribute in Employee
+	*  var jobNb = allEmp.distinctValues("jobName").length; //`jobName` is a DatastoreClassAttribute of Employee
+    * ``` 
+	* #### Example 2 - distinctValues with Object Attributes.
+	* ```javascript
+	* // In a "keywords" object attribute of an Article datastore class, you store the page numbers for each keyword in a "pages" array. 
+	* // You want to know all pages that contain at least one keyword
+	*  var arr = ds.Article.all().distinctValues("keywords.pages[]");
+	* ``` 
 	*/
-	distinctValues(attribute: DatastoreClassAttribute) : any[];
-	/**
-	*creates an array and returns in it all the distinct values stored in attribute for the entity collection or datastore class
-	*/
-	distinctValues(attribute: String) : any[];
-	/**
+	distinctValues(attribute: DatastoreClassAttribute): any[];
+	
+	
+	
+
+    /**
 	*exports all the entities stored in the object for which it is called in JSON format
+	* It can be called for a :
+	* 	- datastore 
+	*	- DatastoreClass 
+	*	- EntityCollection
+	* @warning : 
+	* - calculated attributes are not exported -- only their underlying attributes are exported,
+	* - extended datastore classes are not exported,
+	* - related or alias attributes are not exported directly -- only primary keys values are exported,
+	* - data from outside catalogs or datastores are not exported	
+	* #### Example :
+	* ```javascript
+	* myFolder = new Folder("C:/ExportCollectionJSON/");     // get a reference to the export folder
+	* if (myFolder.exists)     // if the folder actually exists
+	* {
+    *	var coll=ds.Employee.query("lastName = :1", "P*");   
+    *	coll.exportAsJSON( myFolder ) ;     // export the collection
+	*	}
+	* ```
+	*For more details, go here : http://doc.wakanda.org/home2.en.html%23/Datastore/Entity-Collection/length.303-638616.en.html#/Datastore/Entity-Collection/exportAsJSON.301-1041820.en.html
+	*
+	* @param exportFolder Folder Folder where you want to export the collection.
+	* @param numFiles Number Maximum number of files per Folder
+	* @param fileLimitSize	Number Size limit vamue of export files (in KB)
+	* @param attLimitSize Number Size limit (in bytes) velow which the contents of a BLOB or Picture attribute are embedded into the main file
+	*  
 	*/
-	exportAsJSON(exportFolder: WAKFolderInstance, numFiles: Number, fileLimitSize: Number, attLimitSize?: Number) : void;
-	/**
+	exportAsJSON(exportFolder: WAKFolderInstance, numFiles?: Number, fileLimitSize?: Number, attLimitSize?: Number) : void;
+	
+	
+	
+	
+	
+/**
 	*exports all the entities stored the object for which it is called in SQL format
+	* It can be called for a :
+	* 	- datastore 
+	*	- DatastoreClass 
+	*	- EntityCollection
+	* @warning : 
+	* - calculated attributes are not exported -- only their underlying attributes are exported,
+	* - extended datastore classes are not exported,
+	* - related or alias attributes are not exported directly -- only primary keys values are exported,
+	* - data from outside catalogs or datastores are not exported	
+	* #### Example 
+	* ```javascript
+	* 	myFolder = new Folder("C:/ExportCollection/");     // get a reference to the export folder
+	*	if (myFolder.exists)     // if the folder actually exists
+	*	{
+    *	var coll=ds.Employee.query("lastName = :1", "P*");   
+    *	coll.exportAsSQL( myFolder ) ;     // export the collection
+	* ```
+	* For more details go here : http://doc.wakanda.org/home2.en.html%23/Datastore/Entity-Collection/length.303-638616.en.html#/Datastore/Entity-Collection/exportAsSQL.301-1041494.en.html
+	*
+	* @param exportFolder Folder Folder where you want to export the collection.
+	* @param numFiles Number Maximum number of files per Folder
+	* @param fileLimitSize	Number Size limit vamue of export files (in KB)
+	* @param attLimitSize Number Size limit (in bytes) velow which the contents of a BLOB or Picture attribute are embedded into the main file
 	*/
-	exportAsSQL(exportFolder: WAKFolderInstance, numFiles: Number, fileLimitSize: Number, attLimitSize?: Number) : void;
-	/**
-	*applies the search criteria specified in queryString and (optionally) value to all the entities of the DatastoreClass or EntityCollection and returns the first entity found in an object of type Entity
+	exportAsSQL(exportFolder: WAKFolderInstance, numFiles?: Number, fileLimitSize?: Number, attLimitSize?: Number) : void;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+/**
+	* Search operation in a the DatastoreClass or EntityCollection that returns `the first entity` found in an object of type `Entity`
+	* ## Important :
+	* ``
+	* The find( ) method is equivalent to executing a query( ) followed by retrieving the first entity:
+	* For more details and exemples check the Query method section
+	* ``
+	* #### Example1 : With QueryString syntax
+	* ```javascript
+	* ds.Employee.find( "name == DOE");
+	* ```
+	* #### Example2 :  With placeholders syntax
+	* ```javascript
+	* ds.Employee.find( 'name ==:1', "DOE");
+	* ```
+	* @param queryString 
+	* @param valueList  Value(s) to compare when using placeholders
+	* @param options 
+	* @returns The first found entity in the collection
+	* 
+	*  
 	*/
-	find(queryString: String, ...valueList: any[]) : Entity;
+	find(queryString: String, valueList: any[], options : Object) : Entity;
+	
+	
+	
+	
 	/**
-	*returns the entity in the first position of the entity collection or datastore class
+	* Returns the entity in the first position of the entity collection or datastore class
+	* #### Example
+	* ```javascript
+	* ds.Employee.query('ID > 2').first()  //exemple1
+	* ds.Company.first()  //exemple2
+	* ```
 	*/
 	first() : Entity;
-	/**
-	*executes the callbackFn function on each entity in the entity collection in ascending order
+	
+	
+
+
+
+/**
+	* Executes the callbackFn function on each entity in the entity collection(or Dataclass) in ascending order
+	* @param callbackFn Function Handler function to invoke for each entity in the collection
+	* ``
+	* The callbackFn function accepts two parameters: function (`thisArg`, `iterator`)
+	* -  The first parameter, `thisArg`, represents the entity currently being processed. When it is executed, the function receives in this parameter the entity on which it iterates (the parameter is used like the keyword `this`). You can then perform any type of operation on the values of the entity.
+	* - The second (optional) parameter, `iterator`, is the iterator. When it is executed, the function receives in this parameter the position of the element currently being processed in the entity collection. You can use it, for example, to display a counter.
+	* ``
+	* @warning The forEach( ) method includes an optimized mechanism that triggers the entity to be saved automatically if it has been modified, and not saved when it hasn't.
+	* You can however call the save( ) method anyway to manage any errors in a try/catch structure.  (In this case the call is detected by Wakanda and the entity is not saved a second time)
+	* #### Example 
+	* ```javascript
+	*  // We want to give a 5% raise to all employees with a salary less than 5,000.
+	* mySet = ds.Employee.query('salary < 5000') ;
+	* mySet.forEach(
+    * function( emp ) {
+	* emp.salary *= 1.05;
+	* // unnecessary to save modification forEach does it automatically when needed
+    * });
+	* ```
 	*/
 	forEach(callbackFn: Function) : void;
+	
+	
+	
+	
+	
+	
 	/**
 	*generates entities in the datastore class where it is applied and returns the resulting entity collection
+	* @param Array whose values are used to generate entities
+	* @returns New entity collection
+	* 
+	* @warning :
+	* - The entities passed in the `arrayValues` are **generated and saved** when executing fromArray()
+	* - Wakanda automatically adds the **ID number** to the entity created 
+	* - You can modify an existing entity by adding the __KEY  and STAMP attributes and their respective values in arrayValues 
+	*
+	* #### Example
+	* ```javascript
+	* var arrAdd = []     // Create an empty array
+	* arrAdd[0] = {lastName: "Potter", firstName: "Harold", salary: 3200};
+	* arrAdd[1] = {lastName: "Luke", firstName: "Lucy", salary: 5300, married: true}; // 'married' is ignored if the attribute does not exist in the datastore class
+	* arrAdd[2] = {lastName: "Blue", firstName: "George", salary: 3200};
+	* var newColl = ds.Employees.fromArray(arrAdd);     // entities are created and saved
+	* newColl; 
+	* ```
 	*/
 	fromArray(arrayValues: any[]) : EntityCollection;
+	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	*returns the percentage of logical fragmentation for the entities of the datastore class
+	* 
+	* Tip : Beyond a rate of 20% (0.2), it may be useful to [compact the datastore data] (http://doc.wakanda.org/Datastore/Datastore-Maintenance-Methods/compactDataStore.301-595628.en.html)  
+	*
+	* #### Note :
+	* Works only with Wakanda Built-in DB. (i.e. do not concern MySQL / ODBC / Custom catalog)
+	* 
 	*/
 	getFragmentation() : Number;
+	
+	
+	
+	
 	/**
 	*returns the name of the datastore class to which it is applied in a string
+	* ```javascript
+	* var nameEM = ds.Book.getName();
+	* ```
 	*/
 	getName() : String;
+	
+	
+	
+	
 	/**
 	*returns the current scope property value of the datastore class
+	* Two values can be returned for a datastore class: (default value `public`)
+	*	- "public": a public datastore class can be accessed from anywhere (including on the client side)
+	*   - "public on server": a public on server datastore class can only be accessed on the server
+	* 
+	* You can get more information about the [Datastore Class Properties here](http://doc.wakanda.org/Datastore-Model-Designer/Datastore-Classes.300-305138.en.html#664408)
 	*/
 	getScope() : String;
+	
+	
+	
+	
+	
 	/**
 	*imports all the entities stored in JSON format from the file(s) located in the importFolder folder
+	* 
+	* The importFromJSON( ) method can be called for a:
+	*	- Datastore: entities from all the datastore classes are imported,
+	*	- DatastoreClass: entities from the datastore class are imported.
+	*
+	* #### Note
+	* This method only work with the Wakanda Built-in database (MYSQL and other Connectors are not concerned)
+	*
+	*
+	* @warning :
+	* ````text
+	*	- This folder must contain UTF-8 text files into which each entity is described through a single JSON object
+	*	- calculated attributes cannot be imported directly -- only their underlying attributes are imported,
+	*	- extended datastore class entities cannot be imported,
+	*	- related or alias attributes are not imported directly -- only primary keys values are exported,
+	*	- you cannot import data from outside catalogs or datastores. 
+	*
+	*  You can refer to the [exportAsJson method description] (entitycollection.html#exportasjson) for more information about exporting/importing
+	* ```
 	*/
 	importFromJSON(importFolder: WAKFolderInstance) : void;
+	
+	
+	
 	/**
-	*returns the maximum value among all the values of attribute in the entity collection or datastore class
+	* Returns the maximum value among all the values of attribute in the entity collection or datastore class
+	* @param attribute DatastoreClassAttribute Attribute for which you want to get the highest value.
+	* @returns Number Highest value of attribute
+	* #### Example 1  
+	* ```javascript
+	* //We want to find the highest salary among all the female employees:
+	* var fColl = ds.Employee.query("gender == :1","female");
+	* var maxFSalary = fColl.max("salary");
+	* ```
+	* #### Example 2 - Max with object attributes
+	* 
+	* ```javascript
+	* var value = ds.MyClass.all().max("objectAtt.prop") //Highest of all prop attribute values
+	* ```
 	*/
 	max(attribute: DatastoreClassAttribute) : Number;
-	/**
-	*returns the maximum value among all the values of attribute in the entity collection or datastore class
-	*/
-	max(attribute: String) : Number;
+
+	
+	
+	
+	
 	/**
 	*returns the lowest (or minimum) value among all the values of attribute in the entity collection or datastore class
+	* @param attribute DatastoreClassAttribute Attribute for which you want to get the lowest value.
+	* @returns Number Lowest value of attribute
+	* #### Example 1  
+	* ```javascript
+	* //We want to find the lowest salary among all the female employees:
+	* var fColl = ds.Employee.query("gender == :1","female");
+	* var maxFSalary = fColl.min("salary");
+	* ```
+	* #### Example 2 - Min with object attributes
+	* 
+	* ```javascript
+	* var value = ds.MyClass.all().min("objectAtt.prop") //Lowest of all prop attribute values
+	* ```
 	*/
 	min(attribute: DatastoreClassAttribute) : Number;
+	
+	
+	
+	
 	/**
-	*returns the lowest (or minimum) value among all the values of attribute in the entity collection or datastore class
-	*/
-	min(attribute: String) : Number;
-	/**
-	*sorts the entities in the entity collection or datastore class and returns a new sorted entity collection
-	*/
-	orderBy(attributeList: String, sortOrder?: String) : EntityCollection;
-	/**
-	*sorts the entities in the entity collection or datastore class and returns a new sorted entity collection
+	* The orderBy method sorts the entities in the entity collection or datastore class and returns a new sorted entity collection
+	* @param attributeList DatastoreClassAttribute Attribute(s) to be sorted and (if String) order by direction(s)
+	* @param sortOrder string `asc` (by `default`) for ascending sort / `desc` for descending.
+	* @info You can pass from 1 to x attributes separated by commas
+	* #### Example1 orderBy with Mutliple Attributes
+	* ```javascript
+	*  // This example performs a simple search and returns an entity collection that has been sorted on two attributes, the first in descending order
+	*  var mySet = ds.People.query("salary > 10000");
+    *  var mySet2 = mySet.orderBy("salary desc,city");
+	* ```
+	* #### Example2 orberBy with a relation attribute 
+	* ```javascript
+	* // This example sorts employees with a salary greater than 10,000 by the city where their company is located, using a relation attribute
+	* var mySet = ds.People.query("salary > 10000");
+	* mySet = mySet.orderBy(ds.People.employer.city); // `employer` is a relation attribute
+	* ```
+	* #### Example3 orberBy with object attributes
+	* ```javascript
+	* ds.MyClass.all().orderBy("objectAtt.prop desc")
+	* ```
 	*/
 	orderBy(attributeList: DatastoreClassAttribute, sortOrder?: String) : EntityCollection;
+	
+	
+	
+	
+	
+	
 	/**
 	*searches all the entities in the datastore class or entity collection using the search criteria specified in queryString and returns a new collection containing the entities found
+	*  #### Descrption
+	* The Query method description is fully described [here (entity collection part)] (entitycollection.html#query)
 	*/
 	query(queryString: String, ...valueList: any[]) : EntityCollection;
+	
+	
+	
+	
+	
+	
+	
 	/**
-	*permanently removes entities from the datastore
+	* Permanently removes entities from the datastore
+	* - When you apply it to an entity collection, it removes the entities belonging to that entity collection,
+    * - When you apply it to a datastore class, it removes all the entities in the datastore class.
+	*
+	* #### Examples
+	* ```javascript
+	* // Applied to a Dataclass 
+	* ds.Dataclass1.remove();
+	* ```
+	* ```javascript
+	* // Applied to a collection
+	*  ds.Dataclass1.query('ID > 3 & ID < 5').remove();
+	* ```
+	* ```javascript
+	* // Applied to an entity
+	* ds.Dataclass1.first().remove();
+	* ```
+	* ```javascript
+	* // Applied at the Model level (Entity method on the Customer dataclass)
+	* model.Customer.entityMethods.remove = function() {
+    * this.remove();
+	* };
+	* ```
+	* 
 	*/
 	remove() : void;
+	
+	
+	
+	
+	
+	
+	
 	/**
 	*(re)sets the start value for the autosequence number of the datastore class
+	* @param counter New start value for entity counter
+	* This method (re)sets the start value for the autosequence number of the datastore class. 
+	* 
+	* note : the ID is based on this internal counter. An autosequence number can be set for any attribute on [Model Designer] (http://doc.wakanda.org/Datastore-Model-Designer/Datastore-Model-Designer.100-1051416.en.html)
 	*/
 	setAutoSequenceNumber(counter: Number) : void;
-	/**
+	
+	
+	
+	
+	
+	
+	
+/**
 	*returns the sum (i.e., total of all the values) of attribute for the datastore class or entity collection
+	* @param DatastoreClassAttribute Attr
+	ibute whose sum you want to calculate
+	* @param distinct  `false` by Default Use only entities that have different values
+	* #### Example 1
+	* ```javascript
+	*  var highSalaries = ds.Employees.query("salary > 30000").sum("salary" , true);
+	* ```
+	* #### Example2 With Object attributes
+	* ```javascript
+	* var propSum = ds.MyClass.all().sum("objectAtt.prop") //sum of all prop attribute values
+	* ```
 	*/
 	sum(attribute: DatastoreClassAttribute, distinct?: Boolean) : Number;
+	
+	
+	
+	
+	
+	
 	/**
-	*returns the sum (i.e., total of all the values) of attribute for the datastore class or entity collection
+	* The toArray() method creates and returns a JavaScript array where each element is an object containing a set of properties and values corresponding to the attribute names and values for a datastore class or an entity collection
+	* @param attributeList DatastoreClassAttribute List of attributes to return as array or "" to return all attributes
+	* @param sortList string list of attributes used for the sort
+	* @param key boolean Include the entity key and stamp `false` by default
+	* @param skip number Position of starting entity to return
+	* @param top number Number of entities to return
+	* @returns Array containing attributes and values of datastore class or entity collection
+	* 
+	* #### Note
+	* You can of course navigate through dataclasses via relation attributes.
+	* In this scenario you can even limit the number of related entities fetched by passing `RelatedAttribure: N` (where N represents the number of sub elements)
+	* #### EXAMPLES 
+	*  <details> <summary> Click to Expand </summary>
+	*  ### Simple case
+	* ```javascript
+	* var myArray = ds.Employee.toArray("firstName,lastName,salary");
+	* // myArray[0] contains {firstName: 'John', lastName: 'Smith', salary: 5000} 
+	* ```
+	*  ### To get all the attributes from a collection
+	* ```javascript
+	*  var myColl = ds.Employee.query("salary >= 6000 order by salary asc");
+	*  var myArray = myColl.toArray("");     // return all attributes
+	* ```
+	* ### Example with relations and options (key, skip , top)
+	* ```javascript
+	*  var myArray = ds.Employee.toArray("name, employer.name, employer.location", true, 0 , 1)  // employer is a relation attribute related to another dataclass
+	* // myArray[0] contains { __KEY: '0', __STAMP: 2,name: 'Smith', employer: {name: 'ACME', location: 'Memphis'}}
+	*  ```
+	* ### Example with Sort, and Sub filtered Relations (three levels)
+	* ```javascript
+	* 
+	* // - Retrieve the first five students.
+	* // - Limit the number of courses per student to five.
+	* // - Sort arrays by the student's first name and sort course sub-arrays by subject name. Both in ascending order.
+	* // - skip the 1st result 
+	*  var sel = ds.Student.all();
+	*  var myArray = sel.toArray("fullName, Course:5, Course.matter, Course.teacher.fullName", "firstName, Course.matter", 1, 5);
+	* ```
+	* 
 	*/
-	sum(attribute: DatastoreClassAttribute, distinct?: String) : Number;
+	toArray(attributeList: DatastoreClassAttribute, sortList?: String, key?: Boolean, skip?: Number, top?: Number): any[];
+	
+	
+	
+	
+	
+	
 	/**
-	*returns the sum (i.e., total of all the values) of attribute for the datastore class or entity collection
-	*/
-	sum(attribute: String, distinct?: Boolean) : Number;
-	/**
-	*returns the sum (i.e., total of all the values) of attribute for the datastore class or entity collection
-	*/
-	sum(attribute: String, distinct?: String) : Number;
-	/**
-	*creates and returns a JavaScript array where each element is an object containing a set of properties and values corresponding to the attribute names and values for a datastore class or an entity collection
-	*/
-	toArray(attributeList: String, sortList: String, key: String, skip: Number, top?: Number) : any[];
-	/**
-	*creates and returns a JavaScript array where each element is an object containing a set of properties and values corresponding to the attribute names and values for a datastore class or an entity collection
-	*/
-	toArray(attributeList: String, sortList: String, key: Boolean, skip: Number, top?: Number) : any[];
-	/**
-	*creates and returns a JavaScript array where each element is an object containing a set of properties and values corresponding to the attribute names and values for a datastore class or an entity collection
-	*/
-	toArray(attributeList: DatastoreClassAttribute, sortList: String, key: String, skip: Number, top?: Number) : any[];
-	/**
-	*creates and returns a JavaScript array where each element is an object containing a set of properties and values corresponding to the attribute names and values for a datastore class or an entity collection
-	*/
-	toArray(attributeList: DatastoreClassAttribute, sortList: String, key: Boolean, skip: Number, top?: Number) : any[];
-	/**
-	*returns the name of the datastore class as a string
+	*returns a string representation of the entity or entity collection
+	* #### Example 
+	* ```
+	* ds.Dataclass1.query('ID > 3').toString()  // applied to a collection 
+	* ds.Dataclass1.first().toString() // applied to an entity
+	* ```
 	*/
 	toString() : String;
 }
@@ -1333,49 +1783,368 @@ interface DatastoreClassEnumerator {
 
 interface Entity {
 /**
-	*returns the datastore class (object of the DatastoreClass type) of the entity
+	* Returns the datastore class (object of the DatastoreClass type) of the entity. 
+	*
+	* #### For more information go [here](entitycollection.html#getdataclass)
 	*/
 	getDataClass() : DatastoreClass;
+	
+	
+	
+	
+	
 	/**
 	*returns the timestamp of the last save of the entity to which it is applied
+	* @returns  Date object in local format
 	*/
 	getTimeStamp() : Date;
+	
+	
+	
+	
 	/**
-	*returns True or False depending on whether the entity iterator points to an entity that is currently loaded in memory
+	* returns True or False depending on whether the entity iterator points to an entity that is currently loaded in memory
 	*/
 	isLoaded() : Boolean;
+	
+	
+	
 	/**
-	*returns True or False depending on whether the entity to which it is applied has been modified since the last time it was loaded from the datastore
+	* returns True or False depending on whether the entity to which it is applied has been modified since the last time it was loaded from the datastore.
+	* #### Note
+	* You can use this method to find out if you need to save the entity.
+	* This method always returns True for a new entity.
+	*
+	* #### Example
+	* ```javascript
+	* emp = ds.Employee.first();
+    *    //... process the data in the entity
+	* if (emp.isModified())     // if at least one of the attributes has been changed
+    * emp.save(); 
+    * // otherwise, no need to save the entity
+	* ```
 	*/
 	isModified() : Boolean;
+	
+	
+	
+	
 	/**
-	*returns True or False depending on whether the entity to which it is applied has just been created in the datastore
+	*returns True or False depending on whether the entity to which it is applied has just been created in the datastore (and not saved yet)
 	*/
 	isNew() : Boolean;
+
+
+
 	/**
 	*puts the entity pointer on the next entity within an iteration of entities
+	*
+	* #### Example with a `for` loop
+	* ```javascript
+	*  var myColl = ds.People.query("nationality = :1", "FR");
+    * for (var onePerson = myColl.first(); onePerson != null; onePerson=onePerson.next())
+    * // onePerson will return null after the last entity of the collection
+	* {
+    * onePerson.name = onePerson.name.toUpperCase();
+    * onePerson.save();
+	* }
+	* ```
+	* #### Same Example with `while`
+	* ```javascript
+	* var myColl = ds.People.query("nationality = :1", "FR");
+	* var onePerson = myColl.first(); 
+	* while (onePerson != null)
+    * {
+    *    onePerson.name = onePerson.name.toUpperCase();
+    *    onePerson.save();
+    *    onePerson=onePerson.next();
+    * }
 	*/
 	next() : Entity;
+	
+	
+	
+	
 	/**
 	*reloads the entity as it is stored in the datastore
+	* @warning 
+	* If values are modified and not saved, they are lost.
+	*  #### Note : This method is useful :
+	* - when you attempt to save an entity but receive an error because this entity was modified in the meantime by another user
+	* - when adding new related entities (see below):
+	* ```javascript
+	* 
+	* 
+	* locationsColl_Before = company.locations; //3 locations
+	* //Then you create a new location related to the company.  You might expect calling this again:
+	* locationsColl_After = company.locations; //3 locations
+	* //It will not, it will still return the original 3.  In order to get all 4 locations related to the company you need to refresh:
+	* company.refresh();  locationsColl_AfterRefresh = company.locations; //4 locations
+	* ```
 	*/
 	refresh() : void;
+	
+	
+	
+	
+	
 	/**
 	*releases the entity from memory
+	*
+	* <details> <summary>**Note** : How to use this method (advanced) : </summary>
+	* ***
+	* ````text
+	* Once unloaded by this method, the entity is not unusable. 
+	* Wakanda keeps a reference to the entity and automatically reloads it as soon as it becomes used again.
+	* This utility method lets you optimize memory consumption when the server needs to load and work with numerous large objects, such as pictures or BLOBs. 
+	* 
+	* In principle, the garbage collection mechanism of JavaScript will purge unused objects from memory. However, this mechanism operates * * autonomously and can prove to be insufficient in some cases. For example, when the server has loaded dozens of large pictures on the JavaScript side, only references are handled, which may not require the intervention of the garbage collector. 
+	* 
+	* However, on the server side, the memory is in high demand. In a case like this, it is useful to be able to "force" entities to be unloaded using the release( ) method.
+	* 
+	* Note that after calling release( ), if you want to make sure that the JavaScript reference to an entity has been deleted without having to wait for garbage collection (and thus for a subsequent access to the entity to return an error), you must force its value to null.
+	* ````
+	* 
+	* #### Example :
+	* ```javascript
+	* myEntity.release();   //unload the entity from the server
+	* myEntity = null;     // delete its reference
+	* ```
 	*/
 	release() : void;
+	
+	
+	
+	
+	
+	
 	/**
 	*removes the entity from the datastore
+	*
+	* #### Note:
+	* When this method is executed, it triggers a call to the remove event on the server if it has been set for the entity's datastore class or one of the datastore class attributes.
+	* 
+	* For more information and examples about the remove() method, check its description [here (collection section)](entitycollection.html#remove)
 	*/
 	remove() : void;
+	
+	
+	
+	
+	
+	
 	/**
-	*saves the changes made to the entity in the datastore
+	* Saves the changes made to the entity in the datastore
+	* 
+	* 
+	* **How to update an existing entity :**
+	* ```javascript 
+	* var a = ds.Employee.first();
+	* a.firstname = "MyNewFirstName" ;
+	* a.lastname =  "MyNewLastName" ;
+	* a.save();
+	* ```
+	* **How to create then save an entity:**
+	* ```javascript
+	* new ds.Employee(
+*{
+*	firstname : "MyNewFirstName" ,
+*	lastname  : "MyNewLastName"
+*}).save();
+	* ```
+	* 
+	* </p> 
+	* ***
+	* 
+	* #### Events
+	* 
+	* When executing a save() action, on the server side the events (if defined) are performed in the following order :
+	* 1. validate on each attribute
+	* 2. validate on the datastore class
+	* 3. save on the datastore class
+	* 4. save on each attribute
+	*
+	* #### Example 
+	*
+	* ```javascript
+	* //You can intercept and manage the error returned by the engine when the entity's internal stamp being saved is different from the one that is saved in the data
+	* //To do this, you can place the save statement in a try/catch type structure. For example:
+	* // select an entity and change its name to uppercase
+	* function toUpperEmployee(lastName, firstName) 
+	* {
+    	* var emp = ds.Employee.find("lastName = :1 and firstName = :2", lastName, firstName);
+    	* emp.lastName.toUppercase();
+    	* try
+    	* {
+    	*    emp.save();
+    	* }
+    	* catch(e)
+       	* {  ... // put the error-processing code here
+* }
+	* ```
 	*/
 	save() : void;
+	
+	
+	
+	
 	/**
 	*returns a string representation of the entity or entity collection
+	* Examples are available [here](entitycollection.html#tostring)
 	*/
 	toString() : String;
+
+
+
+	/**
+	 * The getKey( ) method returns the primary key value of the entity to which it is applied.
+	 * ```javascript
+	 * 	var ent = ds.Person.find("name = :1", "Smith");
+	 *	var key = ent.getKey();
+	 * ```
+	 * This method is useful to identify the entity to update for instance.  
+	 * The KEY value is also needed when you pass a POST request
+	 * 
+	 * 
+	 * 
+	 */
+	getKey() : String;
+
+
+	/**
+	 * The getStamp( ) method returns the current value of the internal stamp of the entity.
+	 * The internal locking stamp is automatically incremented by Wakanda each time the entity is saved on the server. 
+	 * **It manages concurrent user access**
+	 * 
+	 * #### Note 
+	 * The entity's STAMP value is needed when executing POST request throught XRH to update an entity
+	 * 
+	 */
+	getStamp() : Number;
+
+
+
+
+
+
+	/**
+	 * The lock( ) method tries to lock the entity for the session and returns true if the entity is locked successfully, or false if the entity is already locked by another session.
+	 * @returns True if the entity is locked for the session, false otherwise
+	 * 
+	 * @warning The lock()/unlock() method only works with WakandaDB and 4D Mobile Connector. It does not work when working with the **MYSQL & OBDC Connectors**
+	 *  
+	 * For more details about locking entities check this pages :
+	 *  - [lock() API Description](http://doc.wakanda.org/Datastore/Entity/lock.301-1074685.en.html)
+	 *  - [In-Depth description of locking mecanism](http://doc.wakanda.org/Datastore/Entity/Locking-Entities.300-606099.en.html)
+	 * 
+	 */
+	lock() : Boolean;
+
+
+
+
+	/**
+	 * The unlock() method unlocks the entity in the running session.
+	 * This method must be called after the lock( ) method to unlock the entity for the other sessions.
+	 * 
+	 * @warning The lock()/unlock() method only works with WakandaDB and 4D Mobile Connector. It does not work when working with the **MYSQL & OBDC Connectors**
+	 *  
+	 * For more details about locking entities check this pages :
+	 *  - [unlock() API Description](http://doc.wakanda.org/Datastore/Entity/unlock.301-1074691.en.html)
+	 *  - [In-Depth description of locking mecanism](http://doc.wakanda.org/Datastore/Entity/Locking-Entities.300-606099.en.html)
+	 * 
+	 */
+	unlock() : void;
+
+
+
+	/**
+	 * The getModifiedAttributes( ) method returns an array containing the names of attributes that have been modified in the entity.
+	 * This method is useful in validation control functions.(validate events for instance or methods, functions..)
+	 * @returns Array of attributes 
+	 * 
+	 * #### Example in a Dataclass Validate Event 
+	 * ```javascript
+	 * model.Invoice.events.validate = function(event) {
+	 *           //get the array of attributes that were changed
+     *   var attributeMods = this.getModifiedAttributes();
+     *      //cycle through them
+     *   attributeMods.forEach(function(attribName){
+     *       switch (attribName){ 
+     *          case 'ID': //if the ID was changed
+     *          case 'InvoiceDate': //or the invoiceDate was changed
+     *                   //assign an error number and message
+     *               result = {error: 1000, errorMessage: 'Invalid Change !'};
+     *               break;
+     *       }
+     *   });
+     *   return result; //return result regardless
+     * }
+	 * ```
+	 *  
+	 * 
+	 * ```javascript
+	 *  //Then each time you perform a save action the entity will go through this validation process
+	 *  var a = ds.Invoice.first();
+	 *  a.ID = 12;
+	 *  a.save();
+	 *  // Running this will thow the error message 'Invalid Change !
+	 * ```
+	 */
+	getModifiedAttributes() : Array;
+
+
+
+
+
+
+
+	/**
+	 * The validate( ) method passes the entity through the validation process.
+	 * Precisely it means  that on the server, the code associated with the **validate (attribute) and validate (datastore class) event(s)** is executed.
+	 * @returns True in case of success (the entity successfully passes the validation process)
+	 * @warning Keep in mind that the entity is not saved until you actually call the save( ) method.  
+	 *
+	 * 
+	 * </br> </p>
+	 * <details> 
+	 * <summary> 
+	 * 
+	 *  #### Validation  Example (click to Expand) 
+	 * </summary>
+	 * ```javascript
+	 * // first let's create a dataclass validate event
+	 * model.Elem.events.validate = function(event) //onValidate until Wakanda v8
+    *{
+    *if (this.name == "Unknown") {
+    *    return {
+    *        error: 100, // an object with 'error' will make validation fail
+    *        errorMessage: "The name cannot be 'Unknown'"
+    *    };
+   * }
+*} ```
+	 * Then you could create a datastore class method
+	 * ```javascript
+	 * checkValidity:function()
+    {
+    try {
+            return this.validate(); // returns true if successful
+    }
+    catch (e) {
+        throw { // if fail
+                // send an exception with the customized message
+                // from the error stack
+            message: e.messages[e.messages.length - 1] 
+             
+        };
+    }
+} 
+	 * //Finally you would simply call your Validation process by calling 
+	 *  // - the validate() method (server side) or , 
+	 * //  - the CheckValidity class method (server side or client side)
+	* ```
+	*/
+	validate() : Boolean;
 }
 
 
@@ -1675,7 +2444,28 @@ interface EntityCollection {
 	
 	
 	/**
-	*returns the datastore class (object of the DatastoreClass type) of the entity collection
+	* Returns the datastore class (object of the DatastoreClass type) of the entity collection.
+	*
+	* To get the DataClass name displayed in must be followed by the getName() or toString() api 
+	* #### Example
+	* ```javascript
+	* - ds.MyDataClass.all().getDataClass().toString()  //to a collection with toString
+	* - ds.MyDataClass.first().getDataClass().getName() // to an entity with getName()
+	* ```
+	* Another example on a model event :
+	* ```javascript
+	*  
+	*
+	* // In the onInit event of an extended datastore class, you want to fill in the 'category' attribute the name of the derived class. 
+	* // You can write:
+	* model.Manager.events.init = function(event)
+	* {
+    *    //get the name of the class of the entity
+    *  var myType = this.getDataClass().getName();
+    *   //fill it in the category attribute
+    * this.category = myType;
+	* };
+	* ```
 	*/
 	getDataClass() : DatastoreClass;
 	
@@ -1896,7 +2686,7 @@ interface EntityCollection {
 	* - When you apply it to an entity collection, it removes the entities belonging to that entity collection,
     * - When you apply it to a datastore class, it removes all the entities in the datastore class.
 	*
-	* #### Example
+	* #### Examples
 	* ```javascript
 	* // Applied to a Dataclass 
 	* ds.Dataclass1.remove();
@@ -1905,6 +2695,17 @@ interface EntityCollection {
 	* // Applied to a collection
 	*  ds.Dataclass1.query('ID > 3 & ID < 5').remove();
 	* ```
+	* ```javascript
+	* // Applied to an entity
+	* ds.Dataclass1.first().remove();
+	* ```
+	* ```javascript
+	* // Applied at the Model level (Entity method on the Customer dataclass)
+	* model.Customer.entityMethods.remove = function() {
+    * this.remove();
+	* };
+	* ```
+	* 
 	*/
 	remove() : void;
 	
@@ -1979,6 +2780,11 @@ interface EntityCollection {
 	
 	/**
 	*returns a string representation of the entity or entity collection
+	* #### Example 
+	* ```
+	* ds.Dataclass1.query('ID > 3').toString()  // applied to a collection 
+	* ds.Dataclass1.first().toString() // applied to an entity
+	* ```
 	*/
 	toString() : String;
 }
@@ -1995,7 +2801,7 @@ interface WAKDirectory {
      * Create a new user session and sets it as the current session.
      * 
      * ```javascript
-     * var cur = currentSession();
+     * var cur = directory.currentSession;
      * console.log( cur.ID );
      * // BF44D6E51B8FAKE485D8966ED3EDF6DD
      * 
@@ -2015,7 +2821,7 @@ interface WAKDirectory {
      * // 1E121BA4AE82446B9FDB430F0A9055C6
      * // The new session is now the current session
      * 
-     * var previousSession = getSession( 'BF44D6E51B8FAKE485D8966ED3EDF6DD' );
+     * var previousSession = directory.getSession( 'BF44D6E51B8FAKE485D8966ED3EDF6DD' );
      * console.log( previousSession.ID );
      * // BF44D6E51B8FAKE485D8966ED3EDF6DD
      * // The previous session is still valid
@@ -2090,7 +2896,7 @@ interface WAKDirectory {
      * Get an active session object from a session id.
      * 
      * ```javascript
-     * var previousSession = getSession( 'BF44D6E51B8FAKE485D8966ED3EDF6DD' );
+     * var previousSession = directory.getSession( 'BF44D6E51B8FAKE485D8966ED3EDF6DD' );
      * ```
      * 
      * @param sessionID Describes the string session id
@@ -2102,7 +2908,7 @@ interface WAKDirectory {
     //  * 
     //  * ```javascript
     //  * // Get all active user session
-    //  * var sessionArray = getUserSessions();
+    //  * var sessionArray = directory.getUserSessions();
     //  * ```
     //  * 
     //  * @returns Returns an array of session object if any
@@ -2113,7 +2919,7 @@ interface WAKDirectory {
     //  * 
     //  * ```javascript
     //  * // Get all active user session for the current user
-    //  * var sessionArray = getUserSessions( currentSession().user.ID );
+    //  * var sessionArray = directory.getUserSessions( currentSession().user.ID );
     //  * ```
     //  * 
     //  * @param userId Describes a user ID.
@@ -2125,7 +2931,7 @@ interface WAKDirectory {
     //  * 
     //  * ```javascript
     //  * // Get all active user session for the current user
-    //  * var sessionArray = getUserSessions( currentSession().user );
+    //  * var sessionArray = directory.getUserSessions( currentSession().user );
     //  * ```
     //  * 
     //  * @param user Describes a user object.
@@ -2138,7 +2944,7 @@ interface WAKDirectory {
      */
     getRemoteGroupByAlias(alias: String): Group;
     /**
-     * returns a local Group Object referencing the remote group that corresponds to the unique Distinguished Name (DN) you passed in the dn parameter.
+     * Returns a local Group Object referencing the remote group that corresponds to the unique Distinguished Name (DN) you passed in the dn parameter.
      * @warning Requires LDAP component.
      */
     getRemoteGroupByDN(dn: String): Group;
@@ -2157,8 +2963,8 @@ interface WAKDirectory {
      * Authenticates a user by their name and key and, in case of success, opens a new user Session on the server.
      * 
      * ```javascript
-     * loginByKey('john', '6153A6FA0E4880D9B8D0BE4720F78E895265D0A9');
-     * loginByKey('john', '6153A6FA0E4880D9B8D0BE4720F78E895265D0A9', 60*60);
+     * directory.loginByKey('john', '6153A6FA0E4880D9B8D0BE4720F78E895265D0A9');
+     * directory.loginByKey('john', '6153A6FA0E4880D9B8D0BE4720F78E895265D0A9', 60*60);
      * ```
      * 
      * @param name Describes the user name
@@ -2171,8 +2977,8 @@ interface WAKDirectory {
      * Authenticates a user by their name and password and, in case of success, opens a new user Session on the server.
      * 
      * ```javascript
-     * loginByPassword('john', 'my-password');
-     * loginByPassword('john', 'my-password', 60*60);
+     * directory.loginByPassword('john', 'my-password');
+     * directory.loginByPassword('john', 'my-password', 60*60);
      * ```
      * 
      * @param name Describes the user name
@@ -2185,7 +2991,7 @@ interface WAKDirectory {
      * Logs out the user from its current session on the Wakanda server.
      * 
      * ```javascript
-     * logout();
+     * directory.logout();
      * ```
      * 
      * @returns Returns `true` if the user has been successfully logged out and `false` if an error occured
@@ -2232,10 +3038,10 @@ interface WAKDirectory {
      * ```javascript
      * console.log(directory.currentSession.ID);
      * // 2EA82764A075497181278B2F05DA2EDA
-     * setCurrentSession('E8CBA745124D4BE4BF7D5A224183EC8E', true);
+     * directory.setCurrentSession('E8CBA745124D4BE4BF7D5A224183EC8E', true);
      * console.log(directory.currentSession.ID);
      * // E8CBA745124D4BE4BF7D5A224183EC8E
-     * getSession('2EA82764A075497181278B2F05DA2EDA');
+     * directory.getSession('2EA82764A075497181278B2F05DA2EDA');
      * // null
      * // Previous session has expire
      * ```
@@ -2250,13 +3056,13 @@ interface WAKDirectory {
      * ```javascript
      * // Usually defined in a boostrap file
      * directory.setSessionManager( 'session' );
-     * // Refers to PROJECT/backend/modules/session/index.js module
+     * // Refers to PROJECT/modules/session/index.js module
      * ```
      * 
      * The module must export the following methods to handle all session operations:
      * 
      * ```javascript
-     * // PROJECT/backend/modules/session/index.js
+     * // PROJECT/modules/session/index.js
      * // This session manager saves all session in the storage (could be a Redis instead)
      * 
      * // Called everytime the server creates or updates a session
@@ -2313,7 +3119,7 @@ interface WAKDirectory {
      * directory.setLoginManager('my-login-module', 'myDirectoryGroup');
      * ```
      * 
-     * This module is defined inside `PROJECT/backend/modules/my-login-module` or `SOLUTION/modules/my-login-module`.
+     * This module is defined inside `PROJECT/modules/my-login-module` or `SOLUTION/modules/my-login-module`.
      * If the module is not found in the project, it is then check inside the solution.
      * It must export a `login()` method and return the `user` object.
      * 
@@ -2384,14 +3190,14 @@ interface File {
      * 
      * #### Example 1: Get a reference to an existing file
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/bootstrap.js' );
+     * var myFile = new File( 'PROJECT/bootstrap.js' );
      * console.log( myFile.exists );
      * // true
      * ```
      * 
      * #### Example 2: Get a reference to a missing file
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/file-to-create.js' );
+     * var myFile = new File( 'PROJECT/file-to-create.js' );
      * console.log( myFile.exists );
      * // false
      * ```
@@ -2405,7 +3211,7 @@ interface File {
      * 
      * #### Example 1: Get a reference to an existing file
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend/' );
+     * var myFolder = new Folder( 'PROJECT/' );
      * var myFile = new File( myFolder, 'bootstrap.js' );
      * console.log( myFile.exists );
      * // true
@@ -2413,7 +3219,7 @@ interface File {
      * 
      * #### Example 2: Get a reference to a missing file
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend/' );
+     * var myFolder = new Folder( 'PROJECT/' );
      * var myFile = new File( myFolder, 'file-to-create.js' );
      * console.log( myFile.exists );
      * // false
@@ -2427,7 +3233,7 @@ interface File {
      * Check if the path references a file.
      * 
      * ```javascript
-     * var myIsFile = File.isFile( 'PROJECT/backend/bootstrap.js' );
+     * var myIsFile = File.isFile( 'PROJECT/bootstrap.js' );
      * console.log( myIsFile );
      * // true
      * ```
@@ -2487,7 +3293,7 @@ interface WAKFileInstance extends WAKBlobInstance {
      * Creates a new file on disk.
      * 
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/my-created-file.js' );
+     * var myFile = new File( 'PROJECT/my-created-file.js' );
      * var myResult = myFile.create();
      * console.log( myResult );
      * // true
@@ -2515,7 +3321,7 @@ interface WAKFileInstance extends WAKBlobInstance {
      * Moves the file to the specified destination.
      * 
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/my-file.js' );
+     * var myFile = new File( 'PROJECT/my-file.js' );
      * myFile.create();
      * myFile.moveTo( 'PROJECT/my-moved-file.js', yes );
      * // myFile always references the "my-file.js" file
@@ -2532,7 +3338,7 @@ interface WAKFileInstance extends WAKBlobInstance {
      * Moves the file to the specified destination.
      * 
      * ```javascript
-     * var mySourceFile = new File( 'PROJECT/backend/my-file.js' );
+     * var mySourceFile = new File( 'PROJECT/my-file.js' );
      * var myDestinationFile = new File( 'PROJECT/my-moved-file.js' );
      * // The file must exists to be renamed
      * myFile.create();
@@ -2540,7 +3346,7 @@ interface WAKFileInstance extends WAKBlobInstance {
      * // myFile always references the "my-file.js" file
      * // The referenced file did not change with the moveTo() action.
      * console.log( myFile.path );
-     * // PROJECT/backend/my-file.js
+     * // PROJECT/my-file.js
      * ```
      * 
      * @warning After the `moveTo()` action, the file referenced is still the source file and not the destination file. Therefore, the referenced file does not exist anymore.
@@ -2550,14 +3356,14 @@ interface WAKFileInstance extends WAKBlobInstance {
     moveTo(file: String, overwrite?: Boolean): void;
     /**
      * Removes the file from the disk.
-     * @returns `true` if the file is not here, `false` otherwise.
+     * @returns `true` if the file is removed from disk, `false` otherwise.
       */
     remove(): Boolean;
     /**
      * Rename the file on disk.
      * 
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/my-file.js' );
+     * var myFile = new File( 'PROJECT/my-file.js' );
      * // The file must exists to be renamed
      * myFile.create();
      * // The destination file name must be free
@@ -2565,7 +3371,7 @@ interface WAKFileInstance extends WAKBlobInstance {
      * // myFile always references the "my-file.js" file
      * // The referenced file did not change with the setName() action.
      * console.log( myFile.path );
-     * // PROJECT/backend/my-file.js
+     * // PROJECT/my-file.js
      * ```
      * 
      * @warning The file must exist on disk to be renamed
@@ -2589,6 +3395,7 @@ interface WAKFileInstance extends WAKBlobInstance {
 // 	valid() : Boolean;
 // }
 
+
 interface Folder {
     /**
      * References a folder.
@@ -2596,7 +3403,7 @@ interface Folder {
      * 
      * #### Example 1: Get a reference to an existing folder
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend' );
+     * var myFolder = new Folder( 'PROJECT' );
      * console.log( myFolder.exists );
      * // true
      * ```
@@ -2615,7 +3422,7 @@ interface Folder {
      * Check if the path references a folder.
      * 
      * ```javascript
-     * var myIsFolder = Folder.isFolder( 'PROJECT/backend' );
+     * var myIsFolder = Folder.isFolder( 'PROJECT' );
      * console.log( myIsFolder );
      * // true
      * ```
@@ -2687,7 +3494,7 @@ interface WAKFolderInstance {
      * Creates a new folder on disk.
      * 
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend/my-created-folder' );
+     * var myFolder = new Folder( 'PROJECT/my-created-folder' );
      * var myResult = myFolder.create();
      * console.log( myResult );
      * // true
@@ -2702,7 +3509,7 @@ interface WAKFolderInstance {
      * 
      * #### Example 1: Basic usage
      * ```javascript
-     * var folder = new Folder( 'PROJECT/backend/' );
+     * var folder = new Folder( 'PROJECT/' );
      * folder.forEachFile( function( file )
      * {
      *     console.log( file.path );
@@ -2711,7 +3518,7 @@ interface WAKFolderInstance {
      * 
      * #### Example 2: Override `this`
      * ```javascript
-     * var folder = new Folder( 'PROJECT/backend/' );
+     * var folder = new Folder( 'PROJECT/' );
      * folder.forEachFile( function( file )
      * {
      *     console.log( this );
@@ -2730,7 +3537,7 @@ interface WAKFolderInstance {
      * 
      * #### Example 1: Basic usage
      * ```javascript
-     * var folder = new Folder( 'PROJECT/backend/' );
+     * var folder = new Folder( 'PROJECT/' );
      * folder.forEachFolder( function( folder )
      * {
      *     console.log( folder.path );
@@ -2739,7 +3546,7 @@ interface WAKFolderInstance {
      * 
      * #### Example 2: Override `this`
      * ```javascript
-     * var folder = new Folder( 'PROJECT/backend/' );
+     * var folder = new Folder( 'PROJECT/' );
      * folder.forEachFolder( function( folder )
      * {
      *     console.log( this );
@@ -2776,7 +3583,7 @@ interface WAKFolderInstance {
      * 
      * #### Example 1: Basic usage
      * ```javascript
-     * var folder = new Folder( 'PROJECT/backend/' );
+     * var folder = new Folder( 'PROJECT/' );
      * folder.parse( function( file, position, folder )
      * {
      *     console.log( '-----------------------------' );
@@ -2788,7 +3595,7 @@ interface WAKFolderInstance {
      * 
      * #### Example 2: Override `this`
      * ```javascript
-     * var folder = new Folder( 'PROJECT/backend/' );
+     * var folder = new Folder( 'PROJECT/' );
      * folder.parse( function( file, position, folder )
      * {
      *     console.log( this );
@@ -2817,7 +3624,7 @@ interface WAKFolderInstance {
      * Rename the folder on disk.
      * 
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend/my-folder' );
+     * var myFolder = new Folder( 'PROJECT/my-folder' );
      * // The folder must exists to be renamed
      * myFolder.create();
      * // The destination folder name must be free
@@ -2825,7 +3632,7 @@ interface WAKFolderInstance {
      * // myFolder always references the "my-folder" folder
      * // The referenced folder did not change with the setName() action.
      * console.log( myFolder.path );
-     * // PROJECT/backend/my-folder
+     * // PROJECT/my-folder
      * ```
      * 
      * @warning The folder must exist on disk to be renamed
@@ -2984,7 +3791,7 @@ interface HttpServer {
      */
     readonly ssl: HttpServerSSL;
     /**
-     * Current status of the HTTP server.
+     * Return true if the HTTP Server is started.
      */
     readonly started: Boolean;
     /**
@@ -2994,7 +3801,31 @@ interface HttpServer {
      * #### Step 1: Add a request handler
      * ```javascript
      * // It is recommended to write these lines in bootstrap.js
-     * // On every "/ping" requests, call "hello()" function in "request-greetings.js"
+     * // On every "/ping" requests, call "pong()" function in "request-greetings" module
+     * httpServer.addRequestHandler('^/ping$', 'request-greetings', 'pong');
+     * ```
+     * 
+     * #### Step 2: Handle the request
+     * ```javascript
+     * // modules/request-greetings/index.js
+     * exports.pong = function pong( request, response ){
+     *     return 'pong';
+     * }
+     * ```
+     * 
+     * @param pattern Regexp pattern to intercept a HTTP request
+     * @param modulePath Path to the module that exports the functionName
+     * @param functionName Function name which handles the request and returns the request response
+     */
+    addRequestHandler(pattern: String, modulePath: String, functionName: String): void;
+    /**
+     * Adds a request handler function on the server.
+     * It is recommended to write all request handler in the `bootstrap.js` file in order to be available at server start up.
+     * 
+     * #### Step 1: Add a request handler
+     * ```javascript
+     * // It is recommended to write these lines in bootstrap.js
+     * // On every "/ping" requests, call "pong()" function in "request-greetings.js"
      * httpServer.addRequestHandler('^/ping$', 'request-greetings.js', 'pong');
      * ```
      * 
@@ -3018,12 +3849,12 @@ interface HttpServer {
      * #### Step 1: Add a websocket handler
      * ```javascript
      * // It is recommended to write these lines in bootstrap.js
-     * httpServer.addWebSocketHandler('^/ping$', './backend/websocket-greetings.js', 'websocket-id', true);
+     * httpServer.addWebSocketHandler('^/ping$', './websocket-greetings.js', 'websocket-id', true);
      * ```
      * 
      * #### Step 2: Handle the websocket
      * ```javascript
-     * // ./backend/websocket-greetings.js
+     * // ./websocket-greetings.js
      * // Same as for ShareWorker
      * // Called every time a new websocket is connected
      * onconnect = function ( msg ) {
@@ -3056,12 +3887,26 @@ interface HttpServer {
      * };
      * ```
      * 
-     * @param pattern Regexp pattern to intercept a HTTP request
+     * @param pattern Regexp pattern to intercept a WS request
      * @param filePath Absolute or relative path from the project to the file that defines the websocket handler. Filesystem are not working in filePath parameter (`PROJECT`, `SOLUTION`, ...).
      * @param socketID Socket ID usefull for `removeWebSocketHandler()`
      * @param sharedWorker `true` if uses shared worker (recommended). `false` if uses dedicated worker.
      */
     addWebSocketHandler(pattern: String, filePath: String, socketID: String, sharedWorker: Boolean): void;
+    /**
+     * Removes an existing request handler function on the server.
+     * 
+     * ```javascript
+     * // Must match parameters of "addRequestHandler()"
+     * // httpServer.addRequestHandler('^/ping$', 'request-greetings', 'pong');
+     * httpServer.removeRequestHandler('^/ping$', 'request-greetings', 'pong');
+     * ```
+     * 
+     * @param pattern Regexp pattern to intercept a HTTP request
+     * @param modulePath Path to the module that exports the functionName
+     * @param functionName Function name which handles the request
+     */
+    removeRequestHandler(pattern: String, modulePath: String, functionName: String): void;
     /**
      * Removes an existing request handler function on the server.
      * 
@@ -3082,7 +3927,7 @@ interface HttpServer {
      * ```javascript
      * // Must match socketID parameter of "addWebSocketHandler()"
      * // httpServer.addWebSocketHandler('^/ping$', 'backend/websocket-greetings.js', 'websocket-id', true);
-     * httpServer.httpServer.removeWebSocketHandler( 'websocket-id' );
+     * httpServer.removeWebSocketHandler( 'websocket-id' );
      * ```
      * 
      * @param socketID Identifies the websocket to remove
@@ -3127,6 +3972,7 @@ interface HttpServerSSL {
      */
     getCertificatePath(): String;
 }
+
 
 
 
@@ -3275,13 +4121,13 @@ interface Image {
      * 
      * #### Example 1: Basic usage
      * ```javascript
-     * var myImage = loadImage( 'PROJECT/backend/my-image.jpg' );
-     * myImage.save( 'PROJECT/backend/my-saved-image.jpg' );
+     * var myImage = loadImage( 'PROJECT/my-image.jpg' );
+     * myImage.save( 'PROJECT/my-saved-image.jpg' );
      * ```
      * #### Example 2: Save image in another format
      * ```javascript
-     * var myImage = loadImage( 'PROJECT/backend/my-image.jpg' );
-     * myImage.save( 'PROJECT/backend/my-png-image.png', 'image/png' );
+     * var myImage = loadImage( 'PROJECT/my-image.jpg' );
+     * myImage.save( 'PROJECT/my-png-image.png', 'image/png' );
      * ```
      * 
      * @warning Overrides existing files
@@ -3294,14 +4140,14 @@ interface Image {
      * 
      * #### Example 1: Basic usage
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/my-saved-image.jpg' );
-     * var myImage = loadImage( 'PROJECT/backend/my-image.jpg' );
+     * var myFile = new File( 'PROJECT/my-saved-image.jpg' );
+     * var myImage = loadImage( 'PROJECT/my-image.jpg' );
      * myImage.save( myFile );
      * ```
      * #### Example 2: Save image in another format
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/my-png-image.png' );
-     * var myImage = loadImage( 'PROJECT/backend/my-image.jpg' );
+     * var myFile = new File( 'PROJECT/my-png-image.png' );
+     * var myImage = loadImage( 'PROJECT/my-image.jpg' );
      * myImage.save( myFile, 'image/png' );
      * ```
      * 
@@ -3314,10 +4160,10 @@ interface Image {
      * Updates the image metadata.
      * 
      * ```javascript
-     * var myImage = loadImage( 'PROJECT/backend/my-image.jpg' );
+     * var myImage = loadImage( 'PROJECT/my-image.jpg' );
      * var newMeta = { IPTC: { Keywords: ['vacation', 'snow']}};
      * myImage.saveMeta( newMeta );
-     * myImage.save( 'PROJECT/backend/my-meta-image.jpg' );
+     * myImage.save( 'PROJECT/my-meta-image.jpg' );
      * ```
      * 
      * @warning A `save` is required in order to save the metadata on disk
@@ -3337,16 +4183,16 @@ interface Image {
      * 
      * #### Example 1: Basic usage
      * ```javascript
-     * var myImage = loadImage( 'PROJECT/backend/my-image.jpg' );
+     * var myImage = loadImage( 'PROJECT/my-image.jpg' );
      * var myThumbnail = myImage.thumbnail( 50, 50 );
-     * myThumbnail.save( 'PROJECT/backend/my-thumbnail.jpg' );
+     * myThumbnail.save( 'PROJECT/my-thumbnail.jpg' );
      * ```
      * 
      * #### Example 2: Change thumbnail mode
      * ```javascript
-     * var myImage = loadImage( 'PROJECT/backend/my-image.jpg' );
+     * var myImage = loadImage( 'PROJECT/my-image.jpg' );
      * var myThumbnail = myImage.thumbnail( 50, 50, 2 );
-     * myThumbnail.save( 'PROJECT/backend/my-thumbnail.jpg' );
+     * myThumbnail.save( 'PROJECT/my-thumbnail.jpg' );
      * ```
      * 
      * @param width (pixels) Thumbnail width
@@ -3407,7 +4253,8 @@ interface MIMEMessage {
      */
     count: Number;
     /**
-     * Encoding type: 'multipart/form-data' or 'application/x-www-form-urlencoded'.
+     * Encoding type.
+        example: 'multipart/form-data' or 'application/x-www-form-urlencoded'.
      */
     encoding: String;
     /**
@@ -3455,9 +4302,12 @@ interface MIMEMessagePart {
     size: Number;
     /**
      * Saves the body of the part in the file whose path is passed in filePath.
+     * @param filePath file path where to save MIMEMessagePart
+     * @param overWrite if true, it will override the file if already exists. Else, the save will be omitted
      */
     save(filePath: String, overWrite?: Boolean): void;
 }
+
 	interface Module {
 		//TODO
 	}
@@ -3523,7 +4373,7 @@ interface WAKMutexProxy {
  * ### Step 1: Define the node worker
  * 
  * ```javascript
- * // PROJECT/backend/worker.js
+ * // PROJECT/worker.js
  * // onconnect is called everytime a new worker proxy is created
  * onconnect = function( event )
  * {
@@ -3576,7 +4426,7 @@ interface WAKMutexProxy {
  * ```
  * 
  * #### How to require a wakanda module ?
- * The module should be defined in `PROJECT/backend/modules`
+ * The module should be defined in `PROJECT/modules`
  * 
  * ```javascript
  * var myModule = require( 'myModule' );
@@ -3585,7 +4435,7 @@ interface WAKMutexProxy {
  * ### Step 2: Create the node worker thread and get the worker proxy
  * 
  * ```javascript
- * // PROJECT/backend/proxy.js
+ * // PROJECT/proxy.js
  * // Create a new NodeWorker and get the proxy worker
  * var myWorkerProxy = new NodeWorker( 'backend/worker.js', 'my-worker-name' );
  * // Get the proxy worker port for communication
@@ -3597,7 +4447,7 @@ interface WAKMutexProxy {
  * ### Step 3: Listen for node worker messages
  * 
  * ```javascript
- * // PROJECT/backend/proxy.js
+ * // PROJECT/proxy.js
  * // Listen for worker thread messages
  * workerProxyPort.onmessage = function( event )
  * {
@@ -3635,7 +4485,7 @@ interface NodeWorker {
      * Node workers can be addressed from any thread, they are uniquely identified by their path and name.
      * 
      * ```javascript
-     * // "worker.js" is defined in PROJECT/backend/worker.js
+     * // "worker.js" is defined in PROJECT/worker.js
      * var myWorkerProxy = new NodeWorker( 'backend/worker.js', 'my-worker-name' );
      * ```
      * 
@@ -3787,7 +4637,7 @@ interface WAKNodeWorkerProxy {
  * ### Step 1: Define the shared worker
  * 
  * ```javascript
- * // PROJECT/backend/worker.js
+ * // PROJECT/worker.js
  * // onconnect is called everytime a new worker proxy is created
  * onconnect = function( event )
  * {
@@ -3832,7 +4682,7 @@ interface WAKNodeWorkerProxy {
  * ```
  * 
  * #### How to require a wakanda module ?
- * The module should be defined in `PROJECT/backend/modules`
+ * The module should be defined in `PROJECT/modules`
  * 
  * ```javascript
  * var myModule = require( 'myModule' );
@@ -3841,7 +4691,7 @@ interface WAKNodeWorkerProxy {
  * ### Step 2: Create the shared worker thread and get the worker proxy
  * 
  * ```javascript
- * // PROJECT/backend/proxy.js
+ * // PROJECT/proxy.js
  * // Create a new SharedWorker and get the proxy worker
  * var myWorkerProxy = new SharedWorker( 'backend/worker.js', 'my-worker-name' );
  * // Get the proxy worker port for communication
@@ -3853,7 +4703,7 @@ interface WAKNodeWorkerProxy {
  * ### Step 3: Listen for shared worker messages
  * 
  * ```javascript
- * // PROJECT/backend/proxy.js
+ * // PROJECT/proxy.js
  * // Listen for worker thread messages
  * workerProxyPort.onmessage = function( event )
  * {
@@ -3892,7 +4742,7 @@ interface SharedWorker {
      * Shared workers can be addressed from any thread, they are uniquely identified by their path and name.
      * 
      * ```javascript
-     * // "worker.js" is defined in PROJECT/backend/worker.js
+     * // "worker.js" is defined in PROJECT/worker.js
      * var myWorkerProxy = new SharedWorker( 'backend/worker.js', 'my-worker-name' );
      * ```
      * 
@@ -4059,7 +4909,7 @@ interface SystemWorker {
      * 
      * #### Example 2: Pass parameters, quotes and env variables options to the system worker
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend' );
+     * var myFolder = new Folder( 'PROJECT' );
      * var options = {
      *     parameters : { folder_ref : myFolder },
      *     quote : '"',
@@ -4097,7 +4947,7 @@ interface SystemWorker {
      * 
      * #### Example 2: Pass parameters, quotes and env variables options to the system worker
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend' );
+     * var myFolder = new Folder( 'PROJECT' );
      * var options = {
      *     parameters : { folder_ref : myFolder },
      *     quote : '"',
@@ -4140,7 +4990,7 @@ interface SystemWorker {
      * 
      * #### Example 4: Pass parameters, quotes and env variables options to the system worker
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend' );
+     * var myFolder = new Folder( 'PROJECT' );
      * var options = {
      *     parameters : { folder_ref : myFolder },
      *     quote : '"',
@@ -4183,7 +5033,7 @@ interface SystemWorker {
      * 
      * #### Example 4: Pass parameters, quotes and env variables options to the system worker
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend' );
+     * var myFolder = new Folder( 'PROJECT' );
      * var options = {
      *     parameters : { folder_ref : myFolder },
      *     quote : '"',
@@ -4396,7 +5246,7 @@ interface TextStream {
      * 
      * ```javascript
      * // The file does not have to exist
-     * var myStream = new TextStream( 'PROJECT/backend/my-streamed-file.js', 'write' );
+     * var myStream = new TextStream( 'PROJECT/my-streamed-file.js', 'write' );
      * // Creates the file if it does not exist
      * myStream.write( 'Hello '+ Date.now() +' !\n' );
      * // Important to close the stream every time.
@@ -4413,7 +5263,7 @@ interface TextStream {
      * 
      * ```javascript
      * // The file does not have to exist
-     * var myFile = new File( 'PROJECT/backend/my-streamed-file.js' );
+     * var myFile = new File( 'PROJECT/my-streamed-file.js' );
      * var myStream = new TextStream( file, 'write' );
      * // Creates the file if it does not exist
      * myStream.write( 'Hello '+ Date.now() +' !\n' );
@@ -4433,7 +5283,7 @@ interface WAKTextStreamInstance {
      * Closes the file referenced in the TextStream object.
      * 
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/my-streamed-file.js' );
+     * var myFile = new File( 'PROJECT/my-streamed-file.js' );
      * var myStream = new TextStream( file, 'write' );
      * myStream.write( 'Hello '+ Date.now() +' !\n' );
      * // Important to close the stream every time.
@@ -4445,7 +5295,7 @@ interface WAKTextStreamInstance {
      * Checks if the the cursor position is after the last character of the file referenced in the TextStream object.
      * 
      * ```javascript
-     * var myStream = new TextStream( 'PROJECT/backend/bootstrap.js', 'Read' );
+     * var myStream = new TextStream( 'PROJECT/bootstrap.js', 'Read' );
      * // Is end of file reached ?
      * while( !myStream.end() ){
      *     console.log( myStream.read( 10 ) );
@@ -4465,7 +5315,7 @@ interface WAKTextStreamInstance {
      * Get the current cursor position in the text stream.
      * 
      * ```javascript
-     * var myStream = new TextStream( 'PROJECT/backend/bootstrap.js', 'Read' );
+     * var myStream = new TextStream( 'PROJECT/bootstrap.js', 'Read' );
      * while( !myStream.end() ){
      *     myStream.read( 10 );
      *     console.log( myStream.getPos() );
@@ -4480,7 +5330,7 @@ interface WAKTextStreamInstance {
      * Get the current text stream size.
      * 
      * ```javascript
-     * var myStream = new TextStream( 'PROJECT/backend/bootstrap.js', 'Read' );
+     * var myStream = new TextStream( 'PROJECT/bootstrap.js', 'Read' );
      * console.log( myStream.getSize() );
      * // 183
      * // Important to close the stream every time.
@@ -4492,7 +5342,7 @@ interface WAKTextStreamInstance {
      * Reads bytes from the text stream.
      * 
      * ```javascript
-     * var myStream = new TextStream( 'PROJECT/backend/bootstrap.js', 'Read' );
+     * var myStream = new TextStream( 'PROJECT/bootstrap.js', 'Read' );
      * while( !myStream.end() ){
      *     // Read the next 10 bytes and moves the cursor position accordingly
      *     console.log( myStream.read( 10 ) );
@@ -4508,7 +5358,7 @@ interface WAKTextStreamInstance {
      * Set the cursor position to the beginning of the TextStream.
      * 
      * ```javascript
-     * var myStream = new TextStream( 'PROJECT/backend/bootstrap.js', 'Read' );
+     * var myStream = new TextStream( 'PROJECT/bootstrap.js', 'Read' );
      * console.log( 'Start: '+ myStream.getPos() );
      * myStream.read(20);
      * console.log( 'After read: '+ myStream.getPos() );
@@ -4523,7 +5373,7 @@ interface WAKTextStreamInstance {
      * Writes the text in the TextStream.
      * 
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/my-streamed-file.js' );
+     * var myFile = new File( 'PROJECT/my-streamed-file.js' );
      * var myStream = new TextStream( file, 'write' );
      * myStream.write( 'Hello '+ Date.now() +' !\n' );
      * // Important to close the stream every time.
@@ -4735,7 +5585,7 @@ interface XMLHttpRequest {
      *     // Displays the upload result ID to use as reference in Wakanda DB
      *     console.log( 'Upload ID:'+ xhr.responseText );
      * }
-     * xhr.send( 'PROJECT/backend/my-image.jpg' );
+     * xhr.send( 'PROJECT/my-image.jpg' );
      * ```
      * 
      * @warning Sends synchronous XHR request.
@@ -4755,7 +5605,7 @@ interface XMLHttpRequest {
      * #### Example 2: Upload file
      * See [doc center](http://doc.wakanda.org/home2.en.html#/HTTP-REST/Interacting-with-the-Server/upload.303-1158401.en.html) for more details about upload
      * ```javascript
-     * var myFile = new File( 'PROJECT/backend/my-image.jpg' );
+     * var myFile = new File( 'PROJECT/my-image.jpg' );
      * var xhr = new XMLHttpRequest();
      * xhr.open('PUT', 'http://127.0.0.1:8081/rest/$upload?$rawPict=true');
      * xhr.setRequestHeader( 'Content-Type', 'image/jpeg' );
@@ -4772,7 +5622,7 @@ interface XMLHttpRequest {
      * @warning Sends synchronous XHR request.
      * @param data Data to send in the request `body`
      */
-    send(data?: WAKFileInstance): void;
+    send(data?: WAKFileInstance | WAKBlobInstance | WAKBufferInstance ): void;
     /**
      * Allows the request to be authenticated on the remote server with a client certificate, when necessary.
      * @param keyPath Path to the PEM format private key

@@ -25,7 +25,7 @@ interface SystemWorker {
      * 
      * #### Example 2: Pass parameters, quotes and env variables options to the system worker
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend' );
+     * var myFolder = new Folder( 'PROJECT' );
      * var options = {
      *     parameters : { folder_ref : myFolder },
      *     quote : '"',
@@ -63,7 +63,7 @@ interface SystemWorker {
      * 
      * #### Example 2: Pass parameters, quotes and env variables options to the system worker
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend' );
+     * var myFolder = new Folder( 'PROJECT' );
      * var options = {
      *     parameters : { folder_ref : myFolder },
      *     quote : '"',
@@ -106,7 +106,7 @@ interface SystemWorker {
      * 
      * #### Example 4: Pass parameters, quotes and env variables options to the system worker
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend' );
+     * var myFolder = new Folder( 'PROJECT' );
      * var options = {
      *     parameters : { folder_ref : myFolder },
      *     quote : '"',
@@ -149,7 +149,7 @@ interface SystemWorker {
      * 
      * #### Example 4: Pass parameters, quotes and env variables options to the system worker
      * ```javascript
-     * var myFolder = new Folder( 'PROJECT/backend' );
+     * var myFolder = new Folder( 'PROJECT' );
      * var options = {
      *     parameters : { folder_ref : myFolder },
      *     quote : '"',

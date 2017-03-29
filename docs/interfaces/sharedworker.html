@@ -78,7 +78,7 @@
 						<li>One or more proxies communicating with the worker thread</li>
 					</ul>
 					<h3 id="step-1-define-the-shared-worker">Step 1: Define the shared worker</h3>
-					<pre><code class="lang-javascript"><span class="hljs-comment">// PROJECT/backend/worker.js</span>
+					<pre><code class="lang-javascript"><span class="hljs-comment">// PROJECT/worker.js</span>
 <span class="hljs-comment">// onconnect is called everytime a new worker proxy is created</span>
 onconnect = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> event </span>)
 </span>{
@@ -122,11 +122,11 @@ onconnect = <span class="hljs-function"><span class="hljs-keyword">function</spa
 }
 </code></pre>
 					<h4 id="how-to-require-a-wakanda-module-">How to require a wakanda module ?</h4>
-					<p>The module should be defined in <code>PROJECT/backend/modules</code></p>
+					<p>The module should be defined in <code>PROJECT/modules</code></p>
 					<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myModule = <span class="hljs-built_in">require</span>( <span class="hljs-string">'myModule'</span> );
 </code></pre>
 					<h3 id="step-2-create-the-shared-worker-thread-and-get-the-worker-proxy">Step 2: Create the shared worker thread and get the worker proxy</h3>
-					<pre><code class="lang-javascript"><span class="hljs-comment">// PROJECT/backend/proxy.js</span>
+					<pre><code class="lang-javascript"><span class="hljs-comment">// PROJECT/proxy.js</span>
 <span class="hljs-comment">// Create a new SharedWorker and get the proxy worker</span>
 <span class="hljs-keyword">var</span> myWorkerProxy = <span class="hljs-keyword">new</span> SharedWorker( <span class="hljs-string">'backend/worker.js'</span>, <span class="hljs-string">'my-worker-name'</span> );
 <span class="hljs-comment">// Get the proxy worker port for communication</span>
@@ -135,7 +135,7 @@ onconnect = <span class="hljs-function"><span class="hljs-keyword">function</spa
 workerProxyPort.postMessage( {<span class="hljs-attr">type</span>: <span class="hljs-string">'hello'</span>, <span class="hljs-attr">says</span>: <span class="hljs-string">'Hello worker !'</span>} );
 </code></pre>
 					<h3 id="step-3-listen-for-shared-worker-messages">Step 3: Listen for shared worker messages</h3>
-					<pre><code class="lang-javascript"><span class="hljs-comment">// PROJECT/backend/proxy.js</span>
+					<pre><code class="lang-javascript"><span class="hljs-comment">// PROJECT/proxy.js</span>
 <span class="hljs-comment">// Listen for worker thread messages</span>
 workerProxyPort.onmessage = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> event </span>)
 </span>{
@@ -199,11 +199,7 @@ wait();
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-<<<<<<< HEAD
-									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/67fbe0e/api/sharedworker.d.ts#L109">sharedworker.d.ts:109</a></li>
-=======
-									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/844e736/api/sharedworker.d.ts#L111">sharedworker.d.ts:111</a></li>
->>>>>>> 5844f8ca9c9988f86544e76858bd9724bc68abcc
+									<li>Defined in <a href="https://github.com/JegoYann/wakanda-api-reference/blob/9a1ab6b/api/sharedworker.d.ts#L111">sharedworker.d.ts:111</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -212,7 +208,7 @@ wait();
 										Creates a new shared worker in its own thread if it does not exist yet. Then it returns a proxy object to communicate with the shared worker thread.
 									Shared workers can be addressed from any thread, they are uniquely identified by their path and name.</p>
 								</div>
-								<pre><code class="lang-javascript"><span class="hljs-comment">// "worker.js" is defined in PROJECT/backend/worker.js</span>
+								<pre><code class="lang-javascript"><span class="hljs-comment">// "worker.js" is defined in PROJECT/worker.js</span>
 <span class="hljs-keyword">var</span> myWorkerProxy = <span class="hljs-keyword">new</span> SharedWorker( <span class="hljs-string">'backend/worker.js'</span>, <span class="hljs-string">'my-worker-name'</span> );
 </code></pre>
 							</div>

@@ -1,9 +1,9 @@
 # Wakanda Server Side API Reference
 
-- [Authentication](interfaces/authentication.html)
-- [Data](interfaces/data.html)
-- [Core](interfaces/core.html)
-- [Threads](interfaces/threads.html)
-- [FileSystem](interfaces/filesystem.html)
-- [HTTP](interfaces/http.html)
-- [Storage](interfaces/storage.html)
+- [Authentication](interfaces/wakauthentication.html)
+- [Data](interfaces/wakdata.html)
+- [Core](interfaces/wakcore.html)
+- [Threads](interfaces/wakthreads.html)
+- [FileSystem](interfaces/wakfilesystem.html)
+- [HTTP](interfaces/wakhttp.html)
+- [Storage](interfaces/wakstorage.html)

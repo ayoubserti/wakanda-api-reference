@@ -10,7 +10,7 @@
  * ### Step 1: Define the node worker
  * 
  * ```javascript
- * // PROJECT/backend/worker.js
+ * // PROJECT/worker.js
  * // onconnect is called everytime a new worker proxy is created
  * onconnect = function( event )
  * {
@@ -63,7 +63,7 @@
  * ```
  * 
  * #### How to require a wakanda module ?
- * The module should be defined in `PROJECT/backend/modules`
+ * The module should be defined in `PROJECT/modules`
  * 
  * ```javascript
  * var myModule = require( 'myModule' );
@@ -72,7 +72,7 @@
  * ### Step 2: Create the node worker thread and get the worker proxy
  * 
  * ```javascript
- * // PROJECT/backend/proxy.js
+ * // PROJECT/proxy.js
  * // Create a new NodeWorker and get the proxy worker
  * var myWorkerProxy = new NodeWorker( 'backend/worker.js', 'my-worker-name' );
  * // Get the proxy worker port for communication
@@ -84,7 +84,7 @@
  * ### Step 3: Listen for node worker messages
  * 
  * ```javascript
- * // PROJECT/backend/proxy.js
+ * // PROJECT/proxy.js
  * // Listen for worker thread messages
  * workerProxyPort.onmessage = function( event )
  * {
@@ -122,7 +122,7 @@ interface NodeWorker {
      * Node workers can be addressed from any thread, they are uniquely identified by their path and name.
      * 
      * ```javascript
-     * // "worker.js" is defined in PROJECT/backend/worker.js
+     * // "worker.js" is defined in PROJECT/worker.js
      * var myWorkerProxy = new NodeWorker( 'backend/worker.js', 'my-worker-name' );
      * ```
      * 
